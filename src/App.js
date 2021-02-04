@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import noaaApi from './APIs/noaaApi';
+import './App.css';
 
 const App = () => {
-  return <div>App</div>;
+  return <div>
+  
+  </div>;
 };
 
 export default App;
