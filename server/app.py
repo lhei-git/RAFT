@@ -1,7 +1,14 @@
 import pickle
-from lookup_list import lookup_list as ll
+import sys
+# from src import lookup_list
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
+
+from lookup_list import lookup_list as ll
+from model import LinearReg
+
+# FIGURE OUT HOW TO PUT A FILE INTO A DIFF FOLDER
+
 
 app = Flask(__name__)
 CORS(app)
@@ -12,7 +19,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/data_station')
-def modelMethod():
+def getStationData():
     if request.method == "POST":
         state = stateCodes(str(request.json["state"]))
         zipCode = str(request.json["zip"])
@@ -22,10 +29,18 @@ def modelMethod():
         return x
     return ""
 
-@app.route('/')
+@app.route('/counties_check')
 def test():
     print(ll['MI'])
     return
+
+@app.route('/model_results')
+def model():
+    lr = LinearReg('MAR', 2021, 'testing/datastation.csv')
+    results = lr.predict()
+    print('[INFO] MODEL RESULTS:', results)
+    return ''.join(str(results))
+
 
 def stateCodes(state):
     states = {
