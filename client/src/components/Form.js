@@ -14,6 +14,16 @@ const InputForm = () => {
         <DropdownInput label="Data Station" options={<DataStationSelect />} />
       </Form>
 
+      <Form.Group>
+        <Form.Control
+          size="sm"
+          type="number"
+          placeholder="Year"
+          min="2021"
+          max="9999"
+        />
+      </Form.Group>
+
       <Button variant="primary" type="submit">
         Submit
       </Button>
