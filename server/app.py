@@ -1,22 +1,21 @@
 import pickle
 import sys
+import json
 # from src import lookup_list
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, Response
 from flask_cors import CORS
 
+from helper import stateCodes
 from lookup_list import lookup_list as ll
 from model import LinearReg
 
+# TODO:
 # FIGURE OUT HOW TO PUT A FILE INTO A DIFF FOLDER
-
+# WE NEED TO CONVERT THIS TO A CLASS IN ORDER TO SAVE INFORMATION FROM EACH REQUEST (We could make global vars if we are lazy coders)
 
 app = Flask(__name__)
 CORS(app)
-@app.route('/state')
-def index():
-    if request.method == 'POST':
-        my_abst = request.get_json() ['']
-    return render_template('index.html')
+
 
 @app.route('/data_station')
 def getStationData():
@@ -24,80 +23,51 @@ def getStationData():
         state = stateCodes(str(request.json["state"]))
         zipCode = str(request.json["zip"])
         reqString = "https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?locationid=FIPS:26&limit=1000&datasetid=GHCND&locationid=ZIP:" + zipCode
-        response = requests.get(reqString, headers={'Token': 'iNyYxajqDfjhrLqStUAbIaddioahKEus'})
-        x = json.loads(r.text)
+        res = request.get(reqString, headers={'Token': 'iNyYxajqDfjhrLqStUAbIaddioahKEus'})
+        x = json.loads(res.text)
         return x
     return ""
 
-@app.route('/counties_check')
-def test():
-    print(ll['MI'])
-    return
+# EXAMPLE: url/counties?state='MI'
+@app.route('/counties', methods=['GET'])
+def counties():
+    try:
+        if request.method == "GET":
+
+            qs = request.args.to_dict(flat=False)
+
+            if len(qs) == 0 and qs['state'] is None:
+                raise Exception('State QueryString not Provided')
+
+            state = qs['state']
+
+            if isinstance(state, list) and len(state) == 1:
+                state = state[0]
+            elif isinstance(state, list) and len(state) > 1:
+                print(type(state))
+                raise Exception('Too many QueryString arguments passed')
+
+            if ll.get(state.upper()) is None:
+                raise KeyError('Invalid State Provided')
+
+            data = list(ll[state.upper()].keys())
+
+            print(data)
+
+            return jsonify(data=data), 200
+
+    except Exception as e:
+        print(qs)
+        return '[BAD REQUEST] {}'.format(e), 400
+
+
 
 @app.route('/model_results')
 def model():
     lr = LinearReg('MAR', 2021, 'testing/datastation.csv')
     results = lr.predict()
     print('[INFO] MODEL RESULTS:', results)
-    return ''.join(str(results))
-
-
-def stateCodes(state):
-    states = {
-        'AL':'01',
-        'AK':'02',
-        'AZ':'04',
-        'AR':'05',
-        'CA':'06',
-        'CO':'08',
-        'CT':'09',
-        'DC':'11',
-        'DE':'10',
-        'FL':'12',
-        'GA':'13',
-        'HI':'15',
-        'ID':'16',
-        'IL':'17',
-        'IN':'18',
-        'IA':'19',
-        'KS':'20',
-        'KY':'21',
-        'LA':'22',
-        'ME':'23',
-        'MD':'24',
-        'MA':'25',
-        'MI':'26',
-        'MN':'27',
-        'MS':'28',
-        'MO':'29',
-        'MT':'30',
-        'NE':'31',
-        'NV':'32',
-        'NH':'33',
-        'NJ':'34',
-        'NM':'35',
-        'NY':'36',
-        'NC':'37',
-        'ND':'38',
-        'OH':'39',
-        'OK':'40',
-        'OR':'41',
-        'PA':'42',
-        'RI':'44',
-        'SC':'45',
-        'SD':'46',
-        'TN':'47',
-        'TX':'48',
-        'UT':'49',
-        'VT':'50',
-        'VA':'51',
-        'WA':'53',
-        'WV':'54',
-        'WI':'55',
-        'WY':'56',
-    }
-
-    return states.get(state,"Invalid State")
+    return jsonify(data = list(results)), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
