@@ -1,6 +1,4 @@
 import pickle
-import pandas as pd
-import numpy as np
 from lookup_list import lookup_list as ll
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
@@ -87,4 +85,4 @@ def stateCodes(state):
     return states.get(state,"Invalid State")
 
 if __name__ == "__main__":
-    app.run(debug=true)
+    app.run(debug=True)
