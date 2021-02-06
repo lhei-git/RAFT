@@ -1,6 +1,7 @@
 import pickle
 import sys
 import json
+import requests
 # from src import lookup_list
 from flask import Flask, render_template, request, jsonify, Response
 from flask_cors import CORS
@@ -17,15 +18,17 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/data_station')
+@app.route('/data_station', methods=['GET'])
 def getStationData():
-    if request.method == "POST":
-        state = stateCodes(str(request.json["state"]))
-        zipCode = str(request.json["zip"])
-        reqString = "https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?locationid=FIPS:26&limit=1000&datasetid=GHCND&locationid=ZIP:" + zipCode
-        res = request.get(reqString, headers={'Token': 'iNyYxajqDfjhrLqStUAbIaddioahKEus'})
-        x = json.loads(res.text)
-        return x
+    if request.method == "GET":
+        fips = ll[request.args["state"]][request.args["county"]]
+        fips = str(fips)
+        reqString = "https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?locationid=FIPS:" + fips + "&limit=1000&datasetid=GHCND"
+        print(reqString)
+        response = requests.get(reqString, headers={'Token': 'iNyYxajqDfjhrLqStUAbIaddioahKEus'})
+        if(json.loads(response.text) == None):
+            return jsonify("NOAA's API can't be accessed"), 400
+        return jsonify(json.loads(response.text)), 200
     return ""
 
 # EXAMPLE: url/counties?state='MI'
