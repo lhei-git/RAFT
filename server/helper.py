@@ -54,3 +54,38 @@ def stateCodes(state):
     }
 
     return states.get(state,"Invalid State")
+
+def endpoint_to_dict(data):
+    num_to_month = {
+        '01':'JAN',
+        '02':'FEB',
+        '03':'MAR',
+        '04':'APR',
+        '05':'MAY',
+        '06':'JUN',
+        '07':'JUL',
+        '08':'AUG',
+        '09':'SEP',
+        '10':'OCT',
+        '11':'NOV',
+        '12':'DEC'
+    }
+
+    model_data = {
+        'YEAR': set()
+    }
+    
+    for i in data:
+        date = i['date'].split('-')
+        model_data['YEAR'].add(int(date[0]))
+        month = num_to_month[date[1]]
+        
+        if model_data.get(month):
+            model_data[month].append(i['value'])
+        else:
+            model_data[month] = []
+            model_data[month].append(i['value'])
+        
+    model_data['YEAR'] = list(model_data['YEAR'])
+        
+    return model_data

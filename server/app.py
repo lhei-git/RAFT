@@ -3,12 +3,11 @@ import sys
 import json
 import requests
 import csv
-from pandas import json_normalize
 # from src import lookup_list
 from flask import Flask, render_template, request, jsonify, Response
 from flask_cors import CORS
 
-from helper import stateCodes
+from helper import stateCodes, endpoint_to_dict
 from lookup_list import lookup_list as ll
 from model import LinearReg
 
@@ -29,7 +28,20 @@ def getStationData():
         response = requests.get(reqString, headers={'Token': 'iNyYxajqDfjhrLqStUAbIaddioahKEus'})
         if(json.loads(response.text) == None):
             return jsonify("NOAA's API can't be accessed"), 400
-        return jsonify(json.loads(response.text)), 200
+        data = json.loads(response.text)
+
+        res = []
+
+        for i in data['results']:
+            temp = {
+                "data_station_name" : i['name'],
+                "id": i["id"],
+                "lat": i["latitude"],
+                "long": i["longitude"]
+            }
+            res.append(temp)
+        
+        return jsonify(res), 200
     return ""
 
 # EXAMPLE: url/counties?state='MI'
@@ -67,25 +79,17 @@ def counties():
 @app.route('/')
 def test():
     print("Entered Test")
-    reqString = "https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datatypeid=TAVG&datatypeid=TMIN&datatypeid=TMAX&datasetid=GSOM&startdate=1891-09-01&enddate=1901-09-01&locationid=FIPS:26093&limit=1000&stationid=GHCND:USC00203947"
+    reqString = "https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datatypeid=TAVG&datasetid=GSOM&startdate=1891-09-01&enddate=1901-09-01&locationid=FIPS:26093&limit=1000&stationid=GHCND:USC00203947"
     response = requests.get(reqString, headers={'Token': 'iNyYxajqDfjhrLqStUAbIaddioahKEus'})
     data = json.loads(response.text)
     temp_data = data['results']
-    data_file = open('testing/data_file.csv', 'w')
-    csv_writer = csv.writer(data_file)
 
-    count = 0
-    for d in temp_data:
-        if count == 0:
-            header = d.keys()
-            csv_writer.writerow(header)
-            count += 1
-        
-        csv_writer.writerow(d.values())
-    
-    data_file.close()
+    parsed_results = endpoint_to_dict(temp_data)
 
-    return jsonify(), 200
+    lr = LinearReg('MAR', 2021, pandas_data=parsed_results)
+    results = lr.predict()
+
+    return jsonify(temp_data), 200
 
 @app.route('/model_results')
 def model():
@@ -97,10 +101,18 @@ def model():
     # We want to keep that data type (TMIN,TMAX,TAVG), Date, and Value
     # 
     #
-    lr = LinearReg('MAR', 2021, 'testing/datastation.csv')
+    lr = LinearReg('MAR', 2021, path='testing/datastation.csv')
     results = lr.predict()
     print('[INFO] MODEL RESULTS:', results)
     return jsonify(data = list(results)), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+import sys
+path = '/home/xxshazamxx/mysite'
+if path not in sys.path:
+   sys.path.insert(0, path)
+
+from flask_app import app as application
