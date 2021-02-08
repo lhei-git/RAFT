@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Form } from 'react-bootstrap';
-import { InputsContext } from '../context/InputsContext';
 
 const DropdownInput = ({ label, options, select, value }) => {
   return (
