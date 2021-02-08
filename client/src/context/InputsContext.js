@@ -58,11 +58,12 @@ export const InputsProvider = ({ children }) => {
       console.log(err);
     }
   };
-  const getStations = () => {
+  const getStations = async (state, county) => {
     try {
       // axios call to get stations
-      // const response = api.post('url/stations', { month, year, county, station });
-      // dispatch({ type: 'GET_STATIONS', payload: response.data });
+      const response = await raftApi.get(`/data_station?state=${state}&county=${county}`);
+      dispatch({ type: 'GET_STATIONS', payload: response.data.data });
+      console.log('stations', response.data.data);
     } catch (err) {
       console.log(err);
     }

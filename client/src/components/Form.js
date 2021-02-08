@@ -13,12 +13,19 @@ const InputForm = () => {
     selectCounty,
     selectStation,
     getCounties,
+    getStations,
     selectYear,
   } = useContext(InputsContext);
 
   useEffect(() => {
     getCounties(inputs.state);
+    console.log(inputs.county);
   }, [inputs.state]);
+
+  useEffect(() => {
+    getStations(inputs.state, inputs.county);
+    console.log(inputs.station);
+  }, [inputs.county]);
 
   return (
     <div>
@@ -35,7 +42,12 @@ const InputForm = () => {
           select={selectCounty}
           value={inputs.county}
         />
-        <DropdownInput label="Data Station" options={<DataStationSelect />} />
+        <DropdownInput
+          label="Station"
+          options={<DataStationSelect />}
+          select={selectStation}
+          value={inputs.station}
+        />
       </Form>
 
       <Form.Group>
