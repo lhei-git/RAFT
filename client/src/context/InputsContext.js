@@ -32,10 +32,11 @@ export const InputsProvider = ({ children }) => {
     county: '',
     station: '',
     month: '',
-    year: 0,
+    year: 2022,
     counties: [],
     stations: [],
     // model data maybe
+    model: {},
   });
 
   // ACTIONS
@@ -68,6 +69,16 @@ export const InputsProvider = ({ children }) => {
       console.log(err);
     }
   };
+  const getModelData = async (state, county, year, month, stationid) => {
+    try {
+      const response = await raftApi.get(
+        `/datastation_results?state=${state}&county=${county}&year=${year}&month=${month}&stationid=${stationid}`
+      );
+      console.log(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <InputsContext.Provider
@@ -80,6 +91,7 @@ export const InputsProvider = ({ children }) => {
         selectYear,
         getCounties,
         getStations,
+        getModelData,
       }}
     >
       {children}

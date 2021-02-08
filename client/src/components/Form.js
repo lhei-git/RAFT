@@ -4,6 +4,7 @@ import StateSelect from './StateSelect';
 import CountySelect from './CountySelect';
 import DropdownInput from './DropdownInputs';
 import DataStationSelect from './DataStationSelect';
+import getModelData from '../context/InputsContext';
 import { InputsContext } from '../context/InputsContext';
 
 const InputForm = () => {
@@ -62,9 +63,22 @@ const InputForm = () => {
         />
       </Form.Group>
 
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
+      <Button
+          variant="danger"
+          type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+            getModelData(
+              inputs.state,
+              inputs.county,
+              inputs.year,
+              inputs.month,
+              inputs.station
+            );
+          }}
+        >
+          Submit
+        </Button>
     </div>
   );
 };
