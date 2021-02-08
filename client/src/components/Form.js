@@ -4,7 +4,7 @@ import StateSelect from './StateSelect';
 import CountySelect from './CountySelect';
 import DropdownInput from './DropdownInputs';
 import DataStationSelect from './DataStationSelect';
-import getModelData from '../context/InputsContext';
+//import getModelData from '../context/InputsContext';
 import { InputsContext } from '../context/InputsContext';
 
 const InputForm = () => {
@@ -15,6 +15,7 @@ const InputForm = () => {
     selectStation,
     getCounties,
     getStations,
+    getModelData,
     selectYear,
   } = useContext(InputsContext);
 
@@ -26,7 +27,9 @@ const InputForm = () => {
   useEffect(() => {
     getStations(inputs.state, inputs.county);
     console.log(inputs.station);
-  }, [inputs.county]);
+  }, [inputs.state, inputs.county]);
+
+
 
   return (
     <div>
