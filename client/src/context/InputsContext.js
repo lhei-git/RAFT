@@ -22,7 +22,9 @@ const inputsReducer = (state, action) => {
     case 'GET_STATIONS':
       return { ...state, stations: payload };
     case 'GET_MODEL_DATA':
-      return { ...state, model: payload };
+      return { ...state, errorMessage: '', model: payload };
+    case 'ERROR_MESSAGE':
+      return { ...state, errorMessage: payload, model: {} }
     default:
       return state;
   }
@@ -39,6 +41,7 @@ export const InputsProvider = ({ children }) => {
     stations: [],
     // model data maybe
     model: {},
+    errorMessage: '',
   });
 
   // ACTIONS
@@ -81,7 +84,8 @@ export const InputsProvider = ({ children }) => {
       dispatch({ type: 'GET_MODEL_DATA', payload: response.data.data });
       console.log(response.data.data);
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data);
+      dispatch({ type: 'ERROR_MESSAGE', payload: error.response.data });
     }
   };
 

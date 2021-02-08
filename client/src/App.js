@@ -21,6 +21,7 @@ function App() {
       </fieldset>
       <Form />
       <br />
+      {inputs.errorMessage && inputs.errorMessage} <br/>
       <p> Prediction (celsius): {inputs.model && inputs.model.prediction} </p>
       <p> MSE: {inputs.model.metrics && inputs.model.metrics.mse} </p>
       <p> R2: {inputs.model.metrics && inputs.model.metrics.r2} </p>
