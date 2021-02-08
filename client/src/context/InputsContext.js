@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import raftApi from '../APIs/raftApi';
 
 export const InputsContext = React.createContext();
 
@@ -27,7 +28,7 @@ const inputsReducer = (state, action) => {
 
 export const InputsProvider = ({ children }) => {
   const [inputs, dispatch] = useReducer(inputsReducer, {
-    state: '',
+    state: 'MI',
     county: '',
     station: '',
     month: '',
@@ -48,11 +49,12 @@ export const InputsProvider = ({ children }) => {
     dispatch({ type: 'SELECT_STATION', payload: month });
   const selectYear = (year) =>
     dispatch({ type: 'SELECT_STATION', payload: year });
-  const getCounties = () => {
+  const getCounties = async (state) => {
     try {
       // axios call to get counties
-      // const response = api.post('url/counties', { state: state });
-      // dispatch({ type: 'GET_COUNTIES', action: response.data });
+      const response = await raftApi.get(`/counties?state=${state}`);
+      dispatch({ type: 'GET_COUNTIES', payload: response.data.data });
+      console.log('counties', response.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -61,7 +63,7 @@ export const InputsProvider = ({ children }) => {
     try {
       // axios call to get stations
       // const response = api.post('url/stations', { month, year, county, station });
-      // dispatch({ type: 'GET_STATIONS', action: response.data });
+      // dispatch({ type: 'GET_STATIONS', payload: response.data });
     } catch (err) {
       console.log(err);
     }
