@@ -21,6 +21,8 @@ const inputsReducer = (state, action) => {
       return { ...state, counties: payload };
     case 'GET_STATIONS':
       return { ...state, stations: payload };
+    case 'GET_MODEL_DATA':
+      return { ...state, model: payload };
     default:
       return state;
   }
@@ -62,7 +64,9 @@ export const InputsProvider = ({ children }) => {
   const getStations = async (state, county) => {
     try {
       // axios call to get stations
-      const response = await raftApi.get(`/data_station?state=${state}&county=${county}`);
+      const response = await raftApi.get(
+        `/data_station?state=${state}&county=${county}`
+      );
       dispatch({ type: 'GET_STATIONS', payload: response.data });
       console.log('STATIONS', response.data);
     } catch (err) {
@@ -74,6 +78,7 @@ export const InputsProvider = ({ children }) => {
       const response = await raftApi.get(
         `/datastation_results?state=${state}&county=${county}&year=${year}&month=${month}&stationid=${stationid}`
       );
+      dispatch({ type: 'GET_MODEL_DATA', payload: response.data.data });
       console.log(response.data.data);
     } catch (error) {
       console.log(error);

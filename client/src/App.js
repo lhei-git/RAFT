@@ -1,7 +1,11 @@
+import { useContext } from 'react';
 import './App.css';
 import Form from './components/Form';
+import { InputsContext } from './context/InputsContext';
 
 function App() {
+  const { inputs } = useContext(InputsContext);
+
   return (
     <div className="App">
       <h1>Welcome to RAFT!</h1>
@@ -16,6 +20,10 @@ function App() {
         </ol>
       </fieldset>
       <Form />
+      <br />
+      <p> Prediction (celsius): {inputs.model && inputs.model.prediction} </p>
+      <p> MSE: {inputs.model.metrics && inputs.model.metrics.mse} </p>
+      <p> R2: {inputs.model.metrics && inputs.model.metrics.r2} </p>
     </div>
   );
 }
@@ -23,18 +31,18 @@ function App() {
 const styles = {
   loginLegend: {
     margin: '20px',
-    width: '155px'
+    width: '155px',
   },
   myFieldset: {
     border: '3px solid',
     maxWidth: 'max-content',
     margin: '0 auto',
     marginBottom: '40px',
-    paddingRight: '20px'
+    paddingRight: '20px',
   },
   ol: {
-    textAlign: 'left'
-  }
-}
+    textAlign: 'left',
+  },
+};
 
 export default App;
