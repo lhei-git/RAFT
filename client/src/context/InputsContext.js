@@ -32,7 +32,7 @@ export const InputsProvider = ({ children }) => {
     county: '',
     station: '',
     month: '',
-    year: 0,
+    year: 2022,
     counties: [],
     stations: [],
     // model data maybe
@@ -62,8 +62,8 @@ export const InputsProvider = ({ children }) => {
     try {
       // axios call to get stations
       const response = await raftApi.get(`/data_station?state=${state}&county=${county}`);
-      dispatch({ type: 'GET_STATIONS', payload: response.data.data });
-      console.log('stations', response.data.data);
+      dispatch({ type: 'GET_STATIONS', payload: response.data });
+      console.log('STATIONS', response.data);
     } catch (err) {
       console.log(err);
     }
