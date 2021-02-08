@@ -13,6 +13,7 @@ const InputForm = () => {
     selectCounty,
     selectStation,
     getCounties,
+    selectYear,
   } = useContext(InputsContext);
 
   useEffect(() => {
@@ -42,8 +43,10 @@ const InputForm = () => {
           size="sm"
           type="number"
           placeholder="Year"
-          min="2021"
+          min="2022"
           max="9999"
+          value={inputs.year}
+          onChange={(e) => selectYear(e.target.value)}
         />
       </Form.Group>
 

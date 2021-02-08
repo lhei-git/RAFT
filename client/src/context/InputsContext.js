@@ -32,7 +32,7 @@ export const InputsProvider = ({ children }) => {
     county: '',
     station: '',
     month: '',
-    year: '',
+    year: 0,
     counties: [],
     stations: [],
     // model data maybe
@@ -46,9 +46,8 @@ export const InputsProvider = ({ children }) => {
   const selectStation = (station) =>
     dispatch({ type: 'SELECT_STATION', payload: station });
   const selectMonth = (month) =>
-    dispatch({ type: 'SELECT_STATION', payload: month });
-  const selectYear = (year) =>
-    dispatch({ type: 'SELECT_STATION', payload: year });
+    dispatch({ type: 'SELECT_MONTH', payload: month });
+  const selectYear = (year) => dispatch({ type: 'SELECT_YEAR', payload: year });
   const getCounties = async (state) => {
     try {
       // axios call to get counties
