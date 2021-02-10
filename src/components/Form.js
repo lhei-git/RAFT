@@ -22,7 +22,7 @@ const InputForm = () => {
 
   useEffect(() => {
     getCounties(inputs.state);
-    console.log(inputs.county);
+    console.log("chosen county", inputs.county);
   }, [inputs.state]);
 
   useEffect(() => {
