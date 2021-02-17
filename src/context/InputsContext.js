@@ -24,7 +24,7 @@ const inputsReducer = (state, action) => {
     case 'GET_MODEL_DATA':
       return { ...state, errorMessage: '', model: payload };
     case 'ERROR_MESSAGE':
-      return { ...state, errorMessage: payload, model: {} }
+      return { ...state, errorMessage: payload, model: {} };
     default:
       return state;
   }
@@ -32,7 +32,7 @@ const inputsReducer = (state, action) => {
 
 export const InputsProvider = ({ children }) => {
   const [inputs, dispatch] = useReducer(inputsReducer, {
-    state: 'MI',
+    state: '',
     county: '',
     station: '',
     month: '',
@@ -54,6 +54,7 @@ export const InputsProvider = ({ children }) => {
   const selectMonth = (month) =>
     dispatch({ type: 'SELECT_MONTH', payload: month });
   const selectYear = (year) => dispatch({ type: 'SELECT_YEAR', payload: year });
+
   const getCounties = async (state) => {
     try {
       // axios call to get counties
@@ -81,6 +82,12 @@ export const InputsProvider = ({ children }) => {
       const response = await raftApi.get(
         `/datastation_results?state=${state}&county=${county}&year=${year}&month=${month}&stationid=${stationid}`
       );
+      if (
+        response.data == null ||
+        response.data == undefined ||
+        response.data == 0
+      )
+        throw new Error({ response: { data: 'No data available' } });
       dispatch({ type: 'GET_MODEL_DATA', payload: response.data.data });
       console.log(response.data.data);
     } catch (error) {
