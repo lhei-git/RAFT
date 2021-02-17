@@ -36,7 +36,7 @@ export const InputsProvider = ({ children }) => {
     county: '',
     station: '',
     month: '',
-    year: 2022,
+    year: 2025,
     counties: [],
     stations: [],
     // model data maybe
