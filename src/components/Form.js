@@ -20,20 +20,6 @@ const InputForm = () => {
     selectYear,
   } = useContext(InputsContext);
 
-  useEffect(() => {
-    getCounties(inputs.state);
-    console.log("chosen county", inputs.county);
-  }, [inputs.state]);
-
-  useEffect(() => {
-    getStations(inputs.state, inputs.county);
-    console.log("STATION", inputs.station);
-  }, [inputs.county]);
-
-  useEffect(() => {
-    console.log("selected station", inputs.station)
-  }, [inputs.station])
-
   return (
     <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
       <Form>
@@ -44,6 +30,7 @@ const InputForm = () => {
               options={<StateSelect />}
               select={selectState}
               value={inputs.state}
+              get={() => getCounties(inputs.state)}
             />
           </Col>
           <Col xs="3">
@@ -52,6 +39,7 @@ const InputForm = () => {
               options={<CountySelect />}
               select={selectCounty}
               value={inputs.county}
+              get={() => getStations(inputs.state, inputs.county)}
             />
           </Col>
           <Col xs="6">
