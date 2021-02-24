@@ -1,5 +1,9 @@
 import React, { useReducer } from 'react';
 import raftApi from '../APIs/raftApi';
+import Geocode from "react-geocode";
+Geocode.setApiKey(process.env.REACT_APP_MAPS_API_KEY);
+Geocode.setLanguage("en");
+Geocode.enableDebug();
 
 export const InputsContext = React.createContext();
 
@@ -25,6 +29,8 @@ const inputsReducer = (state, action) => {
       return { ...state, errorMessage: '', model: payload };
     case 'ERROR_MESSAGE':
       return { ...state, errorMessage: payload, model: {} };
+    case 'SET_LAT_LNG':
+      return { ...state, latLng: payload }
     default:
       return state;
   }
@@ -42,6 +48,7 @@ export const InputsProvider = ({ children }) => {
     // model data maybe
     model: {},
     errorMessage: '',
+    latLng: { lat: 0, lng: 0 }
   });
 
   // ACTIONS
@@ -96,6 +103,32 @@ export const InputsProvider = ({ children }) => {
     }
   };
 
+  const getLatLng = (address) => {
+    Geocode.fromAddress(address).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        // console.log(lat, lng);
+        dispatch({ type: "SET_LAT_LNG", payload: { lat, lng } });
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+  const getLatLngCounty = (address, state) => {
+    console.log("COUNTY", `${address}, ${state}`)
+    Geocode.fromAddress(`${address}, ${state}`).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        // console.log(lat, lng);
+        dispatch({ type: "SET_LAT_LNG", payload: { lat, lng } });
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
   return (
     <InputsContext.Provider
       value={{
@@ -108,6 +141,8 @@ export const InputsProvider = ({ children }) => {
         getCounties,
         getStations,
         getModelData,
+        getLatLng,
+        getLatLngCounty,
       }}
     >
       {children}
