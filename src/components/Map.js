@@ -1,11 +1,11 @@
-import react, { useContext, useState } from "react";
+import react, { useContext, useState } from 'react';
 import {
   GoogleMap,
   useLoadScript,
   Marker,
   InfoWindow,
-} from "@react-google-maps/api";
-import { InputsContext } from "../context/InputsContext";
+} from '@react-google-maps/api';
+import { InputsContext } from '../context/InputsContext';
 
 const options = {
   // styles: **go to snazzymaps.com for styles**
@@ -21,17 +21,11 @@ const Map = () => {
   const { inputs } = useContext(InputsContext);
 
   // If error loading maps
-  if (loadError) return "Error loading maps";
-  if (!isLoaded) return "Loading Maps";
+  if (loadError) return 'Error loading maps';
+  if (!isLoaded) return 'Loading Maps';
 
   return (
     <div>
-      <h1 style={{ position: "absolute", top: "43rem", zIndex: "10" }}>
-        RAFT
-        <span role="img" aria-label="oni">
-          🐘
-        </span>
-      </h1>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={10}
@@ -39,7 +33,10 @@ const Map = () => {
         options={options}
       >
         {inputs.stations.map((station) => (
-          <Marker key={station.id} position={{ lat:station.lat, lng: station.long }} />
+          <Marker
+            key={station.id}
+            position={{ lat: station.lat, lng: station.long }}
+          />
         ))}
       </GoogleMap>
     </div>
@@ -47,9 +44,9 @@ const Map = () => {
 };
 
 const mapContainerStyle = {
-  zIndex: "1",
-  width: "100vw",
-  height: "400px",
+  zIndex: '1',
+  width: '100vw',
+  height: '400px',
 };
 
 export default Map;

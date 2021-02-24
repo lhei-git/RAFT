@@ -5,7 +5,9 @@ import CountySelect from './Dropdowns/CountySelect';
 import DropdownInput from './DropdownInputs';
 import DataStationSelect from './Dropdowns/DataStationSelect';
 import MonthSelect from './Dropdowns/MonthSelect';
+import SeasonSelect from './Dropdowns/SeasonSelect';
 import { InputsContext } from '../context/InputsContext';
+import ToggleSwitch from './ToggleSwitch';
 
 const InputForm = () => {
   const {
@@ -18,10 +20,17 @@ const InputForm = () => {
     getStations,
     getModelData,
     selectYear,
+    selectSeason,
   } = useContext(InputsContext);
 
   return (
-    <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <Form>
         <Form.Row>
           <Col xs="3">
@@ -51,13 +60,28 @@ const InputForm = () => {
             />
           </Col>
         </Form.Row>
-        <Form.Row style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+        <Form.Row
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ToggleSwitch />
           <Col xs="auto" md="4">
             <DropdownInput
               label="Month"
               options={<MonthSelect />}
               select={selectMonth}
               value={inputs.month}
+            />
+          </Col>
+          <Col xs="auto" md="4">
+            <DropdownInput
+              label="Season"
+              options={<SeasonSelect />}
+              select={selectSeason}
+              value={inputs.season}
             />
           </Col>
           <Col xs="auto">
@@ -76,7 +100,7 @@ const InputForm = () => {
           </Col>
         </Form.Row>
 
-      <Button
+        <Button
           variant="danger"
           type="submit"
           onClick={(e) => {
@@ -92,7 +116,7 @@ const InputForm = () => {
         >
           Submit
         </Button>
-        </Form>
+      </Form>
     </div>
   );
 };

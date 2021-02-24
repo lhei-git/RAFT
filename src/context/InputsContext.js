@@ -1,8 +1,8 @@
 import React, { useReducer } from 'react';
 import raftApi from '../APIs/raftApi';
-import Geocode from "react-geocode";
+import Geocode from 'react-geocode';
 Geocode.setApiKey(process.env.REACT_APP_MAPS_API_KEY);
-Geocode.setLanguage("en");
+Geocode.setLanguage('en');
 Geocode.enableDebug();
 
 export const InputsContext = React.createContext();
@@ -19,6 +19,8 @@ const inputsReducer = (state, action) => {
       return { ...state, station: payload };
     case 'SELECT_MONTH':
       return { ...state, month: payload };
+    case 'SELECT_SEASON':
+      return { ...state, season: payload };
     case 'SELECT_YEAR':
       return { ...state, year: payload };
     case 'GET_COUNTIES':
@@ -30,7 +32,7 @@ const inputsReducer = (state, action) => {
     case 'ERROR_MESSAGE':
       return { ...state, errorMessage: payload, model: {} };
     case 'SET_LAT_LNG':
-      return { ...state, latLng: payload }
+      return { ...state, latLng: payload };
     default:
       return state;
   }
@@ -42,13 +44,14 @@ export const InputsProvider = ({ children }) => {
     county: '',
     station: '',
     month: '',
+    season: '',
     year: 2025,
     counties: [],
     stations: [],
     // model data maybe
     model: {},
     errorMessage: '',
-    latLng: { lat: 0, lng: 0 }
+    latLng: { lat: 0, lng: 0 },
   });
 
   // ACTIONS
@@ -60,6 +63,8 @@ export const InputsProvider = ({ children }) => {
     dispatch({ type: 'SELECT_STATION', payload: station });
   const selectMonth = (month) =>
     dispatch({ type: 'SELECT_MONTH', payload: month });
+  const selectSeason = (season) =>
+    dispatch({ type: 'SELECT_SEASON', payload: season });
   const selectYear = (year) => dispatch({ type: 'SELECT_YEAR', payload: year });
 
   const getCounties = async (state) => {
@@ -84,7 +89,14 @@ export const InputsProvider = ({ children }) => {
       console.log(err);
     }
   };
-  const getModelData = async (state, county, year, month, stationid) => {
+  const getModelData = async (
+    state,
+    county,
+    year,
+    month,
+    season,
+    stationid
+  ) => {
     try {
       const response = await raftApi.get(
         `/datastation_results?state=${state}&county=${county}&year=${year}&month=${month}&stationid=${stationid}`
@@ -108,26 +120,26 @@ export const InputsProvider = ({ children }) => {
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
         // console.log(lat, lng);
-        dispatch({ type: "SET_LAT_LNG", payload: { lat, lng } });
+        dispatch({ type: 'SET_LAT_LNG', payload: { lat, lng } });
       },
       (error) => {
         console.error(error);
       }
     );
-  }
+  };
   const getLatLngCounty = (address, state) => {
-    console.log("COUNTY", `${address}, ${state}`)
+    console.log('COUNTY', `${address}, ${state}`);
     Geocode.fromAddress(`${address}, ${state}`).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
         // console.log(lat, lng);
-        dispatch({ type: "SET_LAT_LNG", payload: { lat, lng } });
+        dispatch({ type: 'SET_LAT_LNG', payload: { lat, lng } });
       },
       (error) => {
         console.error(error);
       }
     );
-  }
+  };
 
   return (
     <InputsContext.Provider
@@ -137,6 +149,7 @@ export const InputsProvider = ({ children }) => {
         selectCounty,
         selectStation,
         selectMonth,
+        selectSeason,
         selectYear,
         getCounties,
         getStations,
