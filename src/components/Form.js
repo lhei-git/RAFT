@@ -1,10 +1,10 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
-import StateSelect from './StateSelect';
-import CountySelect from './CountySelect';
+import StateSelect from './Dropdowns/StateSelect';
+import CountySelect from './Dropdowns/CountySelect';
 import DropdownInput from './DropdownInputs';
-import DataStationSelect from './DataStationSelect';
-import MonthSelect from './MonthSelect';
+import DataStationSelect from './Dropdowns/DataStationSelect';
+import MonthSelect from './Dropdowns/MonthSelect';
 import { InputsContext } from '../context/InputsContext';
 
 const InputForm = () => {
