@@ -28,7 +28,7 @@ const Map = () => {
     <div>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={10}
+        zoom={9}
         center={inputs.latLng}
         options={options}
       >
@@ -45,7 +45,7 @@ const Map = () => {
 
 const mapContainerStyle = {
   zIndex: '1',
-  width: '100vw',
+  width: '500px',
   height: '400px',
 };
 

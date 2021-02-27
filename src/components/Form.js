@@ -32,8 +32,14 @@ const InputForm = () => {
       }}
     >
       <Form>
-        <Form.Row>
-          <Col xs="3">
+        <Form.Row
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Col xs="4">
             <DropdownInput
               label="State"
               options={<StateSelect />}
@@ -42,7 +48,7 @@ const InputForm = () => {
               get={() => getCounties(inputs.state)}
             />
           </Col>
-          <Col xs="3">
+          <Col xs="4">
             <DropdownInput
               label="County"
               options={<CountySelect />}
@@ -51,14 +57,14 @@ const InputForm = () => {
               get={() => getStations(inputs.state, inputs.county)}
             />
           </Col>
-          <Col xs="6">
+          {/* <Col xs="6">
             <DropdownInput
               label="Station"
               options={<DataStationSelect />}
               select={selectStation}
               value={inputs.station}
             />
-          </Col>
+          </Col> */}
         </Form.Row>
         <Form.Row
           style={{
@@ -67,7 +73,7 @@ const InputForm = () => {
             alignItems: 'center',
           }}
         >
-          <ToggleSwitch />
+          {/* <ToggleSwitch /> */}
           <Col xs="auto" md="4">
             <DropdownInput
               label="Month"
@@ -76,14 +82,14 @@ const InputForm = () => {
               value={inputs.month}
             />
           </Col>
-          <Col xs="auto" md="4">
+          {/* <Col xs="auto" md="4">
             <DropdownInput
               label="Season"
               options={<SeasonSelect />}
               select={selectSeason}
               value={inputs.season}
             />
-          </Col>
+          </Col> */}
           <Col xs="auto">
             <Form.Group>
               <Form.Label>Year to Predict: </Form.Label>
@@ -91,8 +97,8 @@ const InputForm = () => {
                 size="md"
                 type="number"
                 placeholder="Year"
-                min="2022"
-                max="9999"
+                min="2025"
+                max="2050"
                 value={inputs.year}
                 onChange={(e) => selectYear(e.target.value)}
               />
