@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { InputsContext } from '../context/InputsContext';
+import { InputsContext } from '../../context/InputsContext';
 
 const DataStationSelect = () => {
   const { inputs } = useContext(InputsContext);

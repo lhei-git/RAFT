@@ -1,10 +1,23 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import './App.css';
 import Form from './components/Form';
+import Map from './components/Map';
 import { InputsContext } from './context/InputsContext';
 
+import Geocode from 'react-geocode';
+Geocode.setApiKey(process.env.REACT_APP_MAPS_API_KEY);
+Geocode.setLanguage('en');
+Geocode.enableDebug();
+
 function App() {
-  const { inputs } = useContext(InputsContext);
+  const { inputs, getLatLng, getLatLngCounty } = useContext(InputsContext);
+
+  useEffect(() => {
+    getLatLng(inputs.state);
+  }, [inputs.state]);
+  useEffect(() => {
+    getLatLngCounty(inputs.county, inputs.state);
+  }, [inputs.county]);
 
   return (
     <div className="App">
@@ -19,12 +32,21 @@ function App() {
           <li>Press submit and see the estimated future temperature.</li>
         </ol>
       </fieldset>
-      <Form />
+      <div className="box">
+        <o2 style={styles.o2}>
+          <Form />
+        </o2>
+        <o3 style={styles.o3}>
+          <Map />
+        </o3>
+      </div>
       <br />
-      {inputs.errorMessage && inputs.errorMessage} <br/>
-      <p> Prediction (celsius): {inputs.model && inputs.model.prediction} </p>
-      <p> MSE: {inputs.model.metrics && inputs.model.metrics.mse} </p>
-      <p> R2: {inputs.model.metrics && inputs.model.metrics.r2} </p>
+      {inputs.errorMessage && inputs.errorMessage} <br />
+      <div className="results">
+        <p> Prediction (celsius): {inputs.model && inputs.model.prediction} </p>
+        <p> MSE: {inputs.model.metrics && inputs.model.metrics.mse} </p>
+        <p> R2: {inputs.model.metrics && inputs.model.metrics.r2} </p>
+      </div>
     </div>
   );
 }
@@ -43,6 +65,14 @@ const styles = {
   },
   ol: {
     textAlign: 'left',
+  },
+  o2: {
+    padding: '101px',
+    border: '2px solid #000',
+  },
+  o3: {
+    padding: '50px',
+    border: '2px solid #000',
   },
 };
 
