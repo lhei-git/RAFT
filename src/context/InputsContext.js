@@ -31,8 +31,6 @@ const inputsReducer = (state, action) => {
       return { ...state, errorMessage: '', model: payload };
     case 'ERROR_MESSAGE':
       return { ...state, errorMessage: payload, model: {} };
-    case 'SET_LAT_LNG':
-      return { ...state, latLng: payload };
     default:
       return state;
   }
@@ -44,7 +42,6 @@ export const InputsProvider = ({ children }) => {
     county: '',
     station: '',
     month: '',
-    season: '',
     year: 2025,
     counties: [],
     stations: [],
