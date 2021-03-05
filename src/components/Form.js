@@ -31,79 +31,55 @@ const InputForm = () => {
         alignItems: 'center',
       }}
     >
-      <Form>
+      <Form className="form">
         <Form.Row
           style={{
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'space-around',
             alignItems: 'center',
           }}
         >
-          <Col xs="4">
-            <DropdownInput
-              label="State"
-              options={<StateSelect />}
-              select={selectState}
-              value={inputs.state}
-              get={() => getCounties(inputs.state)}
-            />
-          </Col>
-          <Col xs="4">
-            <DropdownInput
-              label="County"
-              options={<CountySelect />}
-              select={selectCounty}
-              value={inputs.county}
-              get={() => getStations(inputs.state, inputs.county)}
-            />
-          </Col>
-          {/* <Col xs="6">
-            <DropdownInput
-              label="Station"
-              options={<DataStationSelect />}
-              select={selectStation}
-              value={inputs.station}
-            />
-          </Col> */}
+          <DropdownInput
+            label="State"
+            options={<StateSelect />}
+            select={selectState}
+            value={inputs.state}
+            get={() => getCounties(inputs.state)}
+          />
+          <DropdownInput
+            label="County"
+            options={<CountySelect />}
+            select={selectCounty}
+            value={inputs.county}
+            get={() => getStations(inputs.state, inputs.county)}
+          />
         </Form.Row>
         <Form.Row
           style={{
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'space-around',
             alignItems: 'center',
           }}
         >
-          {/* <ToggleSwitch /> */}
-          <Col xs="auto" md="4">
-            <DropdownInput
-              label="Month"
-              options={<MonthSelect />}
-              select={selectMonth}
-              value={inputs.month}
+          <DropdownInput
+            label="Month"
+            options={<MonthSelect />}
+            select={selectMonth}
+            value={inputs.month}
+          />
+          <Form.Group>
+            <Form.Label>Year to Predict: </Form.Label>
+            <Form.Control
+              className="year-input"
+              size="md"
+              type="number"
+              placeholder="Year"
+              min="2025"
+              max="2050"
+              value={inputs.year}
+              onChange={(e) => selectYear(e.target.value)}
             />
-          </Col>
-          {/* <Col xs="auto" md="4">
-            <DropdownInput
-              label="Season"
-              options={<SeasonSelect />}
-              select={selectSeason}
-              value={inputs.season}
-            />
-          </Col> */}
-          <Col xs="auto">
-            <Form.Group>
-              <Form.Label>Year to Predict: </Form.Label>
-              <Form.Control
-                size="md"
-                type="number"
-                placeholder="Year"
-                min="2025"
-                max="2050"
-                value={inputs.year}
-                onChange={(e) => selectYear(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
+          </Form.Group>
         </Form.Row>
 
         <Button

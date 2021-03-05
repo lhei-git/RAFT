@@ -44,9 +44,9 @@ const Map = () => {
 };
 
 const mapContainerStyle = {
+  minWidth: '300px',
   zIndex: '1',
-  width: '500px',
-  height: '400px',
+  height: '200px',
 };
 
 export default Map;
