@@ -9,7 +9,7 @@ import SeasonSelect from './Dropdowns/SeasonSelect';
 import { InputsContext } from '../context/InputsContext';
 import ToggleSwitch from './ToggleSwitch';
 
-const InputForm = () => {
+const InputForm = ({ onSubmitPressed }) => {
   const {
     inputs,
     selectState,
@@ -87,6 +87,7 @@ const InputForm = () => {
           type="submit"
           onClick={(e) => {
             e.preventDefault();
+            onSubmitPressed();
             getModelData(
               inputs.state,
               inputs.county,

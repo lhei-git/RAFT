@@ -1,6 +1,6 @@
 .App {
   min-height: 100vh;
-  /* background-color: pink; */
+  background-color: pink;
   min-width: 100vw;
 }
 
@@ -8,11 +8,11 @@
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  /* background-color: #ff000093; */
+  background-color: #ff000093;
 }
 
 .default-view {
-  /* background-color: #aa0; */
+  background-color: #aa0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@
 .title-logo {
   display: flex;
   flex-direction: column-reverse;
-  /* background-color: orange; */
+  background-color: orange;
   align-items: center;
   padding: 15px 0;
 }
@@ -38,12 +38,12 @@
 .form-container {
   display: flex;
   justify-content: center;
-  /* background-color: plum; */
+  background-color: plum;
   padding: 10px 0;
 }
 
 .form {
-  /* background-color: orchid; */
+  background-color: orchid;
   display: flex;
   align-items: center;
   flex-direction: column;
