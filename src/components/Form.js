@@ -7,7 +7,6 @@ import DataStationSelect from './Dropdowns/DataStationSelect';
 import MonthSelect from './Dropdowns/MonthSelect';
 import SeasonSelect from './Dropdowns/SeasonSelect';
 import { InputsContext } from '../context/InputsContext';
-import ToggleSwitch from './ToggleSwitch';
 
 const InputForm = ({ onSubmitPressed }) => {
   const {
