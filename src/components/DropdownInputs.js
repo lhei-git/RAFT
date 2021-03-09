@@ -2,13 +2,12 @@ import React, { useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 
 const DropdownInput = ({ label, options, select, value, get }) => {
-
   useEffect(() => {
     if (value !== '') {
       // if the get prop exists
       get && get();
     }
-  }, [value])
+  }, [value]);
 
   return (
     <Form.Group controlId="exampleForm.ControlSelect1">

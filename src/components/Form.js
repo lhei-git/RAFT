@@ -5,8 +5,9 @@ import CountySelect from './Dropdowns/CountySelect';
 import DropdownInput from './DropdownInputs';
 import MonthSelect from './Dropdowns/MonthSelect';
 import { InputsContext } from '../context/InputsContext';
+import { Link } from 'react-scroll';
 
-const InputForm = () => {
+const InputForm = ({ onSubmitPressed }) => {
   const {
     inputs,
     selectState,
@@ -20,14 +21,8 @@ const InputForm = () => {
 
   return (
     <div>
-      <Form className="fourm">
-        <Form.Row
-          style={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-          }}
-        >
+      <Form className="form">
+        <Form.Row style={{ display: 'flex', justifyContent: 'space-around' }}>
           <DropdownInput
             label="State"
             options={<StateSelect />}
@@ -43,13 +38,7 @@ const InputForm = () => {
             get={() => getStations(inputs.state, inputs.county)}
           />
         </Form.Row>
-        <Form.Row
-          style={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-          }}
-        >
+        <Form.Row style={{ display: 'flex', justifyContent: 'space-around' }}>
           <DropdownInput
             label="Month"
             options={<MonthSelect />}
@@ -70,12 +59,16 @@ const InputForm = () => {
             />
           </Form.Group>
         </Form.Row>
-
-        <Button
-          variant="danger"
-          type="submit"
+        <Link
+          activeClass="active"
+          to={'results'}
+          spy={true}
+          smooth={true}
+          duration={1000}
+          href={'results'}
           onClick={(e) => {
             e.preventDefault();
+            onSubmitPressed();
             getModelData(
               inputs.state,
               inputs.county,
@@ -85,8 +78,10 @@ const InputForm = () => {
             );
           }}
         >
-          Submit
-        </Button>
+          <Button variant="danger" type="submit">
+            Submit
+          </Button>
+        </Link>
       </Form>
     </div>
   );
