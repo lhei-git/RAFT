@@ -45,11 +45,91 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.pp {
+  min-height: 100vh;
+  background-color: #eee;
+}
+
+@media only screen and (min-width: 992px) {
+  .text-large-lg {
+    font-size: 4em;
   }
-  to {
-    transform: rotate(360deg);
+  .subtext-large-lg {
+    font-size: 2.5em;
   }
+  .vertical-center-lg {
+    height: calc(100vh - 215px);
+    display: flex;
+    align-items: center;
+  }
+}
+
+
+
+/* THADD EDITS, might delete later */
+
+
+/* .default-view-container {
+  background-color: skyblue;
+
+  min-height: 100vh;
+}
+
+.default-view {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.title-logo {
+  background-color: pink;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  flex-grow: 1;
+}
+
+.form-map {
+  background-color: lightgreen;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 2;
+}
+.form {
+  background-color: red;
+  display: flex;
+  justify-content: center;
+}
+.fourm {
+  background-color: #fff;
+  min-width: 500px;
+  border-radius: 1.5%;
+}
+
+.map-container {
+  height: 500px;
+}
+*/
+.input-test {
+  border: none;
+  min-width: 200px;
+
+  display: block;
+  height: calc(1.5em + .75rem + 2px);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }

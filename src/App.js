@@ -4,6 +4,8 @@ import Form from './components/Form';
 import Map from './components/Map';
 import { InputsContext } from './context/InputsContext';
 
+import { Container, Row, Col } from 'react-bootstrap';
+
 import Geocode from 'react-geocode';
 Geocode.setApiKey(process.env.REACT_APP_MAPS_API_KEY);
 Geocode.setLanguage('en');
@@ -21,7 +23,100 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Welcome to RAFT!</h1>
+      <Container fluid className="pp">
+        {/*
+          ==============================
+                  TITLE & LOGO
+          ==============================
+        */}
+        <Row>
+          <Col
+            style={styles.paddingFifteen}
+            xs={{ span: 12, order: 2 }}
+            lg={{ span: 5, order: 1 }}
+          >
+            <h1 className="text-large-lg">RTP</h1>
+            <h3 className="subtext-large-lg">Regional Temperature Profiler</h3>
+          </Col>
+          <Col
+            xs={{ span: 12, order: 1 }}
+            lg={{ span: 3, offset: 4, order: 2 }}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              paddingTop: '15px',
+            }}
+          >
+            <div
+              style={{
+                width: '200px',
+                height: '200px',
+                borderRadius: '50%',
+                backgroundColor: 'lightslategray',
+              }}
+            ></div>
+          </Col>
+        </Row>
+
+        {/*
+          ==============================
+                  FORM & MAP
+          ==============================
+        */}
+        <Row className="vertical-center-lg">
+          <Col
+            // FORM
+            style={styles.paddingTwenty}
+            xs={{ span: 12 }}
+            md={{ span: 12 }}
+            lg={{ span: 8, offset: 2 }}
+            xl={{ span: 4, offset: 1 }}
+          >
+            <Form />
+          </Col>
+          <Col
+            // MAP
+            xs={{ span: 12 }}
+            md={{ span: 12 }}
+            lg={{ span: 10, offset: 1 }}
+            xl={{ span: 6, offset: 0 }}
+          >
+            <Map />
+          </Col>
+        </Row>
+      </Container>
+
+      {/* <div className="default-view-container">
+        <div className="default-view">
+          <div className="title-logo">
+            <div className="title">
+              <h1>RTP</h1>
+              <h3>Regional Temperature Profiler</h3>
+            </div>
+            <div className="logo">
+              <div
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '50%',
+                  backgroundColor: 'lightslategray',
+                }}
+              ></div>
+            </div>
+          </div>
+
+          <div className="form-map">
+            <div className="form">
+              <Form />
+            </div>
+            <div className="map-container">
+              <Map />
+            </div>
+          </div>
+        </div>
+      </div> */}
+
+      {/* <h1>Welcome to RAFT!</h1>
       <fieldset style={styles.myFieldset}>
         <legend style={styles.loginLegend}>Instructions</legend>
         <ol style={styles.ol}>
@@ -46,33 +141,17 @@ function App() {
         <p> Prediction (celsius): {inputs.model && inputs.model.prediction} </p>
         <p> MSE: {inputs.model.metrics && inputs.model.metrics.mse} </p>
         <p> R2: {inputs.model.metrics && inputs.model.metrics.r2} </p>
-      </div>
+      </div> */}
     </div>
   );
 }
 
 const styles = {
-  loginLegend: {
-    margin: '20px',
-    width: '155px',
+  paddingFifteen: {
+    padding: '15px',
   },
-  myFieldset: {
-    border: '3px solid',
-    maxWidth: 'max-content',
-    margin: '0 auto',
-    marginBottom: '40px',
-    paddingRight: '20px',
-  },
-  ol: {
-    textAlign: 'left',
-  },
-  o2: {
-    padding: '101px',
-    border: '2px solid #000',
-  },
-  o3: {
-    padding: '50px',
-    border: '2px solid #000',
+  paddingTwenty: {
+    padding: '20px',
   },
 };
 

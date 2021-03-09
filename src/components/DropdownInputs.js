@@ -14,6 +14,7 @@ const DropdownInput = ({ label, options, select, value, get }) => {
     <Form.Group controlId="exampleForm.ControlSelect1">
       <Form.Label>{label}</Form.Label>
       <Form.Control
+        className="input-test"
         as="select"
         value={value}
         onChange={(e) => select(e.target.value)}

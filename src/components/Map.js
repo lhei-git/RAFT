@@ -73,7 +73,7 @@ const Map = () => {
 
 const mapContainerStyle = {
   zIndex: '1',
-  width: '500px',
+  width: '100%',
   height: '400px',
 };
 
