@@ -37,6 +37,7 @@ const InputForm = ({ onSubmitPressed }) => {
             display: 'flex',
             justifyContent: 'space-around',
             alignItems: 'center',
+            gap: '10px',
           }}
         >
           <DropdownInput

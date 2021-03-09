@@ -40,6 +40,16 @@ function App() {
           </div>
           <div className="form-map">
             <div className="form-container">
+              <div className="information">
+                <p>
+                  RTP is an application that uses a linear regression model that
+                </p>
+                <p>
+                  will help you find a predicted temperature in a chosen county
+                  and year.
+                </p>
+                <p>Choose a state to get started!</p>
+              </div>
               <Form onSubmitPressed={onSubmitPressed} />
             </div>
             <div className="map">

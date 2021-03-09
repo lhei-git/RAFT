@@ -29,8 +29,11 @@ const inputsReducer = (state, action) => {
       return { ...state, stations: payload };
     case 'GET_MODEL_DATA':
       return { ...state, errorMessage: '', model: payload };
+    case 'SET_LAT_LNG':
+      return { ...state, latLng: payload };
     case 'ERROR_MESSAGE':
       return { ...state, errorMessage: payload, model: {} };
+
     default:
       return state;
   }
@@ -68,8 +71,9 @@ export const InputsProvider = ({ children }) => {
     try {
       // axios call to get counties
       const response = await raftApi.get(`/counties?state=${state}`);
-      dispatch({ type: 'GET_COUNTIES', payload: response.data.data });
-      console.log('counties', response.data.data);
+      console.log('debugging', response);
+      dispatch({ type: 'GET_COUNTIES', payload: response.data });
+      console.log('counties', response.data);
     } catch (err) {
       console.log(err);
     }
@@ -78,10 +82,10 @@ export const InputsProvider = ({ children }) => {
     try {
       // axios call to get stations
       const response = await raftApi.get(
-        `/data_station?state=${state}&county=${county}`
+        `/stations?state=${state}&county=${county}&debug=True`
       );
-      dispatch({ type: 'GET_STATIONS', payload: response.data });
-      console.log('STATIONS', response.data);
+      dispatch({ type: 'GET_STATIONS', payload: response.data.Data.results });
+      console.log('STATIONS', response.data.Data.results);
     } catch (err) {
       console.log(err);
     }

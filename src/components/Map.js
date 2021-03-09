@@ -36,7 +36,7 @@ const Map = () => {
         {inputs.stations.map((station) => (
           <Marker
             key={station.id}
-            position={{ lat: station.lat, lng: station.long }}
+            position={{ lat: station.latitude, lng: station.longitude }}
             onClick={() => setSelectedMarker(station)}
           />
         ))}
@@ -45,23 +45,23 @@ const Map = () => {
         {selectedMarker ? (
           <InfoWindow
             position={{
-              lat: selectedMarker.lat + 0.09,
-              lng: selectedMarker.long,
+              lat: selectedMarker.latitude + 0.09,
+              lng: selectedMarker.longitude,
             }}
             onCloseClick={() => setSelectedMarker(null)}
           >
             <div style={{ textAlign: 'left' }}>
               <p>
-                <b>{selectedMarker.data_station_name}</b>
+                <b>{selectedMarker.name}</b>
               </p>
               <p>
                 <b>id:</b> {selectedMarker.id}
               </p>
               <p>
-                <b>lat:</b> {selectedMarker.lat}
+                <b>lat:</b> {selectedMarker.latitude}
               </p>
               <p>
-                <b>lng:</b> {selectedMarker.long}
+                <b>lng:</b> {selectedMarker.longitude}
               </p>
             </div>
           </InfoWindow>
@@ -72,9 +72,10 @@ const Map = () => {
 };
 
 const mapContainerStyle = {
-  minWidth: '300px',
+  minWidth: '400px',
   zIndex: '1',
-  height: '200px',
+  width: '100%',
+  height: '400px',
 };
 
 export default Map;

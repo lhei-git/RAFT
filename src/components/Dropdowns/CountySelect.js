@@ -6,8 +6,10 @@ const CountySelect = () => {
   return (
     <>
       <option value="">Choose...</option>
-      {inputs.counties.map(county => (
-        <option value={county}>{county}</option>
+      {inputs.counties.map((county, i) => (
+        <option key={i} value={county}>
+          {county}
+        </option>
       ))}
     </>
   );
