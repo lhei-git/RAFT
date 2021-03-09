@@ -74,6 +74,7 @@
 }
 
 .tables {
+  text-align: center;
   /* background-color: orange; */
   width: auto;
   display: flex;
@@ -84,7 +85,7 @@
 
 .linearTable {
   /* background-color: orchid; */
-  background-color: #c5c7c99a;
+  /* background-color: #c5c7c99a; */
   border: 1px solid black;
   width: 800px;
   padding: 20px 20px 20px 20px;
@@ -92,7 +93,7 @@
 
 .clusterModelTable {
   /* background-color: paleturquoise; */
-  background-color: #c5c7c99a;
+  /* background-color: #c5c7c99a; */
   border: 1px solid black;
   width: 800px;
   padding: 20px 20px 20px 20px;
@@ -100,8 +101,23 @@
 
 .avgRecordTable {
   /* background-color: peru; */
-  background-color: #c5c7c99a;
+  /* background-color: #c5c7c99a; */
   border: 1px solid black;
   width: 800px;
   padding: 20px 20px 20px 20px;
+}
+
+.plots {
+  display: flex;
+  padding: 20px 20px 20px 20px;
+}
+
+.histTempDataPlot {
+  padding: 20px 20px 20px 20px;
+  background-color: aliceblue;
+}
+
+.histRangeTempsPlot {
+  padding: 20px 20px 20px 20px;
+  background-color: aliceblue;
 }

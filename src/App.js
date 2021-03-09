@@ -47,7 +47,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div>{showResults ? <Results /> : ''}</div>
+        <div id="results">{showResults ? <Results /> : ''}</div>
       </div>
     </div>
   );

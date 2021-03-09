@@ -3,9 +3,11 @@ import './App.css';
 import { InputsContext } from './context/InputsContext';
 import { Table } from 'react-bootstrap';
 import { Data } from '@react-google-maps/api';
+import React from 'react';
+import Plot from 'react-plotly.js';
 
 const Results = () => {
-  const linearModelTableHeaders = ['Average Temperature', 'MSE', 'R^2'];
+  const linearModelTableHeaders = ['Average Temperature', 'MSE', 'R\xB2'];
   const clusterModelTableHeaders = [
     'Average',
     'Highest',
@@ -78,7 +80,8 @@ const Results = () => {
 
   return (
     <div className="tables">
-      <div class="table table-hover" className="linearTable">
+      <div className="linearTable">
+        <h4>Linear Model Predictions</h4>
         <Table responsive="sm">
           <thead>
             <tr>
@@ -94,7 +97,8 @@ const Results = () => {
       <div>
         <p> </p>
       </div>
-      <div class="table table-hover" className="clusterModelTable">
+      <div className="clusterModelTable">
+        <h4>Cluster Model Calculations</h4>
         <Table responsive="sm">
           <thead>
             <tr>
@@ -112,7 +116,8 @@ const Results = () => {
       <div>
         <p> </p>
       </div>
-      <div class="table table-hover" className="avgRecordTable">
+      <div className="avgRecordTable">
+        <h4>Average and Record Temperatures</h4>
         <Table responsive="sm">
           <thead>
             <tr>
@@ -125,6 +130,44 @@ const Results = () => {
             {generateAvgRecordTemperatures(temps3, avgRecordTableHeaders)}
           </tbody>
         </Table>
+      </div>
+      <div className="plots">
+        <div className="histTempDataPlot">
+          <Plot
+            data={[
+              {
+                x: [1, 1.5, 2, 3],
+                y: [2, 4, 6, 3],
+                type: 'scatter',
+                mode: 'markers',
+                marker: { color: 'black' },
+              },
+            ]}
+            layout={{
+              width: 600,
+              height: 500,
+              title: 'Historical Temperature Data',
+            }}
+          />
+        </div>
+        <div className="histRangeTempsPlot">
+          <Plot
+            data={[
+              {
+                x: [1, 1.5, 2, 3],
+                y: [2, 4, 6, 3],
+                type: 'scatter',
+                mode: 'markers',
+                marker: { color: 'black' },
+              },
+            ]}
+            layout={{
+              width: 600,
+              height: 500,
+              title: 'Historical High/Middle/Low Range Temperatures',
+            }}
+          />
+        </div>
       </div>
     </div>
   );

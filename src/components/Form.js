@@ -7,6 +7,7 @@ import DataStationSelect from './Dropdowns/DataStationSelect';
 import MonthSelect from './Dropdowns/MonthSelect';
 import SeasonSelect from './Dropdowns/SeasonSelect';
 import { InputsContext } from '../context/InputsContext';
+import { Link } from 'react-scroll';
 
 const InputForm = ({ onSubmitPressed }) => {
   const {
@@ -80,10 +81,13 @@ const InputForm = ({ onSubmitPressed }) => {
             />
           </Form.Group>
         </Form.Row>
-
-        <Button
-          variant="danger"
-          type="submit"
+        <Link
+          activeClass="active"
+          to={'results'}
+          spy={true}
+          smooth={true}
+          duration={1000}
+          href={'results'}
           onClick={(e) => {
             e.preventDefault();
             onSubmitPressed();
@@ -96,8 +100,10 @@ const InputForm = ({ onSubmitPressed }) => {
             );
           }}
         >
-          Submit
-        </Button>
+          <Button variant="danger" type="submit">
+            Submit
+          </Button>
+        </Link>
       </Form>
     </div>
   );
