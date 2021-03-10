@@ -202,8 +202,8 @@ const Results = ({ ready }) => {
               <Plot
                 data={[
                   {
-                    x: [1, 1.5, 2, 3],
-                    y: [2, 4, 6, 3],
+                    x: inputs.training_data['year'],
+                    y: inputs.training_data[inputs.month],
                     type: 'scatter',
                     mode: 'markers',
                     marker: { color: 'black' },
@@ -220,11 +220,25 @@ const Results = ({ ready }) => {
               <Plot
                 data={[
                   {
-                    x: [1, 1.5, 2, 3],
-                    y: [2, 4, 6, 3],
+                    x: inputs.cluster[1]['High Temp Plot Cluster'][0],
+                    y: inputs.cluster[1]['High Temp Plot Cluster'][1],
                     type: 'scatter',
                     mode: 'markers',
-                    marker: { color: 'black' },
+                    marker: { color: 'red' },
+                  },
+                  {
+                    x: inputs.cluster[1]['Mid Temp Plot Cluster'][0],
+                    y: inputs.cluster[1]['Mid Temp Plot Cluster'][1],
+                    type: 'scatter',
+                    mode: 'markers',
+                    marker: { color: 'green' },
+                  },
+                  {
+                    x: inputs.cluster[1]['Low Temp Plot Cluster'][0],
+                    y: inputs.cluster[1]['Low Temp Plot Cluster'][1],
+                    type: 'scatter',
+                    mode: 'markers',
+                    marker: { color: 'blue' },
                   },
                 ]}
                 layout={{
