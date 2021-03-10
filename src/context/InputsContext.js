@@ -1,8 +1,8 @@
 import React, { useReducer } from 'react';
 import raftApi from '../APIs/raftApi';
-import Geocode from "react-geocode";
+import Geocode from 'react-geocode';
 Geocode.setApiKey(process.env.REACT_APP_MAPS_API_KEY);
-Geocode.setLanguage("en");
+Geocode.setLanguage('en');
 Geocode.enableDebug();
 
 export const InputsContext = React.createContext();
@@ -19,6 +19,8 @@ const inputsReducer = (state, action) => {
       return { ...state, station: payload };
     case 'SELECT_MONTH':
       return { ...state, month: payload };
+    case 'SELECT_SEASON':
+      return { ...state, season: payload };
     case 'SELECT_YEAR':
       return { ...state, year: payload };
     case 'GET_COUNTIES':
@@ -27,10 +29,15 @@ const inputsReducer = (state, action) => {
       return { ...state, stations: payload };
     case 'GET_MODEL_DATA':
       return { ...state, errorMessage: '', model: payload };
+    case 'SET_LAT_LNG':
+      return { ...state, latLng: payload };
+    case 'GET_CLUSTER_DATA':
+      return { ...state, cluster: payload };
+    case 'GET_TRAINING_DATA':
+      return { ...state, training_data: payload };
     case 'ERROR_MESSAGE':
       return { ...state, errorMessage: payload, model: {} };
-    case 'SET_LAT_LNG':
-      return { ...state, latLng: payload }
+
     default:
       return state;
   }
@@ -46,9 +53,11 @@ export const InputsProvider = ({ children }) => {
     counties: [],
     stations: [],
     // model data maybe
-    model: {},
+    model: [],
     errorMessage: '',
-    latLng: { lat: 0, lng: 0 }
+    latLng: { lat: 0, lng: 0 },
+    cluster: {},
+    training_data: {},
   });
 
   // ACTIONS
@@ -60,14 +69,17 @@ export const InputsProvider = ({ children }) => {
     dispatch({ type: 'SELECT_STATION', payload: station });
   const selectMonth = (month) =>
     dispatch({ type: 'SELECT_MONTH', payload: month });
+  const selectSeason = (season) =>
+    dispatch({ type: 'SELECT_SEASON', payload: season });
   const selectYear = (year) => dispatch({ type: 'SELECT_YEAR', payload: year });
 
   const getCounties = async (state) => {
     try {
       // axios call to get counties
       const response = await raftApi.get(`/counties?state=${state}`);
-      dispatch({ type: 'GET_COUNTIES', payload: response.data.data });
-      console.log('counties', response.data.data);
+      console.log('debugging', response);
+      dispatch({ type: 'GET_COUNTIES', payload: response.data });
+      console.log('counties', response.data);
     } catch (err) {
       console.log(err);
     }
@@ -76,27 +88,48 @@ export const InputsProvider = ({ children }) => {
     try {
       // axios call to get stations
       const response = await raftApi.get(
-        `/data_station?state=${state}&county=${county}`
+        `/stations?state=${state}&county=${county}&debug=True`
       );
-      dispatch({ type: 'GET_STATIONS', payload: response.data });
-      console.log('STATIONS', response.data);
+      dispatch({ type: 'GET_STATIONS', payload: response.data.results });
+      console.log('STATIONS', response.data.results);
     } catch (err) {
       console.log(err);
     }
   };
-  const getModelData = async (state, county, year, month, stationid) => {
+  const getClusters = async () => {
     try {
-      const response = await raftApi.get(
-        `/datastation_results?state=${state}&county=${county}&year=${year}&month=${month}&stationid=${stationid}`
-      );
+      // axios call to get stations
+      const response = await raftApi.get(`/clusters`);
+      console.log('CLUSTERS', response.data);
+      dispatch({ type: 'GET_CLUSTER_DATA', payload: response.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getTrainingData = async () => {
+    try {
+      // axios call to get stations
+      const response = await raftApi.get(`/data`);
+      console.log('training data', response.data);
+      dispatch({ type: 'GET_TRAINING_DATA', payload: response.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getModelData = async (year, month, season) => {
+    try {
+      const response = await raftApi.get(`/model?year=${year}&month=${month}`);
+
+      console.log('YOLO', response.data);
+
       if (
-        response.data == null ||
-        response.data == undefined ||
-        response.data == 0
+        response.data === null ||
+        response.data === undefined ||
+        response.data === 0
       )
         throw new Error({ response: { data: 'No data available' } });
-      dispatch({ type: 'GET_MODEL_DATA', payload: response.data.data });
-      console.log(response.data.data);
+      dispatch({ type: 'GET_MODEL_DATA', payload: response.data });
+      console.log(response.data);
     } catch (error) {
       console.log(error.response.data);
       dispatch({ type: 'ERROR_MESSAGE', payload: error.response.data });
@@ -108,26 +141,27 @@ export const InputsProvider = ({ children }) => {
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
         // console.log(lat, lng);
-        dispatch({ type: "SET_LAT_LNG", payload: { lat, lng } });
+        dispatch({ type: 'SET_LAT_LNG', payload: { lat, lng } });
       },
       (error) => {
         console.error(error);
       }
     );
-  }
+  };
+
   const getLatLngCounty = (address, state) => {
-    console.log("COUNTY", `${address}, ${state}`)
+    console.log('COUNTY', `${address}, ${state}`);
     Geocode.fromAddress(`${address}, ${state}`).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
         // console.log(lat, lng);
-        dispatch({ type: "SET_LAT_LNG", payload: { lat, lng } });
+        dispatch({ type: 'SET_LAT_LNG', payload: { lat, lng } });
       },
       (error) => {
         console.error(error);
       }
     );
-  }
+  };
 
   return (
     <InputsContext.Provider
@@ -137,12 +171,15 @@ export const InputsProvider = ({ children }) => {
         selectCounty,
         selectStation,
         selectMonth,
+        selectSeason,
         selectYear,
         getCounties,
         getStations,
         getModelData,
         getLatLng,
         getLatLngCounty,
+        getClusters,
+        getTrainingData,
       }}
     >
       {children}

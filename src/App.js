@@ -1,62 +1,91 @@
-import { useContext, useEffect } from "react";
-import "./App.css";
-import Form from "./components/Form";
-import Map from "./components/Map";
-import { InputsContext } from "./context/InputsContext";
+import { useContext, useEffect, useState } from 'react';
+import './App.css';
+import Form from './components/Form';
+import Map from './components/Map';
+import { InputsContext } from './context/InputsContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
+import Results from './Results';
 
-import Geocode from "react-geocode";
+import Geocode from 'react-geocode';
 Geocode.setApiKey(process.env.REACT_APP_MAPS_API_KEY);
-Geocode.setLanguage("en");
+Geocode.setLanguage('en');
 Geocode.enableDebug();
 
 function App() {
   const { inputs, getLatLng, getLatLngCounty } = useContext(InputsContext);
+  const [showResults, setShowResults] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     getLatLng(inputs.state);
-  }, [inputs.state])
+  }, [inputs.state]);
   useEffect(() => {
     getLatLngCounty(inputs.county, inputs.state);
-  }, [inputs.county])
+  }, [inputs.county]);
+
+  const onSubmitPressed = () => setShowResults(!showResults);
 
   return (
     <div className="App">
-      <h1>Welcome to RAFT!</h1>
-      <fieldset style={styles.myFieldset}>
-        <legend style={styles.loginLegend}>Instructions</legend>
-        <ol style={styles.ol}>
-          <li>Pick a state you would like to see the future temperature of.</li>
-          <li>Pick a county within that state.</li>
-          <li>Pick a data station within that county.</li>
-          <li>Enter a year you would like to see the temperature for.</li>
-          <li>Press submit and see the estimated future temperature.</li>
-        </ol>
-      </fieldset>
-      <Form />
-      <br />
-      {inputs.errorMessage && inputs.errorMessage} <br />
-      <p> Prediction (celsius): {inputs.model && inputs.model.prediction} </p>
-      <p> MSE: {inputs.model.metrics && inputs.model.metrics.mse} </p>
-      <p> R2: {inputs.model.metrics && inputs.model.metrics.r2} </p>
-      <Map />
+      <div className="default-view-container">
+        <div className="default-view">
+          <div className="title-logo">
+            <div className="title">
+              <h1>RAFT</h1>
+              <h3>Regional Temperature Profiler</h3>
+            </div>
+            <div className="logo">
+              <FontAwesomeIcon icon={faGlobeAmericas} size="10x" />
+            </div>
+          </div>
+          <div className="form-map">
+            <div className="form-container">
+              <div className="information">
+                <p>
+                  RTP is an application that uses a linear regression model that
+                </p>
+                <p>
+                  will help you find a predicted temperature in a chosen county
+                  and year.
+                </p>
+                <p>Choose a state to get started!</p>
+              </div>
+              <Form setReady={setReady} onSubmitPressed={onSubmitPressed} />
+            </div>
+            <div className="map">
+              <Map />
+            </div>
+          </div>
+        </div>
+        <div id="results">{showResults ? <Results ready={ready} /> : ''}</div>
+      </div>
     </div>
   );
 }
 
 const styles = {
   loginLegend: {
-    margin: "20px",
-    width: "155px",
+    margin: '20px',
+    width: '155px',
   },
   myFieldset: {
-    border: "3px solid",
-    maxWidth: "max-content",
-    margin: "0 auto",
-    marginBottom: "40px",
-    paddingRight: "20px",
+    border: '3px solid',
+    maxWidth: 'max-content',
+    margin: '0 auto',
+    marginBottom: '40px',
+    paddingRight: '20px',
   },
   ol: {
-    textAlign: "left",
+    textAlign: 'left',
+  },
+  o2: {
+    padding: '101px',
+    border: '2px solid #000',
+  },
+  o3: {
+    padding: '50px',
+    border: '2px solid #000',
   },
 };
 
