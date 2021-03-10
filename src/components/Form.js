@@ -9,7 +9,6 @@ import SeasonSelect from './Dropdowns/SeasonSelect';
 import { InputsContext } from '../context/InputsContext';
 import Spinner from 'react-bootstrap/Spinner';
 import { Link } from 'react-scroll';
-import Paper from '@material-ui/core/Paper';
 
 import './hero.css';
 

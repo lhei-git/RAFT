@@ -175,6 +175,12 @@ const Results = ({ ready }) => {
                   width: 600,
                   height: 500,
                   title: 'Historical Temperature Data',
+                  yaxis: {
+                    title: 'Temperature (&#176;C)'
+                  },
+                  xaxis: {
+                    title: 'Year'
+                  }
                 }}
               />
             </div>
@@ -212,6 +218,12 @@ const Results = ({ ready }) => {
                   title: 'Historical High Temp Cluster/Low Range Temperatures',
                   xref: 'paper',
                   yref: 'paper',
+                  yaxis: {
+                    title: 'Temperature (&#176;C)'
+                  },
+                  xaxis: {
+                    title: 'Year'
+                  }
                 }}
               />
             </div>
