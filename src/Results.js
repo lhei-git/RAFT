@@ -7,6 +7,10 @@ import React from 'react';
 import Plot from 'react-plotly.js';
 
 const Results = () => {
+  const { inputs } = useContext(InputsContext);
+
+  console.log(inputs.training_data && inputs.training_data)
+
   const linearModelTableHeaders = ['Average Temperature', 'MSE', 'R\xB2'];
   const clusterModelTableHeaders = [
     'Average',

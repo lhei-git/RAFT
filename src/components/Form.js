@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
 import StateSelect from './Dropdowns/StateSelect';
 import CountySelect from './Dropdowns/CountySelect';
@@ -7,9 +7,11 @@ import DataStationSelect from './Dropdowns/DataStationSelect';
 import MonthSelect from './Dropdowns/MonthSelect';
 import SeasonSelect from './Dropdowns/SeasonSelect';
 import { InputsContext } from '../context/InputsContext';
+import Spinner from 'react-bootstrap/Spinner'
 import { Link } from 'react-scroll';
 
 const InputForm = ({ onSubmitPressed }) => {
+  const [show, setShow] = useState(false)
   const {
     inputs,
     selectState,
@@ -24,6 +26,17 @@ const InputForm = ({ onSubmitPressed }) => {
     getClusters,
     getTrainingData
   } = useContext(InputsContext);
+
+  const LoadingSpinner = () => {
+    return  <Spinner style={{
+      position: 'fixed',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }} animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+  }
 
   return (
     <div
@@ -91,6 +104,7 @@ const InputForm = ({ onSubmitPressed }) => {
           spy={true}
           smooth={true}
           duration={1000}
+          delay={2001}
           href={'results'}
           onClick={(e) => {
             e.preventDefault();
@@ -101,10 +115,21 @@ const InputForm = ({ onSubmitPressed }) => {
             );
             getClusters()
             getTrainingData()
+            setShow(true)
+            setTimeout(() => setShow(false), 2000);
           }}
         >
           <Button variant="danger" type="submit">
-            Submit
+          {show ? 
+        <Spinner style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }} animation="border" role="status">
+                  <span className="sr-only">Loading...</span>
+                </Spinner>
+      :
+        'Submit'}
           </Button>
         </Link>
       </Form>

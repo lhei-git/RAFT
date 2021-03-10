@@ -139,7 +139,7 @@ export const InputsProvider = ({ children }) => {
       )
         throw new Error({ response: { data: 'No data available' } });
       dispatch({ type: 'GET_MODEL_DATA', payload: response.data });
-      console.log(response.data.data);
+      console.log(response.data);
     } catch (error) {
       console.log(error.response.data);
       dispatch({ type: 'ERROR_MESSAGE', payload: error.response.data });
