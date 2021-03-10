@@ -53,7 +53,7 @@ export const InputsProvider = ({ children }) => {
     counties: [],
     stations: [],
     // model data maybe
-    model: {},
+    model: [],
     errorMessage: '',
     latLng: { lat: 0, lng: 0 },
     cluster: {},
@@ -99,9 +99,7 @@ export const InputsProvider = ({ children }) => {
   const getClusters = async () => {
     try {
       // axios call to get stations
-      const response = await raftApi.get(
-        `/clusters`
-      );
+      const response = await raftApi.get(`/clusters`);
       console.log('CLUSTERS', response.data);
       dispatch({ type: 'GET_CLUSTER_DATA', payload: response.data });
     } catch (err) {
@@ -111,26 +109,18 @@ export const InputsProvider = ({ children }) => {
   const getTrainingData = async () => {
     try {
       // axios call to get stations
-      const response = await raftApi.get(
-        `/data`
-      );
+      const response = await raftApi.get(`/data`);
       console.log('training data', response.data);
       dispatch({ type: 'GET_TRAINING_DATA', payload: response.data });
     } catch (err) {
       console.log(err);
     }
   };
-  const getModelData = async (
-    year,
-    month,
-    season,
-  ) => {
+  const getModelData = async (year, month, season) => {
     try {
-      const response = await raftApi.get(
-        `/model?year=${year}&month=${month}`
-      );
+      const response = await raftApi.get(`/model?year=${year}&month=${month}`);
 
-      console.log('YOLO', response)
+      console.log('YOLO', response.data);
 
       if (
         response.data === null ||
@@ -189,7 +179,7 @@ export const InputsProvider = ({ children }) => {
         getLatLng,
         getLatLngCounty,
         getClusters,
-        getTrainingData
+        getTrainingData,
       }}
     >
       {children}

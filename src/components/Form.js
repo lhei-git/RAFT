@@ -7,11 +7,11 @@ import DataStationSelect from './Dropdowns/DataStationSelect';
 import MonthSelect from './Dropdowns/MonthSelect';
 import SeasonSelect from './Dropdowns/SeasonSelect';
 import { InputsContext } from '../context/InputsContext';
-import Spinner from 'react-bootstrap/Spinner'
+import Spinner from 'react-bootstrap/Spinner';
 import { Link } from 'react-scroll';
 
-const InputForm = ({ onSubmitPressed }) => {
-  const [show, setShow] = useState(false)
+const InputForm = ({ onSubmitPressed, setReady }) => {
+  const [show, setShow] = useState(false);
   const {
     inputs,
     selectState,
@@ -24,19 +24,25 @@ const InputForm = ({ onSubmitPressed }) => {
     selectYear,
     selectSeason,
     getClusters,
-    getTrainingData
+    getTrainingData,
   } = useContext(InputsContext);
 
   const LoadingSpinner = () => {
-    return  <Spinner style={{
-      position: 'fixed',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }} animation="border" role="status">
-              <span className="sr-only">Loading...</span>
-            </Spinner>
-  }
+    return (
+      <Spinner
+        style={{
+          position: 'fixed',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        animation="border"
+        role="status"
+      >
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    );
+  };
 
   return (
     <div
@@ -108,28 +114,33 @@ const InputForm = ({ onSubmitPressed }) => {
           href={'results'}
           onClick={(e) => {
             e.preventDefault();
+            getModelData(inputs.year, inputs.month).then(() => {
+              setReady(true);
+              setShow(false);
+            });
+            getClusters();
+            getTrainingData();
+            setShow(true);
+            // setTimeout(() => setShow(false), 5000);
             onSubmitPressed();
-            getModelData(
-              inputs.year,
-              inputs.month,
-            );
-            getClusters()
-            getTrainingData()
-            setShow(true)
-            setTimeout(() => setShow(false), 2000);
           }}
         >
           <Button variant="danger" type="submit">
-          {show ? 
-        <Spinner style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }} animation="border" role="status">
-                  <span className="sr-only">Loading...</span>
-                </Spinner>
-      :
-        'Submit'}
+            {show ? (
+              <Spinner
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                animation="border"
+                role="status"
+              >
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            ) : (
+              'Submit'
+            )}
           </Button>
         </Link>
       </Form>

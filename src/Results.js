@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import './App.css';
 import { InputsContext } from './context/InputsContext';
 import { Table } from 'react-bootstrap';
@@ -6,19 +6,13 @@ import { Data } from '@react-google-maps/api';
 import React from 'react';
 import Plot from 'react-plotly.js';
 
-const Results = () => {
+const Results = ({ ready }) => {
   const { inputs } = useContext(InputsContext);
 
-  console.log(inputs.training_data && inputs.training_data)
+  console.log(inputs.training_data && inputs.training_data);
 
-  const linearModelTableHeaders = ['Average Temperature', 'MSE', 'R\xB2'];
-  const clusterModelTableHeaders = [
-    'Average',
-    'Highest',
-    'Lowest',
-    'Average (pre-1980)',
-    'Average (post-1980',
-  ];
+  const linearModelTableHeaders = [];
+  const clusterModelTableHeaders = [];
 
   const avgRecordTableHeaders = [
     'Average Temperature',
@@ -46,16 +40,19 @@ const Results = () => {
     { low: 7, med: 8 },
   ];
 
-  const generateLinearTable = (temps1, linearModelTableHeaders) => {
-    return temps1.map((data, i) => (
-      <tr key={i}>
-        <td style={{ fontWeight: 675 }}>{linearModelTableHeaders[i]}</td>
-        <td>{data.low}</td>
-        <td>{data.med}</td>
-        <td>{data.high}</td>
-      </tr>
-    ));
-  };
+  const generateLinearTable = useCallback(
+    (temps1) => {
+      return temps1.map((data, i) => (
+        <tr key={i}>
+          <td style={{ fontWeight: 675 }}>{data.name}</td>
+          <td>{data.prediction[0].toFixed(2)}&#176;C</td>
+          <td>{data.metrics.mse.toFixed(2)}</td>
+          <td>{data.metrics.r2.toFixed(2)}</td>
+        </tr>
+      ));
+    },
+    [inputs.model]
+  );
 
   const generateClusterModelCalculations = (
     temps2,
@@ -85,96 +82,113 @@ const Results = () => {
   return (
     <div className="tables">
       <h1> Results </h1>
-      <div className="linearTable">
-        <h4>Linear Model Predictions</h4>
-        <Table responsive="sm">
-          <thead>
-            <tr>
-              <th> </th>
-              <th>Low Range</th>
-              <th>Medium Range</th>
-              <th>High Range</th>
-            </tr>
-          </thead>
-          <tbody>{generateLinearTable(temps1, linearModelTableHeaders)}</tbody>
-        </Table>
-      </div>
-      <div>
-        <p> </p>
-      </div>
-      <div className="clusterModelTable">
-        <h4>Cluster Model Calculations</h4>
-        <Table responsive="sm">
-          <thead>
-            <tr>
-              <th> </th>
-              <th>Low Range</th>
-              <th>Medium Range</th>
-              <th>High Range</th>
-            </tr>
-          </thead>
-          <tbody>
-            {generateClusterModelCalculations(temps2, clusterModelTableHeaders)}
-          </tbody>
-        </Table>
-      </div>
-      <div>
-        <p> </p>
-      </div>
-      <div className="avgRecordTable">
-        <h4>Average and Record Temperatures</h4>
-        <Table responsive="sm">
-          <thead>
-            <tr>
-              <th> </th>
-              <th>Pre-1980</th>
-              <th>Post-1980</th>
-              <th> </th>
-            </tr>
-          </thead>
-          <tbody>
-            {generateAvgRecordTemperatures(temps3, avgRecordTableHeaders)}
-          </tbody>
-        </Table>
-      </div>
-      <div className="plots">
-        <div className="histTempDataPlot">
-          <Plot
-            data={[
-              {
-                x: [1, 1.5, 2, 3],
-                y: [2, 4, 6, 3],
-                type: 'scatter',
-                mode: 'markers',
-                marker: { color: 'black' },
-              },
-            ]}
-            layout={{
-              width: 600,
-              height: 500,
-              title: 'Historical Temperature Data',
-            }}
-          />
-        </div>
-        <div className="histRangeTempsPlot">
-          <Plot
-            data={[
-              {
-                x: [1, 1.5, 2, 3],
-                y: [2, 4, 6, 3],
-                type: 'scatter',
-                mode: 'markers',
-                marker: { color: 'black' },
-              },
-            ]}
-            layout={{
-              width: 600,
-              height: 500,
-              title: 'Historical High/Middle/Low Range Temperatures',
-            }}
-          />
-        </div>
-      </div>
+      {ready ? (
+        <>
+          <div className="linearTable">
+            <h4>Linear Model Predictions</h4>
+            <Table responsive="sm">
+              <thead>
+                <tr>
+                  <th> </th>
+                  <th>Average Temperature</th>
+                  <th>MSE</th>
+                  <th>R^2</th>
+                </tr>
+              </thead>
+              <tbody>
+                {generateLinearTable(inputs.model, linearModelTableHeaders)}
+              </tbody>
+            </Table>
+          </div>
+          <div>
+            <p> </p>
+          </div>
+          <div className="clusterModelTable">
+            <h4>Cluster Model Calculations</h4>
+            {/* <p>
+              This chart shows the median, highest, and lowest temperatures of
+              the year
+            </p> */}
+            <Table responsive="sm">
+              <thead>
+                <tr>
+                  <th> </th>
+                  <th>Average</th>
+                  <th>Highest Temperature</th>
+                  <th>Lowest Temperature</th>
+                  {/* <th>Average (pre-1980)</th>
+                  <th>Average (post-1980)</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                {generateClusterModelCalculations(
+                  temps2,
+                  clusterModelTableHeaders
+                )}
+              </tbody>
+            </Table>
+          </div>
+          <div>
+            <p> </p>
+          </div>
+          {/* <div className="avgRecordTable">
+      <h4>Average and Record Temperatures</h4>
+      <Table responsive="sm">
+        <thead>
+          <tr>
+            <th> </th>
+            <th>Pre-1980</th>
+            <th>Post-1980</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          {generateAvgRecordTemperatures(temps3, avgRecordTableHeaders)}
+        </tbody>
+      </Table>
+    </div> */}
+          <div className="plots">
+            <div className="histTempDataPlot">
+              <Plot
+                data={[
+                  {
+                    x: [1, 1.5, 2, 3],
+                    y: [2, 4, 6, 3],
+                    type: 'scatter',
+                    mode: 'markers',
+                    marker: { color: 'black' },
+                  },
+                ]}
+                layout={{
+                  width: 600,
+                  height: 500,
+                  title: 'Historical Temperature Data',
+                }}
+              />
+            </div>
+            <div className="histRangeTempsPlot">
+              <Plot
+                data={[
+                  {
+                    x: [1, 1.5, 2, 3],
+                    y: [2, 4, 6, 3],
+                    type: 'scatter',
+                    mode: 'markers',
+                    marker: { color: 'black' },
+                  },
+                ]}
+                layout={{
+                  width: 600,
+                  height: 500,
+                  title: 'Historical High/Middle/Low Range Temperatures',
+                }}
+              />
+            </div>
+          </div>
+        </>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

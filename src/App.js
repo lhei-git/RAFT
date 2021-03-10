@@ -15,6 +15,7 @@ Geocode.enableDebug();
 function App() {
   const { inputs, getLatLng, getLatLngCounty } = useContext(InputsContext);
   const [showResults, setShowResults] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     getLatLng(inputs.state);
@@ -50,14 +51,14 @@ function App() {
                 </p>
                 <p>Choose a state to get started!</p>
               </div>
-              <Form onSubmitPressed={onSubmitPressed} />
+              <Form setReady={setReady} onSubmitPressed={onSubmitPressed} />
             </div>
             <div className="map">
               <Map />
             </div>
           </div>
         </div>
-        <div id="results">{showResults ? <Results /> : ''}</div>
+        <div id="results">{showResults ? <Results ready={ready} /> : ''}</div>
       </div>
     </div>
   );
