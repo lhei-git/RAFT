@@ -9,7 +9,6 @@ import SeasonSelect from './Dropdowns/SeasonSelect';
 import { InputsContext } from '../context/InputsContext';
 import Spinner from 'react-bootstrap/Spinner';
 import { Link } from 'react-scroll';
-import Paper from '@material-ui/core/Paper';
 
 import './hero.css';
 
@@ -104,7 +103,7 @@ const InputForm = ({ onSubmitPressed, setReady, ready }) => {
             onSubmitPressed();
           }}
           >
-          <Button className="formSubmit" variant="danger" type="submit">
+          <Button className="formSubmit" variant="success" type="submit">
             {show ? (
               <Spinner
               style={{

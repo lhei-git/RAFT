@@ -1,10 +1,14 @@
 import { useCallback, useContext, useEffect } from 'react';
 import './App.css';
 import { InputsContext } from './context/InputsContext';
-import { Table } from 'react-bootstrap';
+import { Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Data } from '@react-google-maps/api';
 import React from 'react';
 import Plot from 'react-plotly.js';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+
 
 const Results = ({ ready }) => {
   const { inputs } = useContext(InputsContext);
@@ -21,6 +25,18 @@ const Results = ({ ready }) => {
         </tr>
       ));
     };
+
+    const renderR2Tooltip = (props) => (
+      <Tooltip {...props}>
+        Measure of how close the data is to the fitted regression line.
+      </Tooltip>
+    );
+
+    const renderMSETooltip = (props) => (
+      <Tooltip {...props}>
+        Measure of the model's predictive power.
+      </Tooltip>
+    );
 
   // const generateClusterModelCalculations = (
   //   temps2,
@@ -51,8 +67,24 @@ const Results = ({ ready }) => {
                 <tr>
                   <th> </th>
                   <th>Average Temperature</th>
-                  <th>MSE</th>
-                  <th>R^2</th>
+                  <th>MSE
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderMSETooltip}
+                  >
+                     <FontAwesomeIcon icon={faQuestionCircle} style={{marginLeft: '2px', fontSize: '0.7rem', verticalAlign: '5px'}} />
+                  </OverlayTrigger>
+                  </th>
+                  <th>R&sup2;  
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderR2Tooltip}
+                  >
+                     <FontAwesomeIcon icon={faQuestionCircle} style={{marginLeft: '2px', fontSize: '0.7rem', verticalAlign: '5px'}} />
+                  </OverlayTrigger>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -168,13 +200,18 @@ const Results = ({ ready }) => {
                     mode: 'markers',
                     name: 'historical data',
                     marker: { color: 'black' },
-                    // xaxis: 'Year'
                   },
                 ]}
                 layout={{
                   width: 600,
                   height: 500,
                   title: 'Historical Temperature Data',
+                  yaxis: {
+                    title: 'Temperature (&#176;C)'
+                  },
+                  xaxis: {
+                    title: 'Year'
+                  }
                 }}
               />
             </div>
@@ -212,6 +249,12 @@ const Results = ({ ready }) => {
                   title: 'Historical High Temp Cluster/Low Range Temperatures',
                   xref: 'paper',
                   yref: 'paper',
+                  yaxis: {
+                    title: 'Temperature (&#176;C)'
+                  },
+                  xaxis: {
+                    title: 'Year'
+                  }
                 }}
               />
             </div>
