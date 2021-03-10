@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 import Results from './Results';
 
+import './components/Form.css'
+
 import { Container, Row, Col } from 'react-bootstrap';
 
 import Geocode from 'react-geocode';
@@ -29,61 +31,30 @@ function App() {
 
   return (
     <div className="App">
-      <Container fluid className="pp">
         {/*
           ==============================
                   TITLE & LOGO
           ==============================
         */}
-        <Row>
-          <Col
-            style={styles.paddingFifteen}
-            xs={{ span: 12, order: 2 }}
-            lg={{ span: 5, offset: 1, order: 1 }}
-          >
-            <h1 className="text-large-lg">RTP</h1>
-            <h3 className="subtext-large-lg">Regional Temperature Profiler</h3>
-          </Col>
-          <Col
-            xs={{ span: 12, order: 1 }}
-            lg={{ span: 3, offset: 3, order: 2 }}
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              paddingTop: '15px',
-            }}
-          >
-            <FontAwesomeIcon icon={faGlobeAmericas} size="10x" />
-          </Col>
-        </Row>
+          <div className="title">
+            <div className="titleText">
+              <h1 className="text-large-lg">RTP</h1>
+              <h3 className="subtext-large-lg">Regional Temperature Profiler</h3>
+            </div>
+            <div className="logo">
+              <FontAwesomeIcon icon={faGlobeAmericas} size="10x" />
+            </div>
+          </div>
 
         {/*
           ==============================
                   FORM & MAP
           ==============================
         */}
-        <Row className="vertical-center-lg">
-          <Col
-            // FORM
-            style={styles.paddingTwenty}
-            xs={{ span: 12 }}
-            md={{ span: 12 }}
-            lg={{ span: 8, offset: 2 }}
-            xl={{ span: 4, offset: 1 }}
-          >
-            <Form onSubmitPressed={onSubmitPressed} />
-          </Col>
-          <Col
-            // MAP
-            xs={{ span: 12 }}
-            md={{ span: 12 }}
-            lg={{ span: 10, offset: 1 }}
-            xl={{ span: 6, offset: 0 }}
-          >
-            <Map />
-          </Col>
-        </Row>
-      </Container>
+          <div className="default-content">
+              <Form onSubmitPressed={onSubmitPressed} />
+              <Map  className='map_'/>
+          </div>
 
       {/* { <div className="default-view-container">
         <div className="default-view">

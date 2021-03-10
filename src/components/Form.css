@@ -1,0 +1,53 @@
+.App {
+    display: grid;
+    grid-template-rows: 0.3fr 80vh;
+}
+
+.title {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-template-rows: 1fr;
+    /* margin: 1rem; */
+}
+
+.default-content {
+    display: grid;
+    margin-top: 10px;
+    grid-template: "form map" 1fr / 1fr 1fr;
+    gap: 20px;
+    margin: 0 10px;
+}
+
+.form {
+    grid-area: form;
+}
+
+.map {
+    grid-area: map;
+}
+
+.gmap {
+    height: 100%;
+
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 0.5fr;
+}
+
+.form-dropdown {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    justify-content: center;   
+    align-items: center;
+}
+
+.submitBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

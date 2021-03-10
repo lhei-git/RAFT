@@ -7,6 +7,8 @@ import MonthSelect from './Dropdowns/MonthSelect';
 import { InputsContext } from '../context/InputsContext';
 import { Link } from 'react-scroll';
 
+import './Form.css'
+
 const InputForm = ({ onSubmitPressed }) => {
   const {
     inputs,
@@ -20,31 +22,29 @@ const InputForm = ({ onSubmitPressed }) => {
   } = useContext(InputsContext);
 
   return (
-    <div>
-      <Form className="form">
-        <Form.Row style={{ display: 'flex', justifyContent: 'space-around' }}>
+      <div className="form">
+        <div className="form-dropdown">
+
           <DropdownInput
             label="State"
             options={<StateSelect />}
             select={selectState}
             value={inputs.state}
             get={() => getCounties(inputs.state)}
-          />
+            />
           <DropdownInput
             label="County"
             options={<CountySelect />}
             select={selectCounty}
             value={inputs.county}
             get={() => getStations(inputs.state, inputs.county)}
-          />
-        </Form.Row>
-        <Form.Row style={{ display: 'flex', justifyContent: 'space-around' }}>
+            />
           <DropdownInput
             label="Month"
             options={<MonthSelect />}
             select={selectMonth}
             value={inputs.month}
-          />
+            />
           <Form.Group>
             <Form.Label>Year to Predict: </Form.Label>
             <Form.Control
@@ -56,9 +56,10 @@ const InputForm = ({ onSubmitPressed }) => {
               max="2050"
               value={inputs.year}
               onChange={(e) => selectYear(e.target.value)}
-            />
+              />
           </Form.Group>
-        </Form.Row>
+        </div>
+        <div className="submitBtn">
         <Link
           activeClass="active"
           to={'results'}
@@ -82,7 +83,7 @@ const InputForm = ({ onSubmitPressed }) => {
             Submit
           </Button>
         </Link>
-      </Form>
+        </div>
     </div>
   );
 };
