@@ -116,7 +116,7 @@ const InputForm = ({ onSubmitPressed }) => {
             getClusters()
             getTrainingData()
             setShow(true)
-            setTimeout(() => setShow(false), 2000);
+            setTimeout(() => setShow(false), 1000);
           }}
         >
           <Button variant="danger" type="submit">
