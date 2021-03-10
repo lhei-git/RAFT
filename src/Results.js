@@ -9,37 +9,9 @@ import Plot from 'react-plotly.js';
 const Results = ({ ready }) => {
   const { inputs } = useContext(InputsContext);
 
-  console.log(inputs.training_data && inputs.training_data);
+  console.log(inputs.training_data && inputs.training_data)
 
-  const linearModelTableHeaders = [];
-  const clusterModelTableHeaders = [];
-
-  const avgRecordTableHeaders = [
-    'Average Temperature',
-    'Lowest Temperature',
-    'Highest Temperature',
-  ];
-
-  const temps1 = [
-    { low: 34, med: 54, high: 80 },
-    { low: 1.2, med: 1.3, high: -0.9 },
-    { low: 7, med: 8, high: 5 },
-  ];
-
-  const temps2 = [
-    { low: 34, med: 54, high: 80 },
-    { low: 1.2, med: 1.3, high: -0.9 },
-    { low: 7, med: 8, high: 5 },
-  ];
-
-  const temps3 = [
-    { low: 34, med: 54 },
-    { low: 1.2, med: 1.3 },
-    { low: 7, med: 8 },
-  ];
-
-  const generateLinearTable = useCallback(
-    (temps1) => {
+  const generateLinearTable = (temps1) => {
       return temps1.map((data, i) => (
         <tr key={i}>
           <td style={{ fontWeight: 675 }}>{data.name}</td>
@@ -48,9 +20,7 @@ const Results = ({ ready }) => {
           <td>{data.metrics.r2.toFixed(2)}</td>
         </tr>
       ));
-    },
-    [inputs.model]
-  );
+    };
 
   // const generateClusterModelCalculations = (
   //   temps2,
@@ -69,17 +39,6 @@ const Results = ({ ready }) => {
 
   let average = (array) => array.reduce((a, b) => a + b) / array.length;
 
-  const generateAvgRecordTemperatures = (temps3, avgRecordTableHeaders) => {
-    return temps3.map((data, i) => (
-      <tr key={i}>
-        <td style={{ fontWeight: 675 }}>{avgRecordTableHeaders[i]}</td>
-        <td>{data.low}</td>
-        <td>{data.med}</td>
-        <td>{data.high}</td>
-      </tr>
-    ));
-  };
-
   return (
     <div className="tables">
       <h1> Results </h1>
@@ -97,7 +56,7 @@ const Results = ({ ready }) => {
                 </tr>
               </thead>
               <tbody>
-                {generateLinearTable(inputs.model, linearModelTableHeaders)}
+                {generateLinearTable(inputs.model)}
               </tbody>
             </Table>
           </div>
@@ -199,20 +158,25 @@ const Results = ({ ready }) => {
     </div> */}
           <div className="plots">
             <div className="histTempDataPlot">
+              {console.log(inputs.training_data)}
               <Plot
                 data={[
                   {
                     x: inputs.training_data['year'],
-                    y: inputs.training_data[inputs.month],
+                    y: inputs.training_data[Object.keys(inputs.training_data)[1]],
                     type: 'scatter',
                     mode: 'markers',
+                    name: 'historical data',
                     marker: { color: 'black' },
+                    xaxis: 'Year'
                   },
                 ]}
                 layout={{
                   width: 600,
                   height: 500,
                   title: 'Historical Temperature Data',
+                  x: 'Year',
+                  y: 'Temps'
                 }}
               />
             </div>
@@ -224,6 +188,7 @@ const Results = ({ ready }) => {
                     y: inputs.cluster[1]['High Temp Plot Cluster'][1],
                     type: 'scatter',
                     mode: 'markers',
+                    name: 'High Temps',
                     marker: { color: 'red' },
                   },
                   {
@@ -231,6 +196,7 @@ const Results = ({ ready }) => {
                     y: inputs.cluster[1]['Mid Temp Plot Cluster'][1],
                     type: 'scatter',
                     mode: 'markers',
+                    name: 'Med Temps',
                     marker: { color: 'green' },
                   },
                   {
@@ -238,6 +204,7 @@ const Results = ({ ready }) => {
                     y: inputs.cluster[1]['Low Temp Plot Cluster'][1],
                     type: 'scatter',
                     mode: 'markers',
+                    name: 'Low Temps',
                     marker: { color: 'blue' },
                   },
                 ]}
@@ -245,6 +212,8 @@ const Results = ({ ready }) => {
                   width: 600,
                   height: 500,
                   title: 'Historical High Temp Cluster/Low Range Temperatures',
+                  xref: 'paper',
+                  yref: 'paper',
                 }}
               />
             </div>

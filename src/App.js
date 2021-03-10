@@ -24,7 +24,7 @@ function App() {
     getLatLngCounty(inputs.county, inputs.state);
   }, [inputs.county]);
 
-  const onSubmitPressed = () => setShowResults(!showResults);
+  const onSubmitPressed = () => setShowResults(true);
 
   return (
     <div className="App">
@@ -51,7 +51,7 @@ function App() {
                 </p>
                 <p>Choose a state to get started!</p>
               </div>
-              <Form setReady={setReady} onSubmitPressed={onSubmitPressed} />
+              <Form ready={ready} setReady={setReady} onSubmitPressed={onSubmitPressed} />
             </div>
             <div className="map">
               <Map />
