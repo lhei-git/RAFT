@@ -21,6 +21,8 @@ const InputForm = ({ onSubmitPressed }) => {
     getModelData,
     selectYear,
     selectSeason,
+    getClusters,
+    getTrainingData
   } = useContext(InputsContext);
 
   return (
@@ -94,12 +96,11 @@ const InputForm = ({ onSubmitPressed }) => {
             e.preventDefault();
             onSubmitPressed();
             getModelData(
-              inputs.state,
-              inputs.county,
               inputs.year,
               inputs.month,
-              inputs.station
             );
+            getClusters()
+            getTrainingData()
           }}
         >
           <Button variant="danger" type="submit">

@@ -33,13 +33,13 @@ const Map = () => {
         center={inputs.latLng}
         options={options}
       >
-        {inputs.stations.map((station) => (
-          <Marker
+        {inputs.stations.map((station) => {
+          return <Marker
             key={station.id}
             position={{ lat: station.latitude, lng: station.longitude }}
             onClick={() => setSelectedMarker(station)}
           />
-        ))}
+        })}
 
         {/* show the window above the marker */}
         {selectedMarker ? (

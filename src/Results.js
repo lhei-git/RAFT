@@ -125,6 +125,7 @@ const Results = () => {
               <th> </th>
               <th>Pre-1980</th>
               <th>Post-1980</th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>

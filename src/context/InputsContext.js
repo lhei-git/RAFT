@@ -31,6 +31,10 @@ const inputsReducer = (state, action) => {
       return { ...state, errorMessage: '', model: payload };
     case 'SET_LAT_LNG':
       return { ...state, latLng: payload };
+    case 'GET_CLUSTER_DATA':
+      return { ...state, cluster: payload };
+    case 'GET_TRAINING_DATA':
+      return { ...state, training_data: payload };
     case 'ERROR_MESSAGE':
       return { ...state, errorMessage: payload, model: {} };
 
@@ -52,6 +56,8 @@ export const InputsProvider = ({ children }) => {
     model: {},
     errorMessage: '',
     latLng: { lat: 0, lng: 0 },
+    cluster: {},
+    training_data: {},
   });
 
   // ACTIONS
@@ -84,31 +90,55 @@ export const InputsProvider = ({ children }) => {
       const response = await raftApi.get(
         `/stations?state=${state}&county=${county}&debug=True`
       );
-      dispatch({ type: 'GET_STATIONS', payload: response.data.Data.results });
-      console.log('STATIONS', response.data.Data.results);
+      dispatch({ type: 'GET_STATIONS', payload: response.data.results });
+      console.log('STATIONS', response.data.results);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getClusters = async () => {
+    try {
+      // axios call to get stations
+      const response = await raftApi.get(
+        `/clusters`
+      );
+      console.log('CLUSTERS', response.data);
+      dispatch({ type: 'GET_CLUSTER_DATA', payload: response.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getTrainingData = async () => {
+    try {
+      // axios call to get stations
+      const response = await raftApi.get(
+        `/data`
+      );
+      console.log('training data', response.data);
+      dispatch({ type: 'GET_TRAINING_DATA', payload: response.data });
     } catch (err) {
       console.log(err);
     }
   };
   const getModelData = async (
-    state,
-    county,
     year,
     month,
     season,
-    stationid
   ) => {
     try {
       const response = await raftApi.get(
-        `/datastation_results?state=${state}&county=${county}&year=${year}&month=${month}&stationid=${stationid}`
+        `/model?year=${year}&month=${month}`
       );
+
+      console.log('YOLO', response)
+
       if (
-        response.data == null ||
-        response.data == undefined ||
-        response.data == 0
+        response.data === null ||
+        response.data === undefined ||
+        response.data === 0
       )
         throw new Error({ response: { data: 'No data available' } });
-      dispatch({ type: 'GET_MODEL_DATA', payload: response.data.data });
+      dispatch({ type: 'GET_MODEL_DATA', payload: response.data });
       console.log(response.data.data);
     } catch (error) {
       console.log(error.response.data);
@@ -128,6 +158,7 @@ export const InputsProvider = ({ children }) => {
       }
     );
   };
+
   const getLatLngCounty = (address, state) => {
     console.log('COUNTY', `${address}, ${state}`);
     Geocode.fromAddress(`${address}, ${state}`).then(
@@ -157,6 +188,8 @@ export const InputsProvider = ({ children }) => {
         getModelData,
         getLatLng,
         getLatLngCounty,
+        getClusters,
+        getTrainingData
       }}
     >
       {children}
