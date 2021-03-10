@@ -80,6 +80,7 @@ const Results = () => {
 
   return (
     <div className="tables">
+      <h1> Results </h1>
       <div className="linearTable">
         <h4>Linear Model Predictions</h4>
         <Table responsive="sm">
