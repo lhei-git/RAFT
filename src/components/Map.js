@@ -72,10 +72,11 @@ const Map = () => {
 };
 
 const mapContainerStyle = {
-  minWidth: '400px',
+  minWidth: '500px',
   zIndex: '1',
-  width: '100%',
-  height: '400px',
+  // width: '100%',
+  height: '320px',
+  boxShadow: '1px 1px 9px rgb(10 10 10 / 30%)'
 };
 
 export default Map;

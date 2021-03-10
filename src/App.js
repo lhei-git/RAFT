@@ -32,29 +32,29 @@ function App() {
         <div className="default-view">
           <div className="title-logo">
             <div className="title">
-              <h1>RAFT</h1>
-              <h3>Regional Temperature Profiler</h3>
+            <FontAwesomeIcon icon={faGlobeAmericas} style={{fontSize: '2.7rem', verticalAlign: '0rem'}} />
+              <h1 style={{paddingLeft: '10px'}}>RAFT</h1>
             </div>
-            <div className="logo">
-              <FontAwesomeIcon icon={faGlobeAmericas} size="10x" />
-            </div>
+            {/* <div className="logo">
+            </div> */}
           </div>
-          <div className="form-map">
-            <div className="form-container">
+          <div className="hero">
+            <div className="hero-container">
               <div className="information">
+                <h3 style={{paddingBottom: '.5rem'}}>Regional Temperature Profiler</h3>
                 <p>
-                  RTP is an application that uses a linear regression model that
-                </p>
-                <p>
+                  RTP is an application that uses a linear regression model that <br/>
                   will help you find a predicted temperature in a chosen county
                   and year.
                 </p>
                 <p>Choose a state to get started!</p>
               </div>
-              <Form ready={ready} setReady={setReady} onSubmitPressed={onSubmitPressed} />
-            </div>
-            <div className="map">
-              <Map />
+              <div className='inner-hero-cont'>
+                <Form ready={ready} setReady={setReady} onSubmitPressed={onSubmitPressed} />
+                <div className="map">
+                  <Map />
+                </div>
+              </div>
             </div>
           </div>
         </div>

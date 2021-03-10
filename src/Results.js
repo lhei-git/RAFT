@@ -163,20 +163,18 @@ const Results = ({ ready }) => {
                 data={[
                   {
                     x: inputs.training_data['year'],
-                    y: inputs.training_data[Object.keys(inputs.training_data)[1]],
+                    y: inputs.training_data[Object.keys(inputs.training_data)[0]],
                     type: 'scatter',
                     mode: 'markers',
                     name: 'historical data',
                     marker: { color: 'black' },
-                    xaxis: 'Year'
+                    // xaxis: 'Year'
                   },
                 ]}
                 layout={{
                   width: 600,
                   height: 500,
                   title: 'Historical Temperature Data',
-                  x: 'Year',
-                  y: 'Temps'
                 }}
               />
             </div>
