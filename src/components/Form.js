@@ -9,6 +9,9 @@ import SeasonSelect from './Dropdowns/SeasonSelect';
 import { InputsContext } from '../context/InputsContext';
 import Spinner from 'react-bootstrap/Spinner';
 import { Link } from 'react-scroll';
+import Paper from '@material-ui/core/Paper';
+
+import './hero.css';
 
 const InputForm = ({ onSubmitPressed, setReady, ready }) => {
   const [show, setShow] = useState(false);
@@ -35,41 +38,10 @@ const InputForm = ({ onSubmitPressed, setReady, ready }) => {
     }
   }, [inputs.state, inputs.county, inputs.month])
 
-
-  const LoadingSpinner = () => {
-    return (
-      <Spinner
-        style={{
-          position: 'fixed',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        animation="border"
-        role="status"
-      >
-        <span className="sr-only">Loading...</span>
-      </Spinner>
-    );
-  };
-
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Form className="form">
-        <Form.Row
-          style={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-            gap: '10px',
-          }}
-        >
+    <div className='form-contain'>
+      <div className="form-dropdown-cont" style={{background: '#f8f8ff', borderRadius: '3px', padding: '10px', boxShadow: 'inline 1px 1px 10px rgba(20,20,20,1)'}}>
+        <div className="form-dropdown">
           <DropdownInput
             label="State"
             options={<StateSelect />}
@@ -84,15 +56,8 @@ const InputForm = ({ onSubmitPressed, setReady, ready }) => {
             value={inputs.county}
             get={() => getStations(inputs.state, inputs.county)}
           />
-        </Form.Row>
-        <Form.Row
-          style={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-            gap: '10px',
-          }}
-        >
+        </div>
+        <div className='form-dropdown'>
           <DropdownInput
             label="Month"
             options={<MonthSelect />}
@@ -112,10 +77,13 @@ const InputForm = ({ onSubmitPressed, setReady, ready }) => {
               onChange={(e) => selectYear(e.target.value)}
             />
           </Form.Group>
-        </Form.Row>
+        </div>
+        <div className="submit-cont">
+          
         { formFilled ?
         <Link
-          activeClass="active"
+        className="formSubmit"
+        activeClass="active"
           to={'results'}
           spy={true}
           smooth={true}
@@ -135,12 +103,12 @@ const InputForm = ({ onSubmitPressed, setReady, ready }) => {
             // setTimeout(() => setShow(false), 5000);
             onSubmitPressed();
           }}
-        >
-          <Button variant="danger" type="submit">
+          >
+          <Button className="formSubmit" variant="danger" type="submit">
             {show ? (
               <Spinner
-                style={{
-                  display: 'flex',
+              style={{
+                display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
@@ -155,16 +123,17 @@ const InputForm = ({ onSubmitPressed, setReady, ready }) => {
           </Button>
         </Link>
         :
-          <Button variant="danger" type="submit" onClick={(e) => {
-            e.preventDefault();
-            alert('Please finish filling out the form.')
-          }}>
+        <Button variant="danger" type="submit" onClick={(e) => {
+          e.preventDefault();
+          alert('Please finish filling out the form.')
+        }}>
               {formFilled ?
               'Submit' : 'Form not Filled'}
           </Button>
       }
-      </Form>
-    </div>
+      </div>
+      </div>
+      </div>
   );
 };
 
