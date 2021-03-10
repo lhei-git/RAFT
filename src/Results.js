@@ -123,38 +123,38 @@ const Results = ({ ready }) => {
               </thead>
               <tbody>
                 {/* {generateClusterModelCalculations(
-                  inputs.cluster,
+                  inputs.cluster[0],
                   clusterModelTableHeaders
                 )} */}
                 <tr>
                   <td style={{ fontWeight: 700 }}>Lowest Temperature</td>
                   <td>
-                    {average(inputs.cluster['Low Prediction']).toFixed(2)}
+                    {average(inputs.cluster[0]['Low Temp Cluster']).toFixed(2)}
                     &#176;C
                   </td>
                   <td>
-                    {Math.max(...inputs.cluster['Low Prediction']).toFixed(2)}
+                    {Math.max(...inputs.cluster[0]['Low Temp Cluster']).toFixed(2)}
                     &#176;C
                   </td>
                   <td>
-                    {Math.min(...inputs.cluster['Low Prediction']).toFixed(2)}
+                    {Math.min(...inputs.cluster[0]['Low Temp Cluster']).toFixed(2)}
                     &#176;C
                   </td>
                 </tr>
                 <tr>
                   <td style={{ fontWeight: 700 }}>Middle Temperature</td>
                   <td>
-                    {average(inputs.cluster['Medium Prediction']).toFixed(2)}
+                    {average(inputs.cluster[0]['Mid Temp Cluster']).toFixed(2)}
                     &#176;C
                   </td>
                   <td>
-                    {Math.max(...inputs.cluster['Medium Prediction']).toFixed(
+                    {Math.max(...inputs.cluster[0]['Mid Temp Cluster']).toFixed(
                       2
                     )}
                     &#176;C
                   </td>
                   <td>
-                    {Math.min(...inputs.cluster['Medium Prediction']).toFixed(
+                    {Math.min(...inputs.cluster[0]['Mid Temp Cluster']).toFixed(
                       2
                     )}
                     &#176;C
@@ -163,15 +163,15 @@ const Results = ({ ready }) => {
                 <tr>
                   <td style={{ fontWeight: 700 }}>Highest Temperature</td>
                   <td>
-                    {average(inputs.cluster['High Prediction']).toFixed(2)}
+                    {average(inputs.cluster[0]['High Temp Cluster']).toFixed(2)}
                     &#176;C
                   </td>
                   <td>
-                    {Math.max(...inputs.cluster['High Prediction']).toFixed(2)}
+                    {Math.max(...inputs.cluster[0]['High Temp Cluster']).toFixed(2)}
                     &#176;C
                   </td>
                   <td>
-                    {Math.min(...inputs.cluster['High Prediction']).toFixed(2)}
+                    {Math.min(...inputs.cluster[0]['High Temp Cluster']).toFixed(2)}
                     &#176;C
                   </td>
                 </tr>
@@ -230,7 +230,7 @@ const Results = ({ ready }) => {
                 layout={{
                   width: 600,
                   height: 500,
-                  title: 'Historical High/Middle/Low Range Temperatures',
+                  title: 'Historical High Temp Cluster/Low Range Temperatures',
                 }}
               />
             </div>
