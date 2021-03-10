@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
 import StateSelect from './Dropdowns/StateSelect';
 import CountySelect from './Dropdowns/CountySelect';
@@ -10,8 +10,9 @@ import { InputsContext } from '../context/InputsContext';
 import Spinner from 'react-bootstrap/Spinner';
 import { Link } from 'react-scroll';
 
-const InputForm = ({ onSubmitPressed, setReady }) => {
+const InputForm = ({ onSubmitPressed, setReady, ready }) => {
   const [show, setShow] = useState(false);
+  const [formFilled, setFormFilled] = useState(false);
   const {
     inputs,
     selectState,
@@ -26,6 +27,14 @@ const InputForm = ({ onSubmitPressed, setReady }) => {
     getClusters,
     getTrainingData,
   } = useContext(InputsContext);
+
+  useEffect(() => {
+    if (inputs.state && inputs.county && inputs.month) {
+      setFormFilled(true)
+      console.log('entered')
+    }
+  }, [inputs.state, inputs.county, inputs.month])
+
 
   const LoadingSpinner = () => {
     return (
@@ -104,17 +113,19 @@ const InputForm = ({ onSubmitPressed, setReady }) => {
             />
           </Form.Group>
         </Form.Row>
+        { formFilled ?
         <Link
           activeClass="active"
           to={'results'}
           spy={true}
           smooth={true}
           duration={1000}
-          delay={2001}
+          delay={3000}
           href={'results'}
           onClick={(e) => {
             e.preventDefault();
             getModelData(inputs.year, inputs.month).then(() => {
+              console.log(inputs.model)
               setReady(true);
               setShow(false);
             });
@@ -143,6 +154,15 @@ const InputForm = ({ onSubmitPressed, setReady }) => {
             )}
           </Button>
         </Link>
+        :
+          <Button variant="danger" type="submit" onClick={(e) => {
+            e.preventDefault();
+            alert('Please finish filling out the form.')
+          }}>
+              {formFilled ?
+              'Submit' : 'Form not Filled'}
+          </Button>
+      }
       </Form>
     </div>
   );
