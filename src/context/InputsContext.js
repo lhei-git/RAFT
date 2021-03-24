@@ -108,7 +108,11 @@ export const InputsProvider = ({ children }) => {
   const getClusters = async () => {
     try {
       // axios call to get stations
-      const response = await raftApi.get(`/v2/clusters`);
+      const response = await raftApi.get(`/v2/clusters`,
+        {headers: {
+          Authorization: inputs.token
+        }}
+      );
       console.log('CLUSTERS', response.data);
       dispatch({ type: 'GET_CLUSTER_DATA', payload: response.data });
     } catch (err) {
@@ -118,7 +122,11 @@ export const InputsProvider = ({ children }) => {
   const getTrainingData = async () => {
     try {
       // axios call to get stations
-      const response = await raftApi.get(`/v2/data`);
+      const response = await raftApi.get(`/v2/data`,
+        {headers: {
+          Authorization: inputs.token
+        }}
+      );
       console.log('training data', response.data);
       dispatch({ type: 'GET_TRAINING_DATA', payload: response.data });
     } catch (err) {
@@ -127,9 +135,15 @@ export const InputsProvider = ({ children }) => {
   };
   const getModelData = async (year, month, season) => {
     try {
-      const response = await raftApi.get(`/v2/model?year=${year}&month=${month}`);
+      const response = await raftApi.get(`/v2/model?year=${year}&month=${month}`,
+        {headers: {
+          Authorization: inputs.token
+        }}
+      ).catch(() => {
+        throw response
+      });
 
-      console.log('YOLO', response.data);
+      if (response.status_code)
 
       if (
         response.data === null ||

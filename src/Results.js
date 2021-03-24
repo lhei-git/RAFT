@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import './App.css';
 import { InputsContext } from './context/InputsContext';
 import { Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -8,10 +8,75 @@ import Plot from 'react-plotly.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { Suspense } from 'react';
 
 
 const Results = ({ ready }) => {
-  const { inputs } = useContext(InputsContext);
+  const {
+    inputs,
+    getModelData,
+    getClusters,
+    getTrainingData,
+  } = useContext(InputsContext);
+
+
+
+  const ModelData = () => {
+
+    const [dataRetrieved, setDataRetrieved] = useState();
+
+    useEffect(()=> {
+      if (inputs.model.length === 0) {
+        console.log('getting data')
+        getModelData(inputs.year, inputs.month)
+        if (inputs.model.length !== 0) 
+          setDataRetrieved(true)
+      }
+      else
+        console.log('data retrieved')
+      
+    }, [inputs.state, inputs.year, inputs.month, inputs.county, inputs.model])
+
+    return (
+      <>
+        { dataRetrieved ?
+          <Table responsive="sm">
+              <thead>
+                <tr>
+                  <th> </th>
+                  <th>Average Temperature</th>
+                  <th>MSE
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderMSETooltip}
+                  >
+                      <FontAwesomeIcon icon={faQuestionCircle} style={{marginLeft: '2px', fontSize: '0.7rem', verticalAlign: '5px'}} />
+                  </OverlayTrigger>
+                  </th>
+                  <th>R&sup2;  
+                  <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderR2Tooltip}
+                  >
+                     <FontAwesomeIcon icon={faQuestionCircle} style={{marginLeft: '2px', fontSize: '0.7rem', verticalAlign: '5px'}} />
+                  </OverlayTrigger>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {generateLinearTable(inputs.model)}
+              </tbody>
+            </Table>
+            :
+            ''}
+            </>
+    )
+  }
+
+
+
 
   console.log(inputs.training_data && inputs.training_data)
 
@@ -42,40 +107,11 @@ const Results = ({ ready }) => {
 
   return (
     <div className="tables">
-      <h1> Results </h1>
-      {ready ? (
+      <h2> {`${inputs.county}, ${inputs.state} Results`} </h2>
         <>
           <div className="linearTable">
             <h4>Linear Model Predictions</h4>
-            <Table responsive="sm">
-              <thead>
-                <tr>
-                  <th> </th>
-                  <th>Average Temperature</th>
-                  <th>MSE
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderMSETooltip}
-                  >
-                     <FontAwesomeIcon icon={faQuestionCircle} style={{marginLeft: '2px', fontSize: '0.7rem', verticalAlign: '5px'}} />
-                  </OverlayTrigger>
-                  </th>
-                  <th>R&sup2;  
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderR2Tooltip}
-                  >
-                     <FontAwesomeIcon icon={faQuestionCircle} style={{marginLeft: '2px', fontSize: '0.7rem', verticalAlign: '5px'}} />
-                  </OverlayTrigger>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {generateLinearTable(inputs.model)}
-              </tbody>
-            </Table>
+              <ModelData />
           </div>
           <div>
             <p> </p>
@@ -86,22 +122,18 @@ const Results = ({ ready }) => {
               This chart shows the median, highest, and lowest temperatures of
               the year
             </p> */}
-            <Table responsive="sm">
+            {/* <Table responsive="sm">
               <thead>
                 <tr>
                   <th> </th>
                   <th>Average</th>
                   <th>Highest Temperature</th>
                   <th>Lowest Temperature</th>
-                  {/* <th>Average (pre-1980)</th>
-                  <th>Average (post-1980)</th> */}
+                  <th>Average (pre-1980)</th>
+                  <th>Average (post-1980)</th>
                 </tr>
               </thead>
               <tbody>
-                {/* {generateClusterModelCalculations(
-                  inputs.cluster[0],
-                  clusterModelTableHeaders
-                )} */}
                 <tr>
                   <td style={{ fontWeight: 700 }}>Lowest Temperature</td>
                   <td>
@@ -152,7 +184,7 @@ const Results = ({ ready }) => {
                   </td>
                 </tr>
               </tbody>
-            </Table>
+            </Table> */}
           </div>
           <div>
             <p> </p>
@@ -173,7 +205,7 @@ const Results = ({ ready }) => {
         </tbody>
       </Table>
     </div> */}
-          <div className="plots">
+          {/* <div className="plots">
             <div className="histTempDataPlot">
               {console.log(inputs.training_data)}
               <Plot
@@ -243,11 +275,8 @@ const Results = ({ ready }) => {
                 }}
               />
             </div>
-          </div>
+          </div> */}
         </>
-      ) : (
-        ''
-      )}
     </div>
   );
 };

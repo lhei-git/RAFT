@@ -3,6 +3,7 @@ import { Form, Button, Col } from 'react-bootstrap';
 import StateSelect from './Dropdowns/StateSelect';
 import CountySelect from './Dropdowns/CountySelect';
 import DropdownInput from './DropdownInputs';
+import ErrorMessage from './ErrorMessage';
 import DataStationSelect from './Dropdowns/DataStationSelect';
 import MonthSelect from './Dropdowns/MonthSelect';
 import SeasonSelect from './Dropdowns/SeasonSelect';
@@ -12,7 +13,7 @@ import { Link } from 'react-scroll';
 
 import './hero.css';
 
-const InputForm = ({ onSubmitPressed, setReady, ready }) => {
+const InputForm = ({ onSubmitPressed, setReady, ready, setOpen, open }) => {
   const [show, setShow] = useState(false);
   const [formFilled, setFormFilled] = useState(false);
   const {
@@ -31,11 +32,10 @@ const InputForm = ({ onSubmitPressed, setReady, ready }) => {
   } = useContext(InputsContext);
 
   useEffect(() => {
-    if (inputs.state && inputs.county && inputs.month) {
+    if (inputs.state && inputs.county && inputs.month && inputs.stations.length > 0) {
       setFormFilled(true)
-      console.log('entered')
     }
-  }, [inputs.state, inputs.county, inputs.month])
+  }, [inputs.state, inputs.county, inputs.month, inputs.stations])
 
   return (
     <div className='form-contain'>
@@ -87,19 +87,18 @@ const InputForm = ({ onSubmitPressed, setReady, ready }) => {
           spy={true}
           smooth={true}
           duration={1000}
-          delay={3000}
+          delay={10}
           href={'results'}
           onClick={(e) => {
             e.preventDefault();
-            getModelData(inputs.year, inputs.month).then(() => {
-              console.log(inputs.model)
-              getClusters();
-              getTrainingData();
-              setReady(true);
-              setShow(false);
-            });
-            setShow(true);
-            // setTimeout(() => setShow(false), 5000);
+            // getModelData(inputs.year, inputs.month).then(() => {
+            //   console.log(inputs.model)
+            //   getTrainingData();
+            //   getClusters();
+            //   setReady(true);
+            //   setShow(false);
+            // });
+            // setShow(true);
             onSubmitPressed();
           }}
           >
@@ -124,7 +123,12 @@ const InputForm = ({ onSubmitPressed, setReady, ready }) => {
         :
         <Button variant="danger" type="submit" onClick={(e) => {
           e.preventDefault();
-          alert('Please finish filling out the form.')
+          console.log('ran')
+          setOpen(true)
+          if (inputs.stations.length > 0)
+            inputs.errorMessage = 'Please fill out the form completely.'
+          else
+            inputs.errorMessage = 'County chosen is invalid.'
         }}>
               {formFilled ?
               'Submit' : 'Form not Filled'}
