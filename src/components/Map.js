@@ -30,7 +30,7 @@ const Map = () => {
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={9}
-        center={inputs.latLng}
+        center={inputs.latLng.lat !== 0 && inputs.latLng.lng !== 0 ? inputs.latLng : { lat: 42.332295, lng: -83.047044 }}
         options={options}
       >
         {inputs.stations.map((station) => {

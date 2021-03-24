@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import './App.css';
 import Form from './components/Form';
 import Map from './components/Map';
+import ErrorMessage from './components/ErrorMessage';
 import { InputsContext } from './context/InputsContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
@@ -17,11 +18,20 @@ function App() {
   const [showResults, setShowResults] = useState(false);
   const [ready, setReady] = useState(false);
 
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
-    getLatLng(inputs.state);
+    if (inputs.errorMessage !== '')
+      setOpen(true)
+  }, [inputs.errorMessage])
+
+  useEffect(() => {
+    if (inputs.state !== '')
+      getLatLng(inputs.state);
   }, [inputs.state]);
   useEffect(() => {
-    getLatLngCounty(inputs.county, inputs.state);
+    if (inputs.state !== '')
+      getLatLngCounty(inputs.county, inputs.state);
   }, [inputs.county]);
 
   const onSubmitPressed = () => setShowResults(true);
@@ -50,7 +60,7 @@ function App() {
                 <p>Choose a state to get started!</p>
               </div>
               <div className='inner-hero-cont'>
-                <Form ready={ready} setReady={setReady} onSubmitPressed={onSubmitPressed} />
+                <Form ready={ready} setReady={setReady} onSubmitPressed={onSubmitPressed} setOpen={setOpen} open={open} />
                 <div className="map">
                   <Map />
                 </div>
@@ -60,33 +70,13 @@ function App() {
         </div>
         <div id="results">{showResults ? <Results ready={ready} /> : ''}</div>
       </div>
+      {open ? 
+        <ErrorMessage setOpen={setOpen} open={open} message={inputs.errorMessage}/>
+      :
+        ''
+      }
     </div>
   );
 }
-
-const styles = {
-  loginLegend: {
-    margin: '20px',
-    width: '155px',
-  },
-  myFieldset: {
-    border: '3px solid',
-    maxWidth: 'max-content',
-    margin: '0 auto',
-    marginBottom: '40px',
-    paddingRight: '20px',
-  },
-  ol: {
-    textAlign: 'left',
-  },
-  o2: {
-    padding: '101px',
-    border: '2px solid #000',
-  },
-  o3: {
-    padding: '50px',
-    border: '2px solid #000',
-  },
-};
 
 export default App;
