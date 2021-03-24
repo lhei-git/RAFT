@@ -18,10 +18,12 @@ function App() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    getLatLng(inputs.state);
+    if (inputs.state !== '')
+      getLatLng(inputs.state);
   }, [inputs.state]);
   useEffect(() => {
-    getLatLngCounty(inputs.county, inputs.state);
+    if (inputs.state !== '')
+      getLatLngCounty(inputs.county, inputs.state);
   }, [inputs.county]);
 
   const onSubmitPressed = () => setShowResults(true);

@@ -38,21 +38,6 @@ const Results = ({ ready }) => {
       </Tooltip>
     );
 
-  // const generateClusterModelCalculations = (
-  //   temps2,
-  //   clusterModelTableHeaders
-  // ) => {
-  //   console.log(typeof temps2);
-  //   return temps2.map((data, i) => (
-  //     <tr key={i}>
-  //       <td style={{ fontWeight: 675 }}>{clusterModelTableHeaders[i]}</td>
-  //       <td>{Math.max(...data)}</td>
-  //       <td>{'fsd'}</td>
-  //       <td>{'esfr'}</td>
-  //     </tr>
-  //   ));
-  // };
-
   let average = (array) => array.reduce((a, b) => a + b) / array.length;
 
   return (

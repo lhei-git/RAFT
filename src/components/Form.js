@@ -93,11 +93,11 @@ const InputForm = ({ onSubmitPressed, setReady, ready }) => {
             e.preventDefault();
             getModelData(inputs.year, inputs.month).then(() => {
               console.log(inputs.model)
+              getClusters();
+              getTrainingData();
               setReady(true);
               setShow(false);
             });
-            getClusters();
-            getTrainingData();
             setShow(true);
             // setTimeout(() => setShow(false), 5000);
             onSubmitPressed();
