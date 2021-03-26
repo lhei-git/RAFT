@@ -13,7 +13,7 @@ import { Link } from 'react-scroll';
 
 import './hero.css';
 
-const InputForm = ({ onSubmitPressed, setReady, ready, setOpen, open }) => {
+const InputForm = ({ onSubmitPressed, getData, setGetData, setOpen, open }) => {
   const [show, setShow] = useState(false);
   const [formFilled, setFormFilled] = useState(false);
   const {
@@ -91,62 +91,60 @@ const InputForm = ({ onSubmitPressed, setReady, ready, setOpen, open }) => {
           </Form.Group>
         </div>
         <div className="submit-cont">
-          {formFilled ? (
-            <Link
-              className="formSubmit"
-              activeClass="active"
-              to={'results'}
-              spy={true}
-              smooth={true}
-              duration={1000}
-              delay={10}
-              href={'results'}
-              onClick={(e) => {
-                e.preventDefault();
-                // getModelData(inputs.year, inputs.month).then(() => {
-                //   console.log(inputs.model)
-                //   getTrainingData();
-                //   getClusters();
-                //   setReady(true);
-                //   setShow(false);
-                // });
-                // setShow(true);
-                onSubmitPressed();
-              }}
-            >
-              <Button className="formSubmit" variant="success" type="submit">
-                {show ? (
-                  <Spinner
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                    animation="border"
-                    role="status"
-                  >
-                    <span className="sr-only">Loading...</span>
-                  </Spinner>
-                ) : (
-                  'Submit'
-                )}
-              </Button>
-            </Link>
-          ) : (
-            <Button
-              variant="danger"
-              type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-                console.log('ran');
-                setOpen(true);
-                inputs.errorMessage = 'Please fill out the form completely.';
-              }}
-            >
-              {formFilled ? 'Submit' : 'Form not Filled'}
-            </Button>
-          )}
-        </div>
+          
+        { formFilled ?
+        <Link
+        className="formSubmit"
+        activeClass="active"
+          to={'results'}
+          spy={true}
+          smooth={true}
+          duration={1000}
+          delay={10}
+          href={'results'}
+          onClick={(e) => {
+            e.preventDefault();
+            inputs.model = [];
+            inputs.cluster = [];
+            inputs.training_data = {};
+            setGetData(!getData)
+            onSubmitPressed();
+          }}
+          >
+          <Button className="formSubmit" variant="success" type="submit">
+            {show ? (
+              <Spinner
+              style={{
+                display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                animation="border"
+                role="status"
+              >
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            ) : (
+              'Submit'
+            )}
+          </Button>
+        </Link>
+        :
+        <Button variant="danger" type="submit" onClick={(e) => {
+          e.preventDefault();
+          console.log('ran')
+          setOpen(true)
+          if (inputs.stations.length > 0)
+            inputs.errorMessage = 'Please fill out the form completely.'
+          else
+            inputs.errorMessage = 'County chosen is invalid.'
+        }}>
+              {formFilled ?
+              'Submit' : 'Form not Filled'}
+          </Button>
+      }
+      </div>
+      </div>
       </div>
     </div>
   );
