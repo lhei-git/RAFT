@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import './App.css';
+
 import Form from './components/Form';
 import Map from './components/Map';
 import ErrorMessage from './components/ErrorMessage';
+import Results from './components/Results';
+
 import { InputsContext } from './context/InputsContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
-import Results from './Results';
 
 import Geocode from 'react-geocode';
 Geocode.setApiKey(process.env.REACT_APP_MAPS_API_KEY);
@@ -16,7 +18,7 @@ Geocode.enableDebug();
 function App() {
   const { inputs, getLatLng, getLatLngCounty } = useContext(InputsContext);
   const [showResults, setShowResults] = useState(false);
-  const [ready, setReady] = useState(false);
+  const [getData, setGetData] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -60,7 +62,7 @@ function App() {
                 <p>Choose a state to get started!</p>
               </div>
               <div className='inner-hero-cont'>
-                <Form ready={ready} setReady={setReady} onSubmitPressed={onSubmitPressed} setOpen={setOpen} open={open} />
+                <Form getData={getData} setGetData={setGetData} onSubmitPressed={onSubmitPressed} setOpen={setOpen} open={open} />
                 <div className="map">
                   <Map />
                 </div>
@@ -68,7 +70,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div id="results">{showResults ? <Results ready={ready} /> : ''}</div>
+        <div id="results">{showResults ? <Results getData={getData} /> : ''}</div>
       </div>
       {open ? 
         <ErrorMessage setOpen={setOpen} open={open} message={inputs.errorMessage}/>

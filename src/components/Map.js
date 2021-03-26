@@ -1,4 +1,4 @@
-import react, { useContext, useState } from 'react';
+import react, { useContext, useEffect, useState } from 'react';
 import {
   GoogleMap,
   useLoadScript,
@@ -15,6 +15,7 @@ const options = {
 };
 
 const Map = () => {
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
   });

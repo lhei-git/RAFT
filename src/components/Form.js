@@ -13,7 +13,7 @@ import { Link } from 'react-scroll';
 
 import './hero.css';
 
-const InputForm = ({ onSubmitPressed, setReady, ready, setOpen, open }) => {
+const InputForm = ({ onSubmitPressed, getData, setGetData, setOpen, open }) => {
   const [show, setShow] = useState(false);
   const [formFilled, setFormFilled] = useState(false);
   const {
@@ -91,14 +91,10 @@ const InputForm = ({ onSubmitPressed, setReady, ready, setOpen, open }) => {
           href={'results'}
           onClick={(e) => {
             e.preventDefault();
-            // getModelData(inputs.year, inputs.month).then(() => {
-            //   console.log(inputs.model)
-            //   getTrainingData();
-            //   getClusters();
-            //   setReady(true);
-            //   setShow(false);
-            // });
-            // setShow(true);
+            inputs.model = [];
+            inputs.cluster = [];
+            inputs.training_data = {};
+            setGetData(!getData)
             onSubmitPressed();
           }}
           >
