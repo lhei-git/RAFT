@@ -154,8 +154,8 @@ export const InputsProvider = ({ children }) => {
       dispatch({ type: 'GET_MODEL_DATA', payload: response.data });
       console.log(response.data);
     } catch (error) {
-      console.log(error.response.data);
-      dispatch({ type: 'ERROR_MESSAGE', payload: error.response.data });
+      console.log('MODEL ERROR', error, error.response);
+      dispatch({ type: 'ERROR_MESSAGE', payload: error.response });
     }
   };
 
