@@ -117,8 +117,6 @@ const Results = ({ getData }) => {
       "Mid Temp Cluster",
       "High Temp Cluster",
     ];
-    // let tempCluster2 = ['Pre Low Temp Cluster', 'Pre Mid Temp Cluster', 'Pre High Temp Cluster']
-    // let tempCluster3 = ['Post Low Temp Cluster', 'Post Mid Temp Cluster', 'Post High Temp Cluster']
 
     return tempCluster.map((t, i) => (
       <tr key={i}>
@@ -272,22 +270,6 @@ const Results = ({ getData }) => {
         <div>
           <p> </p>
         </div>
-        {/* <div className="avgRecordTable">
-      <h4>Average and Record Temperatures</h4>
-      <Table responsive="sm">
-        <thead>
-          <tr>
-            <th> </th>
-            <th>Pre-1980</th>
-            <th>Post-1980</th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          {generateAvgRecordTemperatures(temps3, avgRecordTableHeaders)}
-        </tbody>
-      </Table>
-    </div>  */}
         <div className="plots">
           <div className="histTempDataPlot">
             {trainingPlotData.length > 0 ? (
