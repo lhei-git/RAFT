@@ -81,7 +81,7 @@ const mapContainerStyle = {
   minWidth: '500px',
   zIndex: '1',
   // width: '100%',
-  height: '320px',
+  height: '500px',
   boxShadow: '1px 1px 9px rgb(10 10 10 / 30%)',
 };
 

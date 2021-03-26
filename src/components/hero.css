@@ -79,7 +79,7 @@ Table > * {
   }
   .inner-hero-cont {
     grid-template-columns: 1fr;
-    grid-template-rows: 0.7fr 1fr;
+    grid-template-rows: 1fr;
   }
   .form-contain {
     padding-bottom: 15px;

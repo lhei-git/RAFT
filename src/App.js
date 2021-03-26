@@ -70,6 +70,18 @@ function App() {
         </div>
         <div id="results">{showResults ? <Results ready={ready} /> : ''}</div>
       </div>
+      <footer style={{
+        backgroundColor:'#f8f8ff',
+        height:'50px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <a style={{paddingRight:'10px'}} href="https://www.lhei.org">lhei.org</a>
+        <p style={{margin:'0'}}>"copyright"</p>
+        <a style={{paddingLeft:'10px'}} href="#">About Link</a>
+      </footer>
+
       {open ? 
         <ErrorMessage setOpen={setOpen} open={open} message={inputs.errorMessage}/>
       :
