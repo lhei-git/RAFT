@@ -59,7 +59,7 @@ export const InputsProvider = ({ children }) => {
     model: [],
     errorMessage: '',
     latLng: { lat: 0, lng: 0 },
-    cluster: {},
+    cluster: [],
     training_data: {},
     token: ''
   });
