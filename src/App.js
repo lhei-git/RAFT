@@ -21,6 +21,9 @@ function App() {
   const [getData, setGetData] = useState(false);
 
   const [open, setOpen] = useState(false);
+  const [spin, setSpin] = useState(false);
+
+  const toggleHover = () => setSpin(!spin);
 
   useEffect(() => {
     if (inputs.errorMessage !== '')
@@ -44,7 +47,7 @@ function App() {
         <div className="default-view">
           <div className="title-logo">
             <div className="title">
-            <FontAwesomeIcon icon={faGlobeAmericas} style={{fontSize: '2.7rem', verticalAlign: '0rem'}} />
+            <FontAwesomeIcon className={spin ? "fa-spin" : ''} onMouseLeave={toggleHover} onMouseEnter={toggleHover} icon={faGlobeAmericas} style={{fontSize: '2.7rem', verticalAlign: '0rem'}} />
               <h1 style={{paddingLeft: '10px'}}>RAFT</h1>
             </div>
             {/* <div className="logo">
