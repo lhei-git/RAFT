@@ -1,128 +1,184 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
-import './App.css';
-import { InputsContext } from './context/InputsContext';
-import { Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { Data } from '@react-google-maps/api';
-import React from 'react';
-import Plot from 'react-plotly.js';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
-import { Suspense } from 'react';
-
+import { useCallback, useContext, useEffect, useState } from "react";
+import "./App.css";
+import { InputsContext } from "./context/InputsContext";
+import { Table, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Data } from "@react-google-maps/api";
+import React from "react";
+import Plot from "react-plotly.js";
+import Skeleton from "@material-ui/lab/Skeleton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import { Suspense } from "react";
 
 const Results = ({ ready }) => {
-  const {
-    inputs,
-    getModelData,
-    getClusters,
-    getTrainingData,
-  } = useContext(InputsContext);
+  const { inputs, getModelData, getClusters, getTrainingData } = useContext(
+    InputsContext
+  );
+  const [dataRetrieved, setDataRetrieved] = useState(false);
 
-
-
-  const ModelData = () => {
-
-    const [dataRetrieved, setDataRetrieved] = useState();
-
-    useEffect(()=> {
-      if (inputs.model.length === 0) {
-        console.log('getting data')
-        getModelData(inputs.year, inputs.month)
-        if (inputs.model.length !== 0) 
-          setDataRetrieved(true)
-      }
-      else
-        console.log('data retrieved')
-      
-    }, [inputs.state, inputs.year, inputs.month, inputs.county, inputs.model])
+  const ModelDataTable = (props) => {
+    useEffect(() => {
+      if (!props.dataRetrieved) {
+        console.log("getting data");
+        getModelData(inputs.year, inputs.month).then(() =>
+          props.setDataRetrieved(true)
+        );
+      } else console.log("data retrieved");
+    }, [inputs.model]);
 
     return (
       <>
-        { dataRetrieved ?
-          <Table responsive="sm">
-              <thead>
-                <tr>
-                  <th> </th>
-                  <th>Average Temperature</th>
-                  <th>MSE
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderMSETooltip}
-                  >
-                      <FontAwesomeIcon icon={faQuestionCircle} style={{marginLeft: '2px', fontSize: '0.7rem', verticalAlign: '5px'}} />
-                  </OverlayTrigger>
-                  </th>
-                  <th>R&sup2;  
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderR2Tooltip}
-                  >
-                     <FontAwesomeIcon icon={faQuestionCircle} style={{marginLeft: '2px', fontSize: '0.7rem', verticalAlign: '5px'}} />
-                  </OverlayTrigger>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {generateLinearTable(inputs.model)}
-              </tbody>
-            </Table>
-            :
-            ''}
-            </>
-    )
-  }
-
-
-
-
-  console.log(inputs.training_data && inputs.training_data)
-
-  const generateLinearTable = (temps1) => {
-      return temps1.map((data, i) => (
-        <tr key={i}>
-          <td style={{ fontWeight: 675 }}>{data.name}</td>
-          <td>{data.prediction[0].toFixed(2)}&#176;C</td>
-          <td>{data.metrics.mse.toFixed(2)}</td>
-          <td>{data.metrics.r2.toFixed(2)}</td>
-        </tr>
-      ));
-    };
-
-    const renderR2Tooltip = (props) => (
-      <Tooltip {...props}>
-        Measure of how close the data is to the fitted regression line.
-      </Tooltip>
+        <Table responsive="sm">
+          <thead>
+            <tr>
+              <th> </th>
+              <th>Average Temperature</th>
+              <th>
+                MSE
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderMSETooltip}
+                >
+                  <FontAwesomeIcon
+                    icon={faQuestionCircle}
+                    style={{
+                      marginLeft: "2px",
+                      fontSize: "0.7rem",
+                      verticalAlign: "5px",
+                    }}
+                  />
+                </OverlayTrigger>
+              </th>
+              <th>
+                R&sup2;
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderR2Tooltip}
+                >
+                  <FontAwesomeIcon
+                    icon={faQuestionCircle}
+                    style={{
+                      marginLeft: "2px",
+                      fontSize: "0.7rem",
+                      verticalAlign: "5px",
+                    }}
+                  />
+                </OverlayTrigger>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.dataRetrieved ? (
+              generateModelDataTable(inputs.model)
+            ) : (
+              <>
+                {generateSkeleton(3,4)}
+              </>
+            )}
+          </tbody>
+        </Table>
+      </>
     );
+  };
+  const ClusterDataTable = (props) => {
+    useEffect(() => {
+      if (!props.dataRetrieved) {
+        console.log("getting data");
+        // getModelData(inputs.year, inputs.month).then(() =>
+        //    props.setDataRetrieved(true)
+        // );
+      } else console.log("data retrieved");
+    }, [inputs.model]);
 
-    const renderMSETooltip = (props) => (
-      <Tooltip {...props}>
-        Measure of the model's predictive power.
-      </Tooltip>
+    return (
+      <>
+        <Table responsive="sm">
+          <thead>
+            <tr>
+              <th> </th>
+              <th>Average</th>
+              <th>Highest Temperature</th>
+              <th>Lowest Temperature</th>
+              <th>Average (pre-1980)</th>
+              <th>Average (post-1980)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.dataRetrieved ? (
+              generateModelDataTable(inputs.model)
+            ) : (
+              <>
+                {generateSkeleton(3,4)}
+              </>
+            )}
+          </tbody>
+        </Table>
+      </>
     );
+  };
+
+  console.log(inputs.training_data && inputs.training_data);
+
+  const generateSkeleton = (rows, cols) =>  
+    [...Array(rows)].map((_, i) => (
+      <tr key={i}>
+        {[...Array(cols)].map((_, j) =>
+          <td key={j}>
+            <Skeleton animation="wave" />
+          </td>
+        )}
+      </tr>
+    ));
+
+  const generateModelDataTable = (temps) => 
+    temps.map((data, i) => (
+      <tr key={i}>
+        <td style={{ fontWeight: 675 }}>{data.name}</td>
+        <td>{data.prediction[0].toFixed(2)}&#176;C</td>
+        <td>{data.metrics.mse.toFixed(2)}</td>
+        <td>{data.metrics.r2.toFixed(2)}</td>
+      </tr>
+    ));
+
+  const generateClusterTable = (temps) => {
+
+  } 
+
+  const renderR2Tooltip = (props) => (
+    <Tooltip {...props}>
+      Measure of how close the data is to the fitted regression line.
+    </Tooltip>
+  );
+
+  const renderMSETooltip = (props) => (
+    <Tooltip {...props}>Measure of the model's predictive power.</Tooltip>
+  );
 
   let average = (array) => array.reduce((a, b) => a + b) / array.length;
 
   return (
     <div className="tables">
       <h2> {`${inputs.county}, ${inputs.state} Results`} </h2>
-        <>
-          <div className="linearTable">
-            <h4>Linear Model Predictions</h4>
-              <ModelData />
-          </div>
-          <div>
-            <p> </p>
-          </div>
-          <div className="clusterModelTable">
-            <h4>Cluster Model Calculations</h4>
-            {/* <p>
+      <>
+        <div className="linearTable">
+          <h4>Linear Model Predictions</h4>
+          <ModelDataTable
+            setDataRetrieved={setDataRetrieved}
+            dataRetrieved={dataRetrieved}
+          />
+        </div>
+        <div>
+          <p> </p>
+        </div>
+        <div className="clusterModelTable">
+          <h4>Cluster Model Calculations</h4>
+          {/* <p>
               This chart shows the median, highest, and lowest temperatures of
               the year
             </p> */}
-            {/* <Table responsive="sm">
+          {/* <Table responsive="sm">
               <thead>
                 <tr>
                   <th> </th>
@@ -185,11 +241,11 @@ const Results = ({ ready }) => {
                 </tr>
               </tbody>
             </Table> */}
-          </div>
-          <div>
-            <p> </p>
-          </div>
-          {/* <div className="avgRecordTable">
+        </div>
+        <div>
+          <p> </p>
+        </div>
+        {/* <div className="avgRecordTable">
       <h4>Average and Record Temperatures</h4>
       <Table responsive="sm">
         <thead>
@@ -205,7 +261,7 @@ const Results = ({ ready }) => {
         </tbody>
       </Table>
     </div> */}
-          {/* <div className="plots">
+        {/* <div className="plots">
             <div className="histTempDataPlot">
               {console.log(inputs.training_data)}
               <Plot
@@ -276,7 +332,7 @@ const Results = ({ ready }) => {
               />
             </div>
           </div> */}
-        </>
+      </>
     </div>
   );
 };
