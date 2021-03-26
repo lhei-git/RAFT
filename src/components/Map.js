@@ -30,38 +30,38 @@ const Map = () => {
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={9}
-        center={inputs.latLng}
+        center={inputs.latLng.lat !== 0 && inputs.latLng.lng !== 0 ? inputs.latLng : { lat: 42.332295, lng: -83.047044 }}
         options={options}
       >
-        {inputs.stations.map((station) => (
-          <Marker
+        {inputs.stations.map((station) => {
+          return <Marker
             key={station.id}
-            position={{ lat: station.lat, lng: station.long }}
+            position={{ lat: station.latitude, lng: station.longitude }}
             onClick={() => setSelectedMarker(station)}
           />
-        ))}
+        })}
 
         {/* show the window above the marker */}
         {selectedMarker ? (
           <InfoWindow
             position={{
-              lat: selectedMarker.lat + 0.09,
-              lng: selectedMarker.long,
+              lat: selectedMarker.latitude + 0.09,
+              lng: selectedMarker.longitude,
             }}
             onCloseClick={() => setSelectedMarker(null)}
           >
             <div style={{ textAlign: 'left' }}>
               <p>
-                <b>{selectedMarker.data_station_name}</b>
+                <b>{selectedMarker.name}</b>
               </p>
               <p>
                 <b>id:</b> {selectedMarker.id}
               </p>
               <p>
-                <b>lat:</b> {selectedMarker.lat}
+                <b>lat:</b> {selectedMarker.latitude}
               </p>
               <p>
-                <b>lng:</b> {selectedMarker.long}
+                <b>lng:</b> {selectedMarker.longitude}
               </p>
             </div>
           </InfoWindow>
@@ -72,9 +72,11 @@ const Map = () => {
 };
 
 const mapContainerStyle = {
+  minWidth: '500px',
   zIndex: '1',
-  width: '500px',
-  height: '400px',
+  // width: '100%',
+  height: '320px',
+  boxShadow: '1px 1px 9px rgb(10 10 10 / 30%)'
 };
 
 export default Map;
