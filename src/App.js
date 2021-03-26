@@ -26,17 +26,14 @@ function App() {
   const toggleHover = () => setSpin(!spin);
 
   useEffect(() => {
-    if (inputs.errorMessage !== '')
-      setOpen(true)
-  }, [inputs.errorMessage])
+    if (inputs.errorMessage !== '') setOpen(true);
+  }, [inputs.errorMessage]);
 
   useEffect(() => {
-    if (inputs.state !== '')
-      getLatLng(inputs.state);
+    if (inputs.state !== '') getLatLng(inputs.state);
   }, [inputs.state]);
   useEffect(() => {
-    if (inputs.state !== '')
-      getLatLngCounty(inputs.county, inputs.state);
+    if (inputs.state !== '') getLatLngCounty(inputs.county, inputs.state);
   }, [inputs.county]);
 
   const onSubmitPressed = () => setShowResults(true);
@@ -47,8 +44,14 @@ function App() {
         <div className="default-view">
           <div className="title-logo">
             <div className="title">
-            <FontAwesomeIcon className={spin ? "fa-spin" : ''} onMouseLeave={toggleHover} onMouseEnter={toggleHover} icon={faGlobeAmericas} style={{fontSize: '2.7rem', verticalAlign: '0rem'}} />
-              <h1 style={{paddingLeft: '10px'}}>RAFT</h1>
+              <FontAwesomeIcon
+                className={spin ? 'fa-spin' : ''}
+                onMouseLeave={toggleHover}
+                onMouseEnter={toggleHover}
+                icon={faGlobeAmericas}
+                style={{ fontSize: '2.7rem', verticalAlign: '0rem' }}
+              />
+              <h1 style={{ paddingLeft: '10px' }}>RAFT</h1>
             </div>
             {/* <div className="logo">
             </div> */}
@@ -56,16 +59,25 @@ function App() {
           <div className="hero">
             <div className="hero-container">
               <div className="information">
-                <h3 style={{paddingBottom: '.5rem'}}>Regional Temperature Profiler</h3>
+                <h3 style={{ paddingBottom: '.5rem' }}>
+                  Regional Temperature Profiler
+                </h3>
                 <p>
-                  RTP is an application that uses a linear regression model that <br/>
+                  RTP is an application that uses a linear regression model that{' '}
+                  <br />
                   will help you find a predicted temperature in a chosen county
                   and year.
                 </p>
                 <p>Choose a state to get started!</p>
               </div>
-              <div className='inner-hero-cont'>
-                <Form getData={getData} setGetData={setGetData} onSubmitPressed={onSubmitPressed} setOpen={setOpen} open={open} />
+              <div className="inner-hero-cont">
+                <Form
+                  getData={getData}
+                  setGetData={setGetData}
+                  onSubmitPressed={onSubmitPressed}
+                  setOpen={setOpen}
+                  open={open}
+                />
                 <div className="map">
                   <Map />
                 </div>
@@ -73,25 +85,37 @@ function App() {
             </div>
           </div>
         </div>
-        <div id="results">{showResults ? <Results getData={getData} /> : ''}</div>
+        <div id="results">
+          {showResults ? <Results getData={getData} /> : ''}
+        </div>
       </div>
-      <footer style={{
-        backgroundColor:'#f8f8ff',
-        height:'50px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-        <a style={{paddingRight:'10px'}} href="https://www.lhei.org">lhei.org</a>
-        <p style={{margin:'0'}}>"copyright"</p>
-        <a style={{paddingLeft:'10px'}} href="#">About Link</a>
+      <footer
+        style={{
+          backgroundColor: '#f8f8ff',
+          height: '50px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <a style={{ paddingRight: '10px' }} href="https://www.lhei.org">
+          lhei.org
+        </a>
+        <p style={{ margin: '0' }}>&#169;</p>
+        <a style={{ paddingLeft: '10px' }} href="#">
+          About Link
+        </a>
       </footer>
 
-      {open ? 
-        <ErrorMessage setOpen={setOpen} open={open} message={inputs.errorMessage}/>
-      :
+      {open ? (
+        <ErrorMessage
+          setOpen={setOpen}
+          open={open}
+          message={inputs.errorMessage}
+        />
+      ) : (
         ''
-      }
+      )}
     </div>
   );
 }

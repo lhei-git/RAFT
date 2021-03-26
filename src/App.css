@@ -79,14 +79,26 @@
   /* background-color: burlywood; */
 }
 
-.tables {
+.results {
   text-align: center;
   /* background-color: orange; */
   width: auto;
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
   padding: 20px 20px 20px 20px;
+}
+
+.tables {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.5fr 0.5fr;
+  align-items: center;
+}
+
+.table-plots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .linearTable {
@@ -96,6 +108,7 @@
   border: 1px solid black;
   width: 800px;
   padding: 20px 20px 20px 20px;
+  height: 500px;
 }
 
 .clusterModelTable {
@@ -103,9 +116,9 @@
   /* background-color: #c5c7c99a; */
   border: 1px solid black;
   background-color: #84a98c;
-
   width: 800px;
   padding: 20px 20px 20px 20px;
+  height: 500px;
 }
 
 .avgRecordTable {
@@ -113,14 +126,15 @@
   /* background-color: #c5c7c99a; */
   border: 1px solid black;
   background-color: #84a98c;
-
   width: 800px;
   padding: 20px 20px 20px 20px;
 }
 
 .plots {
-  display: flex;
-  padding: 20px 20px 20px 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.5fr 0.5fr;
+  align-items: center;
 }
 
 .histTempDataPlot {

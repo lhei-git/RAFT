@@ -1,15 +1,15 @@
-import { Suspense, useCallback, useContext, useEffect, useState } from "react";
-import "./../App.css";
-import { InputsContext, InputsProvider } from "../context/InputsContext";
-import { Table, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { Data } from "@react-google-maps/api";
-import React from "react";
-import Plot from "react-plotly.js";
-import Skeleton from "@material-ui/lab/Skeleton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import { Suspense, useCallback, useContext, useEffect, useState } from 'react';
+import './../App.css';
+import { InputsContext, InputsProvider } from '../context/InputsContext';
+import { Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Data } from '@react-google-maps/api';
+import React from 'react';
+import Plot from 'react-plotly.js';
+import Skeleton from '@material-ui/lab/Skeleton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
-import DataPlot from "./Plot";
+import DataPlot from './Plot';
 
 const Results = ({ getData }) => {
   const { inputs, getModelData, getClusters, getTrainingData } = useContext(
@@ -21,11 +21,11 @@ const Results = ({ getData }) => {
   const [trainingPlotData, setTrainingPlotData] = useState([]);
   const [clusterPlotData, setClusterPlotData] = useState([]);
 
-  const graphLabelStyle = { 
-    textAlign: "Left", 
+  const graphLabelStyle = {
+    textAlign: 'Left',
     fontWeight: 675,
     minWidth: '100px',
-    maxWidth: '200px' 
+    maxWidth: '200px',
   };
 
   useEffect(() => {
@@ -48,40 +48,40 @@ const Results = ({ getData }) => {
     ) {
       setTrainingPlotData([
         {
-          x: inputs.training_data["year"],
+          x: inputs.training_data['year'],
           y: inputs.training_data[Object.keys(inputs.training_data)[0]],
-          type: "scatter",
-          text: ["1980"],
-          mode: "markers",
-          name: "historical data",
-          marker: { color: "black" },
+          type: 'scatter',
+          text: ['1980'],
+          mode: 'markers',
+          name: 'historical data',
+          marker: { color: 'black' },
         },
       ]);
       setClusterPlotData([
         {
-          x: inputs.cluster[1]["High Temp Plot Cluster"][0],
-          y: inputs.cluster[1]["High Temp Plot Cluster"][1],
-          type: "scatter",
-          mode: "markers",
-          text: ["1980"],
-          name: "High Temps",
-          marker: { color: "red" },
+          x: inputs.cluster[1]['High Temp Plot Cluster'][0],
+          y: inputs.cluster[1]['High Temp Plot Cluster'][1],
+          type: 'scatter',
+          mode: 'markers',
+          text: ['1980'],
+          name: 'High Temps',
+          marker: { color: 'red' },
         },
         {
-          x: inputs.cluster[1]["Mid Temp Plot Cluster"][0],
-          y: inputs.cluster[1]["Mid Temp Plot Cluster"][1],
-          type: "scatter",
-          mode: "markers",
-          name: "Med Temps",
-          marker: { color: "green" },
+          x: inputs.cluster[1]['Mid Temp Plot Cluster'][0],
+          y: inputs.cluster[1]['Mid Temp Plot Cluster'][1],
+          type: 'scatter',
+          mode: 'markers',
+          name: 'Med Temps',
+          marker: { color: 'green' },
         },
         {
-          x: inputs.cluster[1]["Low Temp Plot Cluster"][0],
-          y: inputs.cluster[1]["Low Temp Plot Cluster"][1],
-          type: "scatter",
-          mode: "markers",
-          name: "Low Temps",
-          marker: { color: "blue" },
+          x: inputs.cluster[1]['Low Temp Plot Cluster'][0],
+          y: inputs.cluster[1]['Low Temp Plot Cluster'][1],
+          type: 'scatter',
+          mode: 'markers',
+          name: 'Low Temps',
+          marker: { color: 'blue' },
         },
       ]);
       setDataRetrieved(true);
@@ -111,11 +111,11 @@ const Results = ({ getData }) => {
   };
 
   const generateClusterTable = (temps, pre, post) => {
-    let tempTitle = ["Low", "Middle", "High"];
+    let tempTitle = ['Low', 'Middle', 'High'];
     let tempCluster = [
-      "Low Temp Cluster",
-      "Mid Temp Cluster",
-      "High Temp Cluster",
+      'Low Temp Cluster',
+      'Mid Temp Cluster',
+      'High Temp Cluster',
     ];
 
     return tempCluster.map((t, i) => (
@@ -134,11 +134,11 @@ const Results = ({ getData }) => {
           &#176;C
         </td>
         <td>
-          {average(pre["Pre " + t]).toFixed(2)}
+          {average(pre['Pre ' + t]).toFixed(2)}
           &#176;C
         </td>
         <td>
-          {average(post["Post " + t]).toFixed(2)}
+          {average(post['Post ' + t]).toFixed(2)}
           &#176;C
         </td>
       </tr>
@@ -175,9 +175,9 @@ const Results = ({ getData }) => {
                   <FontAwesomeIcon
                     icon={faQuestionCircle}
                     style={{
-                      marginLeft: "2px",
-                      fontSize: "0.7rem",
-                      verticalAlign: "5px",
+                      marginLeft: '2px',
+                      fontSize: '0.7rem',
+                      verticalAlign: '5px',
                     }}
                   />
                 </OverlayTrigger>
@@ -192,9 +192,9 @@ const Results = ({ getData }) => {
                   <FontAwesomeIcon
                     icon={faQuestionCircle}
                     style={{
-                      marginLeft: "2px",
-                      fontSize: "0.7rem",
-                      verticalAlign: "5px",
+                      marginLeft: '2px',
+                      fontSize: '0.7rem',
+                      verticalAlign: '5px',
                     }}
                   />
                 </OverlayTrigger>
@@ -212,7 +212,7 @@ const Results = ({ getData }) => {
   };
 
   const ClusterDataTable = useCallback(() => {
-    console.log("ran2");
+    console.log('ran2');
 
     return (
       <>
@@ -243,38 +243,35 @@ const Results = ({ getData }) => {
 
   const getPlot = useCallback(
     (data, layout) => {
-      return dataRetrieved ? <DataPlot data={data} layout={layout} /> : "";
+      return dataRetrieved ? <DataPlot data={data} layout={layout} /> : '';
     },
     [inputs.training_data, inputs.cluster, dataRetrieved]
   );
 
   return (
-    <div className="tables">
+    <div className="results">
       <h2> {`${inputs.county}, ${inputs.state} Results`} </h2>
-      <>
-        <div className="linearTable">
-          <h4>Linear Model Predictions</h4>
-          <ModelDataTable />
-        </div>
-        <div>
-          <p> </p>
-        </div>
-        <div className="clusterModelTable">
-          <h4>Cluster Model Calculations</h4>
-          <p>
-            This chart shows the median, highest, and lowest temperatures of the
-            year
-          </p>
-          <ClusterDataTable />
-        </div>
-        <div>
-          <p> </p>
+      <div className="table-plots">
+        <div className="tables">
+          <div className="linearTable">
+            <h4>Linear Model Predictions</h4>
+            <ModelDataTable />
+          </div>
+
+          <div className="clusterModelTable">
+            <h4>Cluster Model Calculations</h4>
+            <p>
+              This chart shows the median, highest, and lowest temperatures of
+              the year
+            </p>
+            <ClusterDataTable />
+          </div>
         </div>
         <div className="plots">
           <div className="histTempDataPlot">
             {trainingPlotData.length > 0 ? (
               getPlot(trainingPlotData, {
-                title: "Historical Temperature Data",
+                title: 'Historical Temperature Data',
               })
             ) : (
               <Skeleton variant="rect" width={500} height={500} />
@@ -283,14 +280,14 @@ const Results = ({ getData }) => {
           <div className="histRangeTempsPlot">
             {clusterPlotData.length > 0 ? (
               getPlot(clusterPlotData, {
-                title: "Clustered Historical Temperatures",
+                title: 'Clustered Historical Temperatures',
               })
             ) : (
               <Skeleton variant="rect" width={500} height={500} />
             )}
           </div>
         </div>
-      </>
+      </div>
     </div>
   );
 };
