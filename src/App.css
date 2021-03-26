@@ -19,7 +19,7 @@
   /* flex-direction: column; */
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: .15fr 1fr;
+  grid-template-rows: 0.15fr 1fr;
 }
 
 .title-logo {
@@ -47,7 +47,6 @@
   /* background-color: aqua; */
 }
 
-
 .information {
   text-align: center;
   /* background-color: cornflowerblue; */
@@ -73,10 +72,10 @@
 }
 
 .map {
-  display: flex;
-  justify-content: center;
+  /* display: flex;
+  justify-content: center; */
   /* padding: 10px 0; */
-  width: 100%;
+  /* width: 100%; */
   /* background-color: burlywood; */
 }
 
@@ -134,9 +133,8 @@
   /* background-color: aliceblue; */
 }
 
-
 @media (max-width: 1000px) {
   .default-view {
-    grid-template-rows: .10fr 1fr;
+    grid-template-rows: 0.1fr 1fr;
   }
 }

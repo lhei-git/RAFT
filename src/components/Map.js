@@ -30,15 +30,21 @@ const Map = () => {
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={9}
-        center={inputs.latLng.lat !== 0 && inputs.latLng.lng !== 0 ? inputs.latLng : { lat: 42.332295, lng: -83.047044 }}
+        center={
+          inputs.latLng.lat !== 0 && inputs.latLng.lng !== 0
+            ? inputs.latLng
+            : { lat: 42.332295, lng: -83.047044 }
+        }
         options={options}
       >
         {inputs.stations.map((station) => {
-          return <Marker
-            key={station.id}
-            position={{ lat: station.latitude, lng: station.longitude }}
-            onClick={() => setSelectedMarker(station)}
-          />
+          return (
+            <Marker
+              key={station.id}
+              position={{ lat: station.latitude, lng: station.longitude }}
+              onClick={() => setSelectedMarker(station)}
+            />
+          );
         })}
 
         {/* show the window above the marker */}
@@ -76,7 +82,7 @@ const mapContainerStyle = {
   zIndex: '1',
   // width: '100%',
   height: '320px',
-  boxShadow: '1px 1px 9px rgb(10 10 10 / 30%)'
+  boxShadow: '1px 1px 9px rgb(10 10 10 / 30%)',
 };
 
 export default Map;
