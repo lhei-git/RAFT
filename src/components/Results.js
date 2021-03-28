@@ -1,7 +1,7 @@
 import { Suspense, useCallback, useContext, useEffect, useState } from "react";
 import "./../App.css";
 import { InputsContext, InputsProvider } from "../context/InputsContext";
-import { Card, Table, OverlayTrigger, Tooltip, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Card, Table, OverlayTrigger, Tooltip, ListGroup, ListGroupItem, Badge } from "react-bootstrap";
 import { Data } from "@react-google-maps/api";
 import React from "react";
 import Plot from "react-plotly.js";
@@ -20,6 +20,7 @@ const Results = ({ getData }) => {
 
   const [trainingPlotData, setTrainingPlotData] = useState([]);
   const [clusterPlotData, setClusterPlotData] = useState([]);
+  const [month, setMonth] = useState(inputs.month);
 
   const graphLabelStyle = { 
     textAlign: "Left", 
@@ -28,7 +29,12 @@ const Results = ({ getData }) => {
     maxWidth: '200px' 
   };
 
+  // useEffect(() => {
+  //   setMonth(inputs.month);
+  // }, [inputs.month])
+
   useEffect(() => {
+    setMonth(inputs.month)
     setTrainingPlotData([]);
     setClusterPlotData([]);
     getModelData(inputs.year, inputs.month);
@@ -64,7 +70,7 @@ const Results = ({ getData }) => {
       Object.keys(inputs.training_data).length > 0
     ) {
       const stations = Array.from(new Set(inputs.training_data['training_data']['station']));
-      const xvals = generateXvalues(stations, inputs.training_data['training_data'], inputs.month)
+      const xvals = generateXvalues(stations, inputs.training_data['training_data'], month)
       const yearvals = generateXvalues(stations, inputs.training_data['training_data'], 'year')
       const data = xvals.map((data, i) => 
         ({
@@ -152,28 +158,38 @@ const Results = ({ getData }) => {
         <td style={graphLabelStyle}>{tempTitle[i]}</td>
         <td>
           {average(temps[t][1]).toFixed(2)}
-          &#176;C
-          ({temps[t][0][0]} - {temps[t][0][temps[t][0].length - 1]})
+          &#176;C<br/>
+          <Badge variant="dark">
+            {temps[t][0][0]} - {temps[t][0][temps[t][0].length - 1]}
+          </Badge>
         </td>
         <td>
           {Math.max(...temps[t][1]).toFixed(2)}
-          &#176;C
-          ({temps[t][0][temps[t][1].indexOf(Math.max(...temps[t][1]))]})
+          &#176;C<br/>
+          <Badge variant="dark">
+            {temps[t][0][temps[t][1].indexOf(Math.max(...temps[t][1]))]}
+          </Badge>
         </td>
         <td>
           {Math.min(...temps[t][1]).toFixed(2)}
-          &#176;C
-          ({temps[t][0][temps[t][1].indexOf(Math.min(...temps[t][1]))]})
+          &#176;C<br/>
+          <Badge variant="dark">
+            {temps[t][0][temps[t][1].indexOf(Math.min(...temps[t][1]))]}
+          </Badge>
         </td>
         <td>
           {average(pre["Pre " + t][1]).toFixed(2)}
-          &#176;C
-          ({pre["Pre " + t][0][0]} - {pre["Pre " + t][0][pre["Pre " + t][0].length - 1]})
+          &#176;C<br/>
+          <Badge variant="dark">
+            {pre["Pre " + t][0][0]} - {pre["Pre " + t][0][pre["Pre " + t][0].length - 1]}
+          </Badge>
         </td>
         <td>
           {average(post["Post " + t][1]).toFixed(2)}
-          &#176;C
-          ({post["Post " + t][0][0]} - {post["Post " + t][0][post["Post " + t][0].length - 1]})
+          &#176;C<br/>
+          <Badge variant="dark">
+            {post["Post " + t][0][0]} - {post["Post " + t][0][post["Post " + t][0].length - 1]}
+          </Badge>
         </td>
       </tr>
     ));
@@ -185,28 +201,34 @@ const Results = ({ getData }) => {
       'Pre-1980',
       'All Data'
     ];
-    console.log(temps['post'][inputs.month])
+    console.log(temps['post'][month])
     return Object.keys(temps).map((data, i) => 
       <tr>
         {console.log(data)}
         <td>{labels[i]}</td>
         {/* average */}
         <td>
-          {average(temps[data][inputs.month]).toFixed(2)}
-          &#176;C
-          ({temps[data]['year'][0]} - {temps[data]['year'][temps[data][inputs.month].length - 1]})
+          {average(temps[data][month]).toFixed(2)}
+          &#176;C<br/>
+          <Badge variant="dark">
+            {temps[data]['year'][0]} - {temps[data]['year'][temps[data][month].length - 1]}
+          </Badge>
         </td>
         {/* highest */}
         <td>
-          {Math.max(...temps[data][inputs.month]).toFixed(2)}
-          &#176;C
-          ({temps[data]['year'][temps[data][inputs.month].indexOf(Math.max(...temps[data][inputs.month]))]})
+          {Math.max(...temps[data][month]).toFixed(2)}
+          &#176;C<br/>
+          <Badge variant="dark">
+            {temps[data]['year'][temps[data][month].indexOf(Math.max(...temps[data][month]))]}
+          </Badge>
         </td>
         {/* lowest */}
         <td>
-          {Math.min(...temps[data][inputs.month]).toFixed(2)}
-          &#176;C
-          ({temps[data]['year'][temps[data][inputs.month].indexOf(Math.min(...temps[data][inputs.month]))]})
+          {Math.min(...temps[data][month]).toFixed(2)}
+          &#176;C<br/>
+          <Badge variant="dark">
+            {temps[data]['year'][temps[data][month].indexOf(Math.min(...temps[data][month]))]}
+          </Badge>
         </td>
       </tr>
     )
@@ -271,7 +293,7 @@ const Results = ({ getData }) => {
           <tbody>
             {Object.keys(inputs.model).length > 0
               ? generateModelDataTable(inputs.model)
-              : generateSkeleton(3, 4)}
+              : generateSkeleton(4, 4)}
           </tbody>
         </Table>
       </>
@@ -325,7 +347,7 @@ const Results = ({ getData }) => {
           <tbody>
             {Object.keys(inputs.training_data).length > 0
               ? generatePrePostTable(inputs.training_data)
-              : generateSkeleton(3, 3)}
+              : generateSkeleton(3, 4)}
           </tbody>
         </Table>
       </>
