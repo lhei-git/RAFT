@@ -1,0 +1,10 @@
+.description {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: start;
+  align-content: center;
+  text-align: center;
+  width: 800px;
+  margin: 0 auto;
+}
