@@ -109,7 +109,7 @@ function App() {
               <p style={{ margin: '0', paddingRight: '10px' }}>&#169; 2021</p>
               <a href="https://www.lhei.org">lhei.org</a>
               <a style={{ paddingLeft: '10px' }} href="/about">
-                About Link
+                About
               </a>
             </footer>
 
