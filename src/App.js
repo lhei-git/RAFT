@@ -97,6 +97,7 @@ function App() {
                 {showResults ? <Results getData={getData} /> : ''}
               </div>
             </div>
+<<<<<<< HEAD
             <footer
               style={{
                 backgroundColor: '#f8f8ff',
@@ -112,6 +113,29 @@ function App() {
                 About Link
               </a>
             </footer>
+=======
+          </div>
+        </div>
+        <div id="results">
+          {showResults ? <Results getData={getData} /> : ''}
+        </div>
+      </div>
+      <footer
+        style={{
+          backgroundColor: '#f8f8ff',
+          height: '50px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <p style={{ margin: '0', paddingRight: '10px' }}>&#169; 2021</p>
+        <a href="https://www.lhei.org">lhei.org</a>
+        <a style={{ paddingLeft: '10px' }} href="#">
+          About Link
+        </a>
+      </footer>
+>>>>>>> origin/thadd-wip
 
             {open ? (
               <ErrorMessage
