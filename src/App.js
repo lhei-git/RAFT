@@ -98,10 +98,8 @@ function App() {
           alignItems: 'center',
         }}
       >
-        <a style={{ paddingRight: '10px' }} href="https://www.lhei.org">
-          lhei.org
-        </a>
-        <p style={{ margin: '0' }}>&#169;</p>
+        <p style={{ margin: '0', paddingRight: '10px' }}>&#169; 2021</p>
+        <a href="https://www.lhei.org">lhei.org</a>
         <a style={{ paddingLeft: '10px' }} href="#">
           About Link
         </a>
