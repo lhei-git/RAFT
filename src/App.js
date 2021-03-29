@@ -85,9 +85,9 @@ function App() {
             </div>
           </div>
         </div>
-        {/* <div id="results"> */}
+        <div id="results">
           {showResults ? <Results getData={getData} /> : ''}
-        {/* </div> */}
+        </div>
       </div>
       <footer
         style={{

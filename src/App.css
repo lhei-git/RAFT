@@ -155,8 +155,6 @@
     padding-left: 20px;
     padding-right: 20px;
     justify-items: unset;
-    grid-template-columns: repeat(auto-fit, minmax(1fr, 1fr));
-    grid-template-rows: repeat(3, 500px);
     grid-template-areas:
       "lmp htd"
       "cmt cht"
