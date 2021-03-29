@@ -364,7 +364,7 @@ const Results = ({ getData }) => {
   return (
     <div className="results">
       <h2> {`${inputs.county}, ${inputs.state} Profile`} </h2>
-      <div className="tables">
+      <div className="tables-charts-two">
         <div className="linearTable">
           <Card>
             <Card.Header as='h6'>Linear Model Predictions</Card.Header>
@@ -400,26 +400,23 @@ const Results = ({ getData }) => {
             </Card.Body>
           </Card>
         </div>
-
-        <div className="plots">
-          <div className="histTempDataPlot">
-            {trainingPlotData.length > 0 ? (
-              getPlot(trainingPlotData, {
-                title: "Historical Temperature Data",
-              })
-            ) : (
-              <Skeleton variant="rect" width={500} height={500} />
-            )}
-          </div>
-          <div className="histRangeTempsPlot">
-            {clusterPlotData.length > 0 ? (
-              getPlot(clusterPlotData, {
-                title: "Clustered Historical Temperatures",
-              })
-            ) : (
-              <Skeleton variant="rect" width={500} height={500} />
-            )}
-          </div>
+        <div className="histTempDataPlot">
+          {trainingPlotData.length > 0 ? (
+            getPlot(trainingPlotData, {
+              title: "Historical Temperature Data",
+            })
+          ) : (
+            <Skeleton variant="rect" width={500} height={500} />
+          )}
+        </div>
+        <div className="histRangeTempsPlot">
+          {clusterPlotData.length > 0 ? (
+            getPlot(clusterPlotData, {
+              title: "Clustered Historical Temperatures",
+            })
+          ) : (
+            <Skeleton variant="rect" width={500} height={500} />
+          )}
         </div>
       </div>
     </div>
