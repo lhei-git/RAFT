@@ -79,14 +79,14 @@
   /* background-color: burlywood; */
 }
 
+
 .results {
   text-align: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 50px 1fr;
+  justify-items: center;
   /* background-color: orange; */
-  width: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 20px 20px 20px;
 }
 
 .tables {
@@ -144,7 +144,6 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(760px, 1fr));
-  /* align-items: center; */
   justify-items: center;
   row-gap: 30px;
 }
@@ -152,15 +151,16 @@
 
 @media (min-width: 1415px) {
   .tables-charts-two {
-    /* grid-template-columns: repeat(2, 1fr); */
-    justify-items: center;
-    grid-template-columns: repeat(auto-fit, minmax(760px, 1fr));
+    max-width: 1500px;
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-items: unset;
+    grid-template-columns: repeat(auto-fit, minmax(1fr, 1fr));
     grid-template-rows: repeat(3, 500px);
     grid-template-areas:
       "lmp htd"
       "cmt cht"
       "ppt .";
-    row-gap: 30px;
   }
   .linearTable { grid-area: lmp; }
   .histTempDataPlot { grid-area: htd; }
