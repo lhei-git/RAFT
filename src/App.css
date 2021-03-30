@@ -36,15 +36,9 @@
   justify-content: center;
 }
 
-.logo {
-  /* text-align: right; */
-  /* background-color: blanchedalmond; */
-  /* padding: 15px; */
-}
-
-.title {
-  /* text-align: left; */
-  /* background-color: aqua; */
+.logo, .logo:hover {
+  text-decoration: none;
+  color: #000;
 }
 
 .information {
@@ -70,15 +64,6 @@
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-
-.map {
-  /* display: flex;
-  justify-content: center; */
-  /* padding: 10px 0; */
-  /* width: 100%; */
-  /* background-color: burlywood; */
-}
-
 
 .results {
   text-align: center;
@@ -117,14 +102,6 @@
   grid-template-columns: 1fr;
   grid-template-rows: 0.5fr 0.5fr;
   align-items: center;
-}
-
-.histTempDataPlot {
-  /* background-color: aliceblue; */
-}
-
-.histRangeTempsPlot {
-  /* background-color: aliceblue; */
 }
 
 @media (max-width: 1000px) {

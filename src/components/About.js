@@ -23,7 +23,11 @@ function About() {
                 icon={faGlobeAmericas}
                 style={{ fontSize: '2.7rem', verticalAlign: '0rem' }}
               />
-              <h1 style={{ paddingLeft: '10px' }}>RAFT</h1>
+              <h1 style={{ paddingLeft: '10px' }}>
+                <a href="/" className="logo">
+                  RAFT
+                </a>
+              </h1>
             </div>
           </div>
 
