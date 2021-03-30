@@ -1,8 +1,16 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import './App.css';
+
+import About from './components/About';
 import Form from './components/Form';
 import Map from './components/Map';
+import ErrorMessage from './components/ErrorMessage';
+import Results from './components/Results';
+
 import { InputsContext } from './context/InputsContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 
 import Geocode from 'react-geocode';
 Geocode.setApiKey(process.env.REACT_APP_MAPS_API_KEY);
@@ -11,69 +19,118 @@ Geocode.enableDebug();
 
 function App() {
   const { inputs, getLatLng, getLatLngCounty } = useContext(InputsContext);
+  const [showResults, setShowResults] = useState(false);
+  const [getData, setGetData] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const [spin, setSpin] = useState(false);
+
+  const toggleHover = () => setSpin(!spin);
 
   useEffect(() => {
-    getLatLng(inputs.state);
+    if (inputs.errorMessage !== '') setOpen(true);
+  }, [inputs.errorMessage]);
+
+  useEffect(() => {
+    if (inputs.state !== '') getLatLng(inputs.state);
   }, [inputs.state]);
   useEffect(() => {
-    getLatLngCounty(inputs.county, inputs.state);
+    if (inputs.state !== '') getLatLngCounty(inputs.county, inputs.state);
   }, [inputs.county]);
 
+  const onSubmitPressed = () => setShowResults(true);
+
   return (
-    <div className="App">
-      <h1>Welcome to RAFT!</h1>
-      <fieldset style={styles.myFieldset}>
-        <legend style={styles.loginLegend}>Instructions</legend>
-        <ol style={styles.ol}>
-          <li>Pick a state you would like to see the future temperature of.</li>
-          <li>Pick a county within that state.</li>
-          <li>Pick a data station within that county.</li>
-          <li>Enter a year you would like to see the temperature for.</li>
-          <li>Press submit and see the estimated future temperature.</li>
-        </ol>
-      </fieldset>
-      <div className="box">
-        <o2 style={styles.o2}>
-          <Form />
-        </o2>
-        <o3 style={styles.o3}>
-          <Map />
-        </o3>
-      </div>
-      <br />
-      {inputs.errorMessage && inputs.errorMessage} <br />
-      <div className="results">
-        <p> Prediction (celsius): {inputs.model && inputs.model.prediction} </p>
-        <p> MSE: {inputs.model.metrics && inputs.model.metrics.mse} </p>
-        <p> R2: {inputs.model.metrics && inputs.model.metrics.r2} </p>
-      </div>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/about">
+          <About />
+        </Route>
+        <Route path="/">
+          <div className="App">
+            <div className="default-view-container">
+              <div className="default-view">
+                <div className="title-logo">
+                  <div className="title">
+                    <FontAwesomeIcon
+                      className={spin ? 'fa-spin' : ''}
+                      onMouseLeave={toggleHover}
+                      onMouseEnter={toggleHover}
+                      icon={faGlobeAmericas}
+                      style={{ fontSize: '2.7rem', verticalAlign: '0rem' }}
+                    />
+                    <h1 style={{ paddingLeft: '10px' }}>
+                      <a href="/" className="logo">
+                        RAFT
+                      </a>
+                    </h1>
+                  </div>
+                  {/* <div className="logo">
+            </div> */}
+                </div>
+                <div className="hero">
+                  <div className="hero-container">
+                    <div className="information">
+                      <h3 style={{ paddingBottom: '.5rem' }}>
+                        Regional Temperature Profiler
+                      </h3>
+                      <p>
+                        RTP is an application that uses a linear regression
+                        model that <br />
+                        will help you find a predicted temperature in a chosen
+                        county and year.
+                      </p>
+                      <p>Choose a state to get started!</p>
+                    </div>
+                    <div className="inner-hero-cont">
+                      <Form
+                        getData={getData}
+                        setGetData={setGetData}
+                        onSubmitPressed={onSubmitPressed}
+                        setOpen={setOpen}
+                        open={open}
+                      />
+                      <div className="map">
+                        <Map />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="results">
+                {showResults ? <Results getData={getData} /> : ''}
+              </div>
+            </div>
+            <footer
+              style={{
+                backgroundColor: '#f8f8ff',
+                height: '50px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <p style={{ margin: '0', paddingRight: '10px' }}>&#169; 2021</p>
+              <a href="https://www.lhei.org">lhei.org</a>
+              <a style={{ paddingLeft: '10px' }} href="/about">
+                About
+              </a>
+            </footer>
+
+            {open ? (
+              <ErrorMessage
+                setOpen={setOpen}
+                open={open}
+                message={inputs.errorMessage}
+              />
+            ) : (
+              ''
+            )}
+          </div>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
-
-const styles = {
-  loginLegend: {
-    margin: '20px',
-    width: '155px',
-  },
-  myFieldset: {
-    border: '3px solid',
-    maxWidth: 'max-content',
-    margin: '0 auto',
-    marginBottom: '40px',
-    paddingRight: '20px',
-  },
-  ol: {
-    textAlign: 'left',
-  },
-  o2: {
-    padding: '101px',
-    border: '2px solid #000',
-  },
-  o3: {
-    padding: '50px',
-    border: '2px solid #000',
-  },
-};
 
 export default App;

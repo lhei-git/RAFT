@@ -7,7 +7,7 @@ const MonthSelect = () => (
     <option value="FEB">Feb</option>
     <option value="MAR">Mar</option>
     <option value="APR">Apr</option>
-    <option value="May">May</option>
+    <option value="MAY">May</option>
     <option value="JUN">Jun</option>
     <option value="JUL">Jul</option>
     <option value="AUG">Aug</option>
