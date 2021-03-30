@@ -12,3 +12,4 @@ Team Members & GitHub usernames:
 * Thaddious Gorges - ThaddG
 * Shubham Tiwari - Killaskt
 * Maximillian Hendricks - maxh24
+* James Bradbury - DambOi
