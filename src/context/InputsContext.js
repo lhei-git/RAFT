@@ -1,11 +1,14 @@
 import React, { useReducer } from 'react';
 import raftApi from '../APIs/raftApi';
 import Geocode from 'react-geocode';
+import { ResponsiveEmbed } from 'react-bootstrap';
 Geocode.setApiKey(process.env.REACT_APP_MAPS_API_KEY);
 Geocode.setLanguage('en');
 Geocode.enableDebug();
 
 export const InputsContext = React.createContext();
+
+// var token = "";
 
 // REDUCER
 const inputsReducer = (state, action) => {
@@ -24,7 +27,7 @@ const inputsReducer = (state, action) => {
     case 'SELECT_YEAR':
       return { ...state, year: payload };
     case 'GET_COUNTIES':
-      return { ...state, counties: payload };
+      return { ...state, counties: payload.counties, token: payload.token };
     case 'GET_STATIONS':
       return { ...state, stations: payload };
     case 'GET_MODEL_DATA':
@@ -56,8 +59,9 @@ export const InputsProvider = ({ children }) => {
     model: [],
     errorMessage: '',
     latLng: { lat: 0, lng: 0 },
-    cluster: {},
+    cluster: [],
     training_data: {},
+    token: ''
   });
 
   // ACTIONS
@@ -76,30 +80,39 @@ export const InputsProvider = ({ children }) => {
   const getCounties = async (state) => {
     try {
       // axios call to get counties
-      const response = await raftApi.get(`/counties?state=${state}`);
-      console.log('debugging', response);
+      const response = await raftApi.get(`/v2/counties?state=${state}`);
       dispatch({ type: 'GET_COUNTIES', payload: response.data });
+
       console.log('counties', response.data);
     } catch (err) {
       console.log(err);
     }
   };
   const getStations = async (state, county) => {
+    console.log('yolo', inputs.token)
     try {
       // axios call to get stations
       const response = await raftApi.get(
-        `/stations?state=${state}&county=${county}&debug=True`
+        `/v2/stations?state=${state}&county=${county}&debug=True`,
+        {headers: {
+          Authorization: inputs.token
+        }}
       );
       dispatch({ type: 'GET_STATIONS', payload: response.data.results });
       console.log('STATIONS', response.data.results);
     } catch (err) {
       console.log(err);
+      dispatch({ type: 'ERROR_MESSAGE', payload: "Data stations not available for this county." });
     }
   };
   const getClusters = async () => {
     try {
       // axios call to get stations
-      const response = await raftApi.get(`/clusters`);
+      const response = await raftApi.get(`/v2/clusters`,
+        {headers: {
+          Authorization: inputs.token
+        }}
+      );
       console.log('CLUSTERS', response.data);
       dispatch({ type: 'GET_CLUSTER_DATA', payload: response.data });
     } catch (err) {
@@ -109,7 +122,11 @@ export const InputsProvider = ({ children }) => {
   const getTrainingData = async () => {
     try {
       // axios call to get stations
-      const response = await raftApi.get(`/data`);
+      const response = await raftApi.get(`/v2/data`,
+        {headers: {
+          Authorization: inputs.token
+        }}
+      );
       console.log('training data', response.data);
       dispatch({ type: 'GET_TRAINING_DATA', payload: response.data });
     } catch (err) {
@@ -118,9 +135,15 @@ export const InputsProvider = ({ children }) => {
   };
   const getModelData = async (year, month, season) => {
     try {
-      const response = await raftApi.get(`/model?year=${year}&month=${month}`);
+      const response = await raftApi.get(`/v2/model?year=${year}&month=${month}`,
+        {headers: {
+          Authorization: inputs.token
+        }}
+      ).catch(() => {
+        throw response
+      });
 
-      console.log('YOLO', response.data);
+      if (response.status_code)
 
       if (
         response.data === null ||
@@ -131,8 +154,8 @@ export const InputsProvider = ({ children }) => {
       dispatch({ type: 'GET_MODEL_DATA', payload: response.data });
       console.log(response.data);
     } catch (error) {
-      console.log(error.response.data);
-      dispatch({ type: 'ERROR_MESSAGE', payload: error.response.data });
+      console.log('MODEL ERROR', error, error.response);
+      dispatch({ type: 'ERROR_MESSAGE', payload: error.response });
     }
   };
 
@@ -144,7 +167,7 @@ export const InputsProvider = ({ children }) => {
         dispatch({ type: 'SET_LAT_LNG', payload: { lat, lng } });
       },
       (error) => {
-        console.error(error);
+        console.error('GET_LAT_LNG', error.data);
       }
     );
   };

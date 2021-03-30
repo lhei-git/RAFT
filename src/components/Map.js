@@ -1,4 +1,4 @@
-import react, { useContext, useState } from 'react';
+import react, { useContext, useEffect, useState } from 'react';
 import {
   GoogleMap,
   useLoadScript,
@@ -15,6 +15,7 @@ const options = {
 };
 
 const Map = () => {
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
   });
@@ -30,15 +31,21 @@ const Map = () => {
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={9}
-        center={inputs.latLng}
+        center={
+          inputs.latLng.lat !== 0 && inputs.latLng.lng !== 0
+            ? inputs.latLng
+            : { lat: 42.332295, lng: -83.047044 }
+        }
         options={options}
       >
         {inputs.stations.map((station) => {
-          return <Marker
-            key={station.id}
-            position={{ lat: station.latitude, lng: station.longitude }}
-            onClick={() => setSelectedMarker(station)}
-          />
+          return (
+            <Marker
+              key={station.id}
+              position={{ lat: station.latitude, lng: station.longitude }}
+              onClick={() => setSelectedMarker(station)}
+            />
+          );
         })}
 
         {/* show the window above the marker */}
@@ -72,10 +79,11 @@ const Map = () => {
 };
 
 const mapContainerStyle = {
-  minWidth: '400px',
+  minWidth: '500px',
   zIndex: '1',
-  width: '100%',
-  height: '400px',
+  // width: '100%',
+  height: '500px',
+  boxShadow: '1px 1px 9px rgb(10 10 10 / 30%)',
 };
 
 export default Map;
