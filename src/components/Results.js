@@ -204,7 +204,6 @@ const Results = ({ getData }) => {
         isTempEmpty = false;
       }
 
-      // console.log(pre["Pre " + t][0] === null, pre["Pre " + t][1] === null, pre["Pre " + t][1].length > 0)
 
       if (!(pre["Pre " + t][0] === null) && !(pre["Pre " + t][1] === null) && pre["Pre " + t][1].length > 0) {
         PreAvg = average(pre["Pre " + t][1]).toFixed(2);
@@ -223,10 +222,11 @@ const Results = ({ getData }) => {
         { !isTempEmpty ?
           <>
             <td>
+              {console.log('nolo', temps[t][0])}
               {avgAll}
               &#176;C<br/>
               <Badge variant="dark">
-                {temps[t][0][0]} - {temps[t][0][temps[t][0].length - 1]}
+                {Math.min(...temps[t][0])} - {Math.max(...temps[t][0])}
               </Badge>
             </td>
             <td>
@@ -254,7 +254,7 @@ const Results = ({ getData }) => {
             {PreAvg}
             &#176;C<br/>
             <Badge variant="dark">
-              {pre["Pre " + t][0][0]} - {pre["Pre " + t][0][pre["Pre " + t][0].length - 1]}
+            {Math.min(...pre["Pre " + t][0])} - {Math.max(...pre["Pre " + t][0])}
             </Badge>
           </td>
         :
@@ -268,7 +268,7 @@ const Results = ({ getData }) => {
               {PostAvg}
               &#176;C<br/>
               <Badge variant="dark">
-                {post["Post " + t][0][0]} - {post["Post " + t][0][post["Post " + t][0].length - 1]}
+                {Math.min(...post["Post " + t][0])} - {Math.max(...post["Post " + t][0])}
               </Badge>
             </td>
           :
@@ -299,7 +299,7 @@ const Results = ({ getData }) => {
             {average(temps[data][month]).toFixed(2)}
             &#176;C<br/>
             <Badge variant="dark">
-              {temps[data]['year'][0]} - {temps[data]['year'][temps[data][month].length - 1]}
+              {Math.min(...temps[data]['year'])} - {Math.max(...temps[data]['year'])}
             </Badge>
           </td>
           {/* highest */}
