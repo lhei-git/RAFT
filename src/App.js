@@ -75,12 +75,22 @@ function App() {
                         Regional Temperature Profiler
                       </h3>
                       <p>
-                        RTP is an application that uses a linear regression
-                        model that <br />
-                        will help you find a predicted temperature in a chosen
-                        county and year.
+                        RTP is an application to help people understand
+                        historical temperature changes and potential future{' '}
+                        <br />
+                        average temperatures for a particular region (a county
+                        of a US state). The application uses data from NOAA
+                        <br /> to present average temperature pre and post 1980;
+                        clusters of low, middle and high temperatures over time;
+                        <br />
+                        and uses a linear model to predict future average
+                        temperatures for a particular year.
+                        <p> </p>
+                        <p>
+                          Choose a specific county, month and a future year of
+                          interest to get started!
+                        </p>
                       </p>
-                      <p>Choose a state to get started!</p>
                     </div>
                     <div className="inner-hero-cont">
                       <Form

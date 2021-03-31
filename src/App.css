@@ -33,9 +33,14 @@
   color: #000;
 }
 
+.information h3 {
+  font-size: 40px;
+}
+
 .information {
   text-align: center;
   padding: 0 0 1rem 0;
+  font-size: larger;
 }
 
 .year-input,
@@ -117,9 +122,9 @@
     padding-right: 20px;
     justify-items: unset;
     grid-template-areas:
-      'lmp htd'
+      'ppt htd'
       'cmt cht'
-      'ppt .';
+      'lmp .';
   }
   .linearTable {
     grid-area: lmp;
