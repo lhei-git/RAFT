@@ -1,7 +1,15 @@
 import { Suspense, useCallback, useContext, useEffect, useState } from "react";
 import "./../App.css";
 import { InputsContext, InputsProvider } from "../context/InputsContext";
-import { Card, Table, OverlayTrigger, Tooltip, ListGroup, ListGroupItem, Badge } from "react-bootstrap";
+import { 
+  Card, 
+  Table, 
+  OverlayTrigger, 
+  Tooltip, 
+  ListGroup, 
+  ListGroupItem, 
+  Badge,
+  Form } from "react-bootstrap";
 import { Data } from "@react-google-maps/api";
 import React from "react";
 import Plot from "react-plotly.js";
@@ -21,6 +29,11 @@ const Results = ({ getData }) => {
   const [trainingPlotData, setTrainingPlotData] = useState([]);
   const [clusterPlotData, setClusterPlotData] = useState([]);
   const [month, setMonth] = useState(inputs.month);
+
+  // false is default
+  // false = scatter, true = line
+  const [toggle, setToggle] = useState(false);
+  const toggleClick = () => {console.log("toggle status", toggle); setToggle(!toggle)};
 
   const graphLabelStyle = { 
     textAlign: "Left", 
@@ -77,7 +90,7 @@ const Results = ({ getData }) => {
           x: yearvals[i],
           y: data,
           type: "scatter",
-          mode: "markers",
+          mode: !toggle ? "markers" : "lines+markers",
           name: stations[i],
         })
       )
@@ -112,7 +125,7 @@ const Results = ({ getData }) => {
       ]);
       setDataRetrieved(true);
     }
-  }, [inputs.training_data, inputs.cluster]);
+  }, [inputs.training_data, inputs.cluster, toggle]);
 
   const generateSkeleton = (rows, cols) =>
     [...Array(rows)].map((_, i) => (
@@ -137,8 +150,10 @@ const Results = ({ getData }) => {
       </tr>
       :
       <tr key={i}>
-        <td>{labels[i]}</td>
-        <td colspan="3">Not Enough Data</td>
+        <td style={{textAlign: 'left'}}>{labels[i]}</td>
+        <td>Not Enough Data</td>
+        <td></td>
+        <td></td>
       </tr>
     ));
   };
@@ -458,7 +473,7 @@ const Results = ({ getData }) => {
             </Card.Body>
           </Card>
         </div>
-        <div className="histTempDataPlot">
+        <div className="histTempDataPlot" style={{position:'relative'}}>
           {trainingPlotData.length > 0 ? (
             getPlot(trainingPlotData, {
               title: "Historical Temperature Data",
@@ -466,6 +481,9 @@ const Results = ({ getData }) => {
           ) : (
             <Skeleton variant="rect" width={500} height={500} />
           )}
+          <Form style={{ position:'absolute', top: '10px', left: '10px' }}>
+            <Form.Check type="switch" id="scatLine" label="Scatter/Line" onClick={toggleClick} />
+          </Form>
         </div>
         <div className="histRangeTempsPlot">
           {clusterPlotData.length > 0 ? (
