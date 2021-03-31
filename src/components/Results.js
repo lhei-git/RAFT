@@ -150,8 +150,10 @@ const Results = ({ getData }) => {
       </tr>
       :
       <tr key={i}>
-        <td>{labels[i]}</td>
-        <td colSpan="3">Not Enough Data</td>
+        <td style={{textAlign: 'left'}}>{labels[i]}</td>
+        <td>Not Enough Data</td>
+        <td></td>
+        <td></td>
       </tr>
     ));
   };
