@@ -138,7 +138,7 @@ const Results = ({ getData }) => {
       :
       <tr key={i}>
         <td>{labels[i]}</td>
-        <td colSpan="3">Not Enough Data</td>
+        <td colspan="3">Not Enough Data</td>
       </tr>
     ));
   };
@@ -151,48 +151,98 @@ const Results = ({ getData }) => {
       "High Temp Cluster",
     ];
 
-    // console.log(inputs.cluster[1][tempCluster2['Low']][0][inputs.cluster[1][tempCluster2['Low']][1].indexOf(Math.max(...temps['High Temp Cluster']))])  
-    console.log(pre['Pre Low Temp Cluster'])  
-    return tempCluster.map((t, i) => (
+    
+    return tempCluster.map((t, i) => {
+      let avgAll;
+      let PreAvg;
+      let PostAvg;
+
+      let isTempEmpty = true;
+      let isPreEmpty = true;
+      let isPostEmpty = true;
+
+      console.log('No Data?', temps)
+
+      if (temps[t][1].length > 0) {
+        avgAll = average(temps[t][1]).toFixed(2);
+        isTempEmpty = false;
+      }
+
+      // console.log(pre["Pre " + t][0] === null, pre["Pre " + t][1] === null, pre["Pre " + t][1].length > 0)
+
+      if (!(pre["Pre " + t][0] === null) && !(pre["Pre " + t][1] === null) && pre["Pre " + t][1].length > 0) {
+        PreAvg = average(pre["Pre " + t][1]).toFixed(2);
+        isPreEmpty = false;
+      }
+
+      if (!(post["Post " + t][0] === null) && !(post["Post " + t][1] === null) && post["Post " + t][1].length > 0) {
+        PostAvg = average(post["Post " + t][1]).toFixed(2);
+        isPostEmpty = false;
+      }
+
+      
+      return (
       <tr key={i}>
         <td style={graphLabelStyle}>{tempTitle[i]}</td>
-        <td>
-          {average(temps[t][1]).toFixed(2)}
-          &#176;C<br/>
-          <Badge variant="dark">
-            {temps[t][0][0]} - {temps[t][0][temps[t][0].length - 1]}
-          </Badge>
-        </td>
-        <td>
-          {Math.max(...temps[t][1]).toFixed(2)}
-          &#176;C<br/>
-          <Badge variant="dark">
-            {temps[t][0][temps[t][1].indexOf(Math.max(...temps[t][1]))]}
-          </Badge>
-        </td>
-        <td>
-          {Math.min(...temps[t][1]).toFixed(2)}
-          &#176;C<br/>
-          <Badge variant="dark">
-            {temps[t][0][temps[t][1].indexOf(Math.min(...temps[t][1]))]}
-          </Badge>
-        </td>
-        <td>
-          {average(pre["Pre " + t][1]).toFixed(2)}
-          &#176;C<br/>
-          <Badge variant="dark">
-            {pre["Pre " + t][0][0]} - {pre["Pre " + t][0][pre["Pre " + t][0].length - 1]}
-          </Badge>
-        </td>
-        <td>
-          {average(post["Post " + t][1]).toFixed(2)}
-          &#176;C<br/>
-          <Badge variant="dark">
-            {post["Post " + t][0][0]} - {post["Post " + t][0][post["Post " + t][0].length - 1]}
-          </Badge>
-        </td>
+        { !isTempEmpty ?
+          <>
+            <td>
+              {avgAll}
+              &#176;C<br/>
+              <Badge variant="dark">
+                {temps[t][0][0]} - {temps[t][0][temps[t][0].length - 1]}
+              </Badge>
+            </td>
+            <td>
+              {Math.max(...temps[t][1]).toFixed(2)}
+              &#176;C<br/>
+              <Badge variant="dark">
+                {temps[t][0][temps[t][1].indexOf(Math.max(...temps[t][1]))]}
+              </Badge>
+            </td>
+            <td>
+              {Math.min(...temps[t][1]).toFixed(2)}
+              &#176;C<br/>
+              <Badge variant="dark">
+                {temps[t][0][temps[t][1].indexOf(Math.min(...temps[t][1]))]}
+              </Badge>
+            </td>
+          </>
+        :
+          <td colspan="3">
+            Not Enough Data
+          </td>
+        }
+        { !isPreEmpty ?
+          <td>
+            {PreAvg}
+            &#176;C<br/>
+            <Badge variant="dark">
+              {pre["Pre " + t][0][0]} - {pre["Pre " + t][0][pre["Pre " + t][0].length - 1]}
+            </Badge>
+          </td>
+        :
+          <td>
+            Not Enough Data
+          </td>
+        }
+        {
+          !isPostEmpty ?
+            <td>
+              {PostAvg}
+              &#176;C<br/>
+              <Badge variant="dark">
+                {post["Post " + t][0][0]} - {post["Post " + t][0][post["Post " + t][0].length - 1]}
+              </Badge>
+            </td>
+          :
+          <td>
+            Not Enough Data
+          </td>
+        }
       </tr>
-    ));
+    );
+  })
   };
 
   const generatePrePostTable = (temps) => {
@@ -201,35 +251,43 @@ const Results = ({ getData }) => {
       'Pre-1980',
       'All Data'
     ];
-    console.log(temps['post'][month])
+
     return Object.keys(temps).map((data, i) => 
       <tr>
-        {console.log(data)}
         <td>{labels[i]}</td>
         {/* average */}
-        <td>
-          {average(temps[data][month]).toFixed(2)}
-          &#176;C<br/>
-          <Badge variant="dark">
-            {temps[data]['year'][0]} - {temps[data]['year'][temps[data][month].length - 1]}
-          </Badge>
+        {
+          temps[data][month].length > 0 ?
+          <>
+            <td>
+            {average(temps[data][month]).toFixed(2)}
+            &#176;C<br/>
+            <Badge variant="dark">
+              {temps[data]['year'][0]} - {temps[data]['year'][temps[data][month].length - 1]}
+            </Badge>
+          </td>
+          {/* highest */}
+          <td>
+            {Math.max(...temps[data][month]).toFixed(2)}
+            &#176;C<br/>
+            <Badge variant="dark">
+              {temps[data]['year'][temps[data][month].indexOf(Math.max(...temps[data][month]))]}
+            </Badge>
+          </td>
+          {/* lowest */}
+          <td>
+            {Math.min(...temps[data][month]).toFixed(2)}
+            &#176;C<br/>
+            <Badge variant="dark">
+              {temps[data]['year'][temps[data][month].indexOf(Math.min(...temps[data][month]))]}
+            </Badge>
+          </td>
+        </>
+        :
+        <td colspan="3">
+          Not Enough Data
         </td>
-        {/* highest */}
-        <td>
-          {Math.max(...temps[data][month]).toFixed(2)}
-          &#176;C<br/>
-          <Badge variant="dark">
-            {temps[data]['year'][temps[data][month].indexOf(Math.max(...temps[data][month]))]}
-          </Badge>
-        </td>
-        {/* lowest */}
-        <td>
-          {Math.min(...temps[data][month]).toFixed(2)}
-          &#176;C<br/>
-          <Badge variant="dark">
-            {temps[data]['year'][temps[data][month].indexOf(Math.min(...temps[data][month]))]}
-          </Badge>
-        </td>
+        }
       </tr>
     )
   }
