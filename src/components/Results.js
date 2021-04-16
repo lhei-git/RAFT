@@ -429,7 +429,7 @@ const Results = ({ getData }) => {
 
     return (
       <>
-        <Table responsive hover>
+        <Table hover>
           <thead>
             <tr>
               <th> </th>

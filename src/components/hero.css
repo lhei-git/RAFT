@@ -13,7 +13,7 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  padding: 0 40px 50px;
+  /* padding: 0 40px 50px; */
   gap: 10px;
   justify-content: center;
   align-items: center;
@@ -39,21 +39,21 @@
   /* width: 300px; */
 }
 
+.form-contain {
+}
+
 .form-dropdown-cont {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.5fr;
-  grid-template-rows: 1fr;
-  /* width: 200px; */
-  column-gap: 10px;
-  background: '#f8f8ff';
+  grid-template-columns: 1fr;
+  grid-template-rows: 50px;
   box-shadow: 0px 1px 4px 1px rgb(10 10 10 / 10%);
 }
 
 .form-dropdown {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 10px;
+  grid-template-columns: 155px 155px;
+  /* grid-template-rows: 1fr 1fr; */
+  column-gap: 10px;
 }
 
 .submit-cont {

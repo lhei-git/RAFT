@@ -56,12 +56,19 @@
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.map {
+  margin: 0 1em 1em;
+}
+
 .results {
   text-align: center;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 50px 1fr;
   justify-items: center;
+}
+#results {
+  margin: 0 1em;
 }
 
 .tables {
@@ -80,11 +87,7 @@
 .clusterModelTable,
 .avgRecordTable,
 .PrePostTable {
-  background-color: #84a98c;
-  border: 1px solid black;
   width: 760px;
-  padding: 20px 20px 20px 20px;
-  height: fit-content;
 }
 
 .plots {
@@ -106,13 +109,14 @@
 
 --------------------------------------------------------------------- */
 .tables-charts-two {
+  overflow-x: scroll;
   margin-bottom: 20px;
   margin-top: 20px;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(760px, 1fr));
   justify-items: center;
-  row-gap: 30px;
+  gap: 30px;
 }
 
 @media (min-width: 1415px) {

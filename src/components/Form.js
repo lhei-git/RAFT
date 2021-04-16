@@ -10,6 +10,7 @@ import SeasonSelect from './Dropdowns/SeasonSelect';
 import { InputsContext } from '../context/InputsContext';
 import Spinner from 'react-bootstrap/Spinner';
 import { Link } from 'react-scroll';
+import Card from '@material-ui/core/Card';
 
 import './hero.css';
 
@@ -20,13 +21,10 @@ const InputForm = ({ onSubmitPressed, getData, setGetData, setOpen, open }) => {
     inputs,
     selectState,
     selectCounty,
-    selectStation,
     selectMonth,
     getCounties,
     getStations,
-    getModelData,
     selectYear,
-    selectSeason,
     getClusters,
     getTrainingData,
   } = useContext(InputsContext);
@@ -44,7 +42,7 @@ const InputForm = ({ onSubmitPressed, getData, setGetData, setOpen, open }) => {
 
   return (
     <div className="form-contain">
-      <div
+      {/* <div
         className="form-dropdown-cont"
         style={{
           background: '#f8f8ff',
@@ -52,7 +50,8 @@ const InputForm = ({ onSubmitPressed, getData, setGetData, setOpen, open }) => {
           padding: '10px',
           boxShadow: 'inline 1px 1px 10px rgba(20,20,20,1)',
         }}
-      >
+      > */}
+      <Card>
         <div className="form-dropdown">
           <DropdownInput
             label="State"
@@ -145,7 +144,8 @@ const InputForm = ({ onSubmitPressed, getData, setGetData, setOpen, open }) => {
             </Button>
           )}
         </div>
-      </div>
+      </Card>
+      {/* </div> */}
     </div>
   );
 };
