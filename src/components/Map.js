@@ -15,7 +15,6 @@ const options = {
 };
 
 const Map = () => {
-
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
   });
@@ -79,11 +78,12 @@ const Map = () => {
 };
 
 const mapContainerStyle = {
-  minWidth: '500px',
+  minWidth: '200px',
   zIndex: '1',
   // width: '100%',
   height: '500px',
   boxShadow: '1px 1px 9px rgb(10 10 10 / 30%)',
+  borderRadius: '0.2em',
 };
 
 export default Map;

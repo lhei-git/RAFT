@@ -12,6 +12,11 @@ import { InputsContext } from './context/InputsContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+
 import Geocode from 'react-geocode';
 Geocode.setApiKey(process.env.REACT_APP_MAPS_API_KEY);
 Geocode.setLanguage('en');
@@ -108,7 +113,15 @@ function App() {
                 </div>
               </div>
               <div id="results">
-                {showResults ? <Results getData={getData} /> : ''}
+                {showResults ? (
+                  <Card>
+                    <CardContent>
+                      <Results getData={getData} />
+                    </CardContent>
+                  </Card>
+                ) : (
+                  ''
+                )}
               </div>
             </div>
             <footer
