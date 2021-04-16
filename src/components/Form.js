@@ -42,16 +42,8 @@ const InputForm = ({ onSubmitPressed, getData, setGetData, setOpen, open }) => {
 
   return (
     <div className="form-contain">
-      {/* <div
-        className="form-dropdown-cont"
-        style={{
-          background: '#f8f8ff',
-          borderRadius: '3px',
-          padding: '10px',
-          boxShadow: 'inline 1px 1px 10px rgba(20,20,20,1)',
-        }}
-      > */}
-      <Card>
+      <Card id="plsWork">
+      <div id="plsWork-inner-container">
         <div className="form-dropdown">
           <DropdownInput
             label="State"
@@ -144,8 +136,8 @@ const InputForm = ({ onSubmitPressed, getData, setGetData, setOpen, open }) => {
             </Button>
           )}
         </div>
+      </div>
       </Card>
-      {/* </div> */}
     </div>
   );
 };

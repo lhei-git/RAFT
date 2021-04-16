@@ -70,8 +70,6 @@ function App() {
                       </a>
                     </h1>
                   </div>
-                  {/* <div className="logo">
-            </div> */}
                 </div>
                 <div className="hero">
                   <div className="hero-container">
