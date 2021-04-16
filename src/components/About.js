@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-
+import aboutImage from '../assets/temperature-figure1-2016.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 import './About.css';
@@ -53,7 +53,13 @@ function About() {
               has risen by 1.84° F (1.02° C). <br /> <p> </p>
               Since the late 1970s average temperatures have risen more quickly,
               beginning a trend of the warmest years on record in the US, as the
-              graph shows below. {/*<img src="temperature-figure1-2016.jpg">*/}
+              graph shows below.{' '}
+              <img
+                src={aboutImage}
+                alt="temperature graph"
+                width="800"
+                height="500"
+              />
               <br /> <p> </p>
               <a href="https://climate.nasa.gov/news/3061/2020-tied-for-warmest-year-on-record-nasa-analysis-shows/">
                 According to NASA
