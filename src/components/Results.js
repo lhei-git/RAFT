@@ -303,7 +303,7 @@ const Results = ({ getData }) => {
           <thead>
             <tr>
               <th>Cluster</th>
-              <th>Average Temperature ({inputs.year})</th>
+              <th>Average Temperature</th>
               <th>
                 MSE
                 <OverlayTrigger
@@ -419,8 +419,10 @@ const Results = ({ getData }) => {
       </h2>
       <div className="tables-charts-two">
         <div className="PrePostTable">
+          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
+            Linear Model Predictions for {inputs.month} , {inputs.year}
+          </h1>
           <Card>
-            <Card.Header as="h6">Linear Model Predictions</Card.Header>
             <Card.Body style={{ padding: '.3em 1.25em 0px' }}>
               <ModelDataTable />
             </Card.Body>
@@ -428,17 +430,12 @@ const Results = ({ getData }) => {
         </div>
 
         <div className="clusterModelTable">
+          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
+            Cluster Analysis for Selected Stations
+          </h1>
           <Card>
-            <Card.Header>Cluster Model Calculations</Card.Header>
             <Card.Body style={{ padding: '.75em 1.25rem 0' }}>
-              <Card.Subtitle>
-                <ListGroup>
-                  <ListGroupItem>
-                    This chart shows the median, highest, and lowest
-                    temperatures of the year.
-                  </ListGroupItem>
-                </ListGroup>
-              </Card.Subtitle>
+              <Card.Subtitle></Card.Subtitle>
               <Card.Text>
                 <ClusterDataTable />
               </Card.Text>
@@ -447,8 +444,10 @@ const Results = ({ getData }) => {
         </div>
 
         <div className="linearTable">
+          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
+            Temperatures for Selected Stations (Pre & Post 1980)
+          </h1>
           <Card>
-            <Card.Header>Pre-Post-All Data Statistics</Card.Header>
             <Card.Body style={{ padding: '.75em 1.25rem 0' }}>
               <Card.Text>
                 <PrePostTable />
