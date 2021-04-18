@@ -106,10 +106,6 @@
   align-items: center;
 }
 
-.g-title .gtitle {
-  font-size: xx-large;
-}
-
 @media (max-width: 1000px) {
   .default-view {
     grid-template-rows: 0.1fr 1fr;

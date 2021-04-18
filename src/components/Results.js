@@ -35,8 +35,11 @@ const Results = ({ getData }) => {
   // false = scatter, true = line
   const [toggle, setToggle] = useState(false);
   const toggleClick = () => {
-    console.log('toggle status', toggle);
     setToggle(!toggle);
+  };
+  const [toggleClustered, setToggleClustered] = useState(false);
+  const toggleClickClustered = () => {
+    setToggleClustered(!toggleClustered);
   };
 
   const graphLabelStyle = {
@@ -118,7 +121,7 @@ const Results = ({ getData }) => {
           x: cls['High Temp Cluster'][0],
           y: cls['High Temp Cluster'][1],
           type: 'scatter',
-          mode: 'markers',
+          mode: !toggleClustered ? 'markers' : 'lines+markers',
           name: 'High Temps',
           marker: { color: 'red' },
         },
@@ -126,7 +129,7 @@ const Results = ({ getData }) => {
           x: cls['Mid Temp Cluster'][0],
           y: cls['Mid Temp Cluster'][1],
           type: 'scatter',
-          mode: 'markers',
+          mode: !toggleClustered ? 'markers' : 'lines+markers',
           name: 'Med Temps',
           marker: { color: 'green' },
         },
@@ -134,14 +137,14 @@ const Results = ({ getData }) => {
           x: cls['Low Temp Cluster'][0],
           y: cls['Low Temp Cluster'][1],
           type: 'scatter',
-          mode: 'markers',
+          mode: !toggleClustered ? 'markers' : 'lines+markers',
           name: 'Low Temps',
           marker: { color: 'blue' },
         },
       ]);
       setDataRetrieved(true);
     }
-  }, [inputs.training_data, inputs.cluster, toggle]);
+  }, [inputs.training_data, inputs.cluster, toggle, toggleClustered]);
 
   const generateSkeleton = (rows, cols) =>
     [...Array(rows)].map((_, i) => (
@@ -188,7 +191,7 @@ const Results = ({ getData }) => {
     ];
 
     // console.log(inputs.cluster[1][tempCluster2['Low']][0][inputs.cluster[1][tempCluster2['Low']][1].indexOf(Math.max(...temps['High Temp Cluster']))])
-    console.log(pre['Pre Low Temp Cluster']);
+    // console.log(pre['Pre Low Temp Cluster']);
     return tempCluster.map((t, i) => (
       <tr key={i}>
         <td style={graphLabelStyle}>{tempTitle[i]}</td>
@@ -351,7 +354,7 @@ const Results = ({ getData }) => {
   };
 
   const ClusterDataTable = () => {
-    console.log('ran2');
+    // console.log('ran2');
 
     return (
       <>
@@ -454,14 +457,17 @@ const Results = ({ getData }) => {
           </Card>
         </div>
         <div className="histTempDataPlot" style={{ position: 'relative' }}>
+          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
+            Historical Temperature Data
+          </h1>
           {trainingPlotData.length > 0 ? (
             getPlot(trainingPlotData, {
-              title: 'Historical Temperature Data',
+              // title: 'Historical Temperature Data',
             })
           ) : (
             <Skeleton variant="rect" width={500} height={500} />
           )}
-          <Form style={{ position: 'absolute', bottom: '10px', left: '10px' }}>
+          <Form style={{ position: 'absolute', top: '50px', left: '30px' }}>
             <Form.Check
               type="switch"
               id="scatLine"
@@ -470,14 +476,25 @@ const Results = ({ getData }) => {
             />
           </Form>
         </div>
-        <div className="histRangeTempsPlot">
+        <div className="histRangeTempsPlot" style={{ position: 'relative' }}>
+          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
+            Clustered Historical Temperatures
+          </h1>
           {clusterPlotData.length > 0 ? (
             getPlot(clusterPlotData, {
-              title: 'Clustered Historical Temperatures',
+              // title: 'Clustered Historical Temperatures',
             })
           ) : (
             <Skeleton variant="rect" width={500} height={500} />
           )}
+          <Form style={{ position: 'absolute', top: '50px', left: '30px' }}>
+            <Form.Check
+              type="switch"
+              id="scatLineCluster"
+              label="Scatter/Line"
+              onClick={toggleClickClustered}
+            />
+          </Form>
         </div>
       </div>
     </div>

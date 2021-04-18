@@ -65,7 +65,7 @@ function App() {
                       style={{ fontSize: '2.7rem', verticalAlign: '0rem' }}
                     />
                     <h1 style={{ paddingLeft: '10px' }}>
-                      <a href="/" className="logo">
+                      <a href="/about" className="logo">
                         RAFT
                       </a>
                     </h1>
@@ -101,24 +101,29 @@ function App() {
                         setOpen={setOpen}
                         open={open}
                       />
-                      <div className="map">
+                      {/* <div className="map">
                         <Map />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
               </div>
-              <div id="results">
-                {showResults ? (
-                  <Card>
-                    <CardContent>
-                      <Results getData={getData} />
-                    </CardContent>
-                  </Card>
-                ) : (
-                  ''
-                )}
+            </div>
+            <section>
+              <div className="map">
+                <Map />
               </div>
+            </section>
+            <div id="results">
+              {showResults ? (
+                <Card>
+                  <CardContent>
+                    <Results getData={getData} />
+                  </CardContent>
+                </Card>
+              ) : (
+                ''
+              )}
             </div>
             <footer
               style={{
