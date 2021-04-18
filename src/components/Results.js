@@ -17,6 +17,8 @@ import Plot from 'react-plotly.js';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 
 import DataPlot from './Plot';
 
@@ -186,11 +188,13 @@ const Results = ({ getData }) => {
       'Mid Temp Cluster',
       'High Temp Cluster',
     ];
-
+    
     // console.log(inputs.cluster[1][tempCluster2['Low']][0][inputs.cluster[1][tempCluster2['Low']][1].indexOf(Math.max(...temps['High Temp Cluster']))])
     console.log(pre['Pre Low Temp Cluster']);
-    return tempCluster.map((t, i) => (
-      <tr key={i}>
+    return tempCluster.map((t, i) => {
+      let postAvg = average(post['Post ' + t][1]).toFixed(2)
+      let preAvg = average(pre['Pre ' + t][1]).toFixed(2)
+      return <tr key={i}>
         <td style={graphLabelStyle}>{tempTitle[i]}</td>
         <td>
           {average(temps[t][1]).toFixed(2)}
@@ -217,7 +221,7 @@ const Results = ({ getData }) => {
           </Badge>
         </td>
         <td>
-          {average(pre['Pre ' + t][1]).toFixed(2)}
+          {preAvg}
           &#176;C
           <br />
           <Badge variant="dark">
@@ -226,8 +230,27 @@ const Results = ({ getData }) => {
           </Badge>
         </td>
         <td>
-          {average(post['Post ' + t][1]).toFixed(2)}
+          {/*arrow go here with logic */}
+          {postAvg}
           &#176;C
+          {preAvg < postAvg ? <FontAwesomeIcon
+                    icon={faArrowUp}
+                    style={{
+                      marginLeft: '2px',
+                      fontSize: '0.7rem',
+                      verticalAlign: '5px',
+                      color:"red",
+                    }}
+                  />:
+                  <FontAwesomeIcon
+                    icon={faArrowDown}
+                    style={{
+                      marginLeft: '2px',
+                      fontSize: '0.7rem',
+                      verticalAlign: '5px',
+                      color:"green",
+                    }}
+                  />}
           <br />
           <Badge variant="dark">
             {post['Post ' + t][0][0]} -{' '}
@@ -235,19 +258,40 @@ const Results = ({ getData }) => {
           </Badge>
         </td>
       </tr>
-    ));
+    });
   };
 
   const generatePrePostTable = (temps) => {
     const labels = ['Post-1980', 'Pre-1980', 'All Data'];
     console.log(temps['post'][month]);
-    return Object.keys(temps).map((data, i) => (
-      <tr>
+    console.log("temps",temps)
+    return Object.keys(temps).map((data, i) => {
+
+      return <tr>
         <td>{labels[i]}</td>
         {/* average */}
+        {console.log(data=="post")}
         <td>
           {average(temps[data][month]).toFixed(2)}
           &#176;C
+          {data==="post"?average(temps['post'][month]) > average(temps['pre'][month])? <FontAwesomeIcon
+                    icon={faArrowUp}
+                    style={{
+                      marginLeft: '2px',
+                      fontSize: '0.7rem',
+                      verticalAlign: '5px',
+                      color:"red",
+                    }}
+                  />:
+                  <FontAwesomeIcon
+                    icon={faArrowDown}
+                    style={{
+                      marginLeft: '2px',
+                      fontSize: '0.7rem',
+                      verticalAlign: '5px',
+                      color:"green",
+                    }}
+                  />:""}
           <br />
           <Badge variant="dark">
             {temps[data]['year'][0]} -{' '}
@@ -258,6 +302,24 @@ const Results = ({ getData }) => {
         <td>
           {Math.max(...temps[data][month]).toFixed(2)}
           &#176;C
+          {data==="post"?Math.max(...temps['post'][month]) > Math.max(...temps['pre'][month])? <FontAwesomeIcon
+                    icon={faArrowUp}
+                    style={{
+                      marginLeft: '2px',
+                      fontSize: '0.7rem',
+                      verticalAlign: '5px',
+                      color:"red",
+                    }}
+                  />:
+                  <FontAwesomeIcon
+                    icon={faArrowDown}
+                    style={{
+                      marginLeft: '2px',
+                      fontSize: '0.7rem',
+                      verticalAlign: '5px',
+                      color:"green",
+                    }}
+                  />:""}
           <br />
           <Badge variant="dark">
             {
@@ -271,6 +333,24 @@ const Results = ({ getData }) => {
         <td>
           {Math.min(...temps[data][month]).toFixed(2)}
           &#176;C
+          {data==="post"?Math.min(...temps['post'][month]) > Math.min(...temps['pre'][month])? <FontAwesomeIcon
+                    icon={faArrowUp}
+                    style={{
+                      marginLeft: '2px',
+                      fontSize: '0.7rem',
+                      verticalAlign: '5px',
+                      color:"red",
+                    }}
+                  />:
+                  <FontAwesomeIcon
+                    icon={faArrowDown}
+                    style={{
+                      marginLeft: '2px',
+                      fontSize: '0.7rem',
+                      verticalAlign: '5px',
+                      color:"green",
+                    }}
+                  />:""}
           <br />
           <Badge variant="dark">
             {
@@ -281,7 +361,7 @@ const Results = ({ getData }) => {
           </Badge>
         </td>
       </tr>
-    ));
+    });
   };
 
   const renderR2Tooltip = (props) => (
