@@ -31,10 +31,12 @@ function About() {
             </div>
           </div>
 
-          <div className="description">
+          <div className="title">
             <h3 style={{ paddingBottom: '.5rem' }}>
               Regional Temperature Profiler
             </h3>
+          </div>
+          <div className="description">
             <p>
               Temperatures are on average increasing across the world. This
               recent growth in average temperature is referred to as global
@@ -102,8 +104,8 @@ function About() {
               changes for particular regions of the US, namely by analysis of
               county temperatures. The application retrieves data from NOAA’s
               API to create a county profile of temperatures from selected
-              county data stations ***add general data set name here GHCN
-              v4?***. <br />
+              county data stations, retrieved as "GHCND: [Data Station ID]."{' '}
+              <br />
               <p> </p>
               RTP presents record and average temperatures for the specific
               county and specific month of interest selected by the user. It
@@ -123,10 +125,7 @@ function About() {
               <a href="https://lhei.org/">
                 Lab for Health and Environmental Information
               </a>{' '}
-              (LHEI). Nic guided the RTP project with computer science capstone
-              students during winter 2021. Sunayana Sharma, Thaddious Gorges,
-              Shubham Tiwari, James Bradbury, and Maximillian Hendricks
-              designed, developed and implemented the RTP application.
+              (LHEI).
             </p>
           </div>
           <div>{/* <img src=“rtpLogo.jpg" alt="RTP"> */}</div>

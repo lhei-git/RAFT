@@ -21,6 +21,10 @@
   margin-left: 3rem;
 }
 
+.rtp {
+  font-weight: bolder;
+}
+
 .title {
   display: flex;
   flex-direction: row;
@@ -34,13 +38,14 @@
 }
 
 .information h3 {
-  font-size: 40px;
+  font-size: 60px;
+  font-weight: 700;
 }
 
 .information {
   text-align: center;
   padding: 0 0 1rem 0;
-  font-size: larger;
+  font-size: 30px;
 }
 
 .year-input,
@@ -58,6 +63,10 @@
 
 .map {
   margin: 0 1em 1em;
+}
+.results h2 {
+  font-size: 50px;
+  font-weight: 700;
 }
 
 .results {
@@ -95,6 +104,10 @@
   grid-template-columns: 1fr;
   grid-template-rows: 0.5fr 0.5fr;
   align-items: center;
+}
+
+.g-title .gtitle {
+  font-size: xx-large;
 }
 
 @media (max-width: 1000px) {

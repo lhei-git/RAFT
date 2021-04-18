@@ -74,22 +74,20 @@ function App() {
                 <div className="hero">
                   <div className="hero-container">
                     <div className="information">
-                      <h3 style={{ paddingBottom: '.5rem' }}>
-                        Regional Temperature Profiler
-                      </h3>
+                      <div classname="rtp">
+                        <h3 style={{ paddingBottom: '.5rem' }}>
+                          Regional Temperature Profiler
+                        </h3>
+                      </div>
                       <p>
-                        RTP is an application to help people understand
-                        historical temperature changes and potential future{' '}
-                        <br />
-                        average temperatures for a particular region (a county
-                        of a US state). The application uses data from NOAA
-                        <br /> to present average temperature pre and post 1980;
-                        clusters of low, middle and high temperatures over time;
+                        The RTP application uses data from NOAA to present
+                        average temperature pre and post 1980; <br /> clusters
+                        of low, middle and high temperatures over time;
                         <br />
                         and uses a linear model to predict future average
                         temperatures for a particular year.
                         <p> </p>
-                        <p>
+                        <p style={{ color: '#696969' }}>
                           Choose a specific county, month and a future year of
                           interest to get started!
                         </p>
@@ -134,7 +132,7 @@ function App() {
               <p style={{ margin: '0', paddingRight: '10px' }}>&#169; 2021</p>
               <a href="https://www.lhei.org">lhei.org</a>
               <a style={{ paddingLeft: '10px' }} href="/about">
-                About
+                about
               </a>
             </footer>
 

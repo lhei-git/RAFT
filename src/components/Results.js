@@ -413,10 +413,8 @@ const Results = ({ getData }) => {
 
   return (
     <div className="results">
-      <h2>
-        {' '}
-        {`${inputs.county}, ${inputs.state} Temperature Profile - for ${inputs.month}, ${inputs.year}`}{' '}
-      </h2>
+      <h2> {`${inputs.county}, ${inputs.state} Temperature Profile`} </h2>
+      <h2> {`for ${inputs.month}`} </h2>
       <div className="tables-charts-two">
         <div className="PrePostTable">
           <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
@@ -463,7 +461,7 @@ const Results = ({ getData }) => {
           ) : (
             <Skeleton variant="rect" width={500} height={500} />
           )}
-          <Form style={{ position: 'absolute', top: '10px', left: '10px' }}>
+          <Form style={{ position: 'absolute', bottom: '10px', left: '10px' }}>
             <Form.Check
               type="switch"
               id="scatLine"
