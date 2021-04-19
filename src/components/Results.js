@@ -543,7 +543,7 @@ const Results = ({ getData }) => {
     <div className="results">
       <h2> {`${inputs.county}, ${inputs.state} Temperature Profile`} </h2>
       <h2 style={{ marginTop: "5px" }}> {`for ${months[inputs.month]}`} </h2>
-      <Grid component="label" container spacing={1} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+      <Grid component="label" container spacing={1} style={{position: "absolute", left: "0", top: "0"}}>
           <Grid item>&#176;C</Grid>
           <Grid item>
             <Form.Check
