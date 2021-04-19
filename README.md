@@ -9,16 +9,15 @@ Regional Assessments of Future Temperatures
 
 An appication that pulls data from the NOAA Api and then uses that data to predict the temperatures of a specified year and specified county. Currently, this application only supports locations in the United States. 
 
+This is the frontend repository.
+The backend can be found [HERE](https://github.com/Killaskt/raft-backend)
+
 Team Members & GitHub usernames:
 * Sunayana Sharma - yanassss
 * Thaddious Gorges - ThaddG
 * Shubham Tiwari - Killaskt
 * Maximillian Hendricks - maxh24
 * James Bradbury - codemonkeman
-
-
-This is the frontend repository.
-The backend can be found [HERE](https://github.com/Killaskt/raft-backend)
 
 ## Setup
 
