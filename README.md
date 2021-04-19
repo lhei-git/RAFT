@@ -25,7 +25,7 @@ The backend can be found [HERE](https://github.com/Killaskt/raft-backend)
 1. Open the command prompt or terminal
 2. Clone the repository `git clone https://github.com/lhei-git/RAFT.git`
 3. Navigate to the new directory: `cd RAFT`
-4. In your terminal (while open to the project directory), `yarn Install`
+4. In your terminal (while open to the project directory), `yarn install`
 5. Get a Google Maps API environment key; [follow these steps if you dont know how](https://studiosimpati.co/setup-configure-google-maps-api-key/)
 6. Create a file named `.env` and place your key inside it
 
