@@ -555,8 +555,8 @@ const Results = ({ getData }) => {
           <Grid item>&#176;F</Grid>
         </Grid>
       <div className="tables-charts-two">
-        <div className="PrePostTable">
-          <h1 style={{ fontSize: "1.5em", fontWeight: "bolder" }}>
+        <div className="linearTable">
+          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
             Linear Model Predictions for {months[inputs.month]}, {inputs.year}
           </h1>
           <Card>
@@ -580,8 +580,8 @@ const Results = ({ getData }) => {
           </Card>
         </div>
 
-        <div className="linearTable">
-          <h1 style={{ fontSize: "1.5em", fontWeight: "bolder" }}>
+        <div className="PrePostTable">
+          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
             Temperatures for Selected Stations (Pre & Post 1980)
           </h1>
           <Card>

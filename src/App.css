@@ -14,11 +14,14 @@
   grid-template-rows: 0.15fr 1fr;
 }
 
-.title-logo {
+.title-logo, .title-logo-about {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   margin-left: 3rem;
+}
+.title-logo-about {
+  margin-top: 2em;
 }
 
 .rtp {

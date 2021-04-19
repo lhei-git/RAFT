@@ -86,12 +86,12 @@ const InputForm = ({ onSubmitPressed, getData, setGetData, setOpen, open }) => {
               <Link
                 className="formSubmit"
                 activeClass="active"
-                to={'results'}
+                to={'map-section'}
                 spy={true}
                 smooth={true}
                 duration={1000}
                 delay={10}
-                href={'results'}
+                href={'map-section'}
                 onClick={(e) => {
                   e.preventDefault();
                   inputs.model = [];

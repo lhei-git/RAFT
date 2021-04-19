@@ -3,7 +3,9 @@
   background-size: cover;
   /* filter: brightness(0.7); */
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../assets/2_Muir_Glacier_Comb_1.jpg")
+    url("../assets/2_Muir_Glacier_Comb_1.jpg");
+  
+  margin-bottom: 1em;
 }
 
 .logo {
@@ -12,17 +14,19 @@
 
 .information {
   color: aliceblue;
+  height: 300px;
 }
 
 .hero-container {
-  height: 100%;
+  height: 100%; 
   display: grid;
   grid-template-columns: 1fr;
-  /* grid-template-rows: 0.1fr 1fr; */
-  /* padding: 10px; */
+  grid-template-rows: 0.9fr 1fr;
 }
 
-.inner-hero-cont {
+.inner-hero-cont  p{
+  font-size: 2em;
+  text-align: center;
   /* display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr; */
@@ -37,9 +41,6 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-
-  /* padding: 10px; */
-  /* width: 300px; */
   width: 100%;
 }
 
@@ -47,10 +48,6 @@
   /* width:'min-content'; */
   padding: '10px';
   margin: 0;
-}
-
-.form-paper {
-  /* width: 300px; */
 }
 
 .form-dropdown-cont {
@@ -62,9 +59,7 @@
 
 .form-dropdown {
   display: grid;
-  /* grid-template-columns: 150px 150px; */
   grid-template-columns: repeat(2, minmax(150px, 200px));
-  /* grid-template-rows: 1fr 1fr; */
   column-gap: 10px;
 }
 
@@ -94,7 +89,7 @@
 }
 
 #map-section {
-  margin-top: 1em;
+  /* margin-top: 1em; */
 }
 
 Table > * {
