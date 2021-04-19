@@ -1,6 +1,6 @@
-import { Suspense, useCallback, useContext, useEffect, useState } from 'react';
-import './../App.css';
-import { InputsContext, InputsProvider } from '../context/InputsContext';
+import { Suspense, useCallback, useContext, useEffect, useState } from "react";
+import "./../App.css";
+import { InputsContext, InputsProvider } from "../context/InputsContext";
 import {
   Card,
   Table,
@@ -10,23 +10,25 @@ import {
   ListGroupItem,
   Badge,
   Form,
-} from 'react-bootstrap';
-import { Data } from '@react-google-maps/api';
-import React from 'react';
-import Plot from 'react-plotly.js';
-import Skeleton from '@material-ui/lab/Skeleton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
-import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+} from "react-bootstrap";
+import { Data } from "@react-google-maps/api";
+import React from "react";
+import Plot from "react-plotly.js";
+import Skeleton from "@material-ui/lab/Skeleton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 
-import DataPlot from './Plot';
+import DataPlot from "./Plot";
+import { Grid } from "@material-ui/core";
 
 const Results = ({ getData }) => {
   const { inputs, getModelData, getClusters, getTrainingData } = useContext(
     InputsContext
   );
   const [dataRetrieved, setDataRetrieved] = useState(false);
+  const [convertToF, setConvertToF] = useState(false);
   // const [dataRetrieved2, setDataRetrieved2] = useState(false);
 
   const [trainingPlotData, setTrainingPlotData] = useState([]);
@@ -45,30 +47,35 @@ const Results = ({ getData }) => {
   };
 
   const months = {
-    "JAN": 'January',
-    "FEB": 'Februrary',
-    "MAR": 'March',
-    "APR": 'April',
-    "MAY": 'May',
-    "JUN": 'June',
-    "JUL": 'July',
-    "AUG": 'August',
-    "SEP": 'September',
-    "OCT": 'October',
-    "NOV": 'November',
-    "DEC": 'December',
+    JAN: "January",
+    FEB: "Februrary",
+    MAR: "March",
+    APR: "April",
+    MAY: "May",
+    JUN: "June",
+    JUL: "July",
+    AUG: "August",
+    SEP: "September",
+    OCT: "October",
+    NOV: "November",
+    DEC: "December",
   };
 
   const graphLabelStyle = {
-    textAlign: 'Left',
+    textAlign: "Left",
     fontWeight: 675,
-    minWidth: '100px',
-    maxWidth: '200px',
+    minWidth: "100px",
+    maxWidth: "200px",
   };
+
+  const convertCtoF = (t) => (t / 5) * 9 + 32;
 
   // useEffect(() => {
   //   setMonth(inputs.month);
   // }, [inputs.month])
+
+  const convert = (b, norm, call) =>
+    b ? <>{call(norm).toFixed(2)}&#176;F</> : <>{norm}&#176;C</>;
 
   useEffect(() => {
     setMonth(inputs.month);
@@ -85,12 +92,12 @@ const Results = ({ getData }) => {
   }, [inputs.model]);
 
   useEffect(() => {
-    const generateXvalues = (se, data, key = 'year') => {
+    const generateXvalues = (se, data, key = "year") => {
       var arr = [];
 
-      for (let i = 0; i < data['station'].length; i++) {
+      for (let i = 0; i < data["station"].length; i++) {
         let d = data[key][i];
-        let idx = se.indexOf(data['station'][i]);
+        let idx = se.indexOf(data["station"][i]);
         try {
           arr[idx].push(d);
         } catch (e) {
@@ -106,27 +113,27 @@ const Results = ({ getData }) => {
       Object.keys(inputs.training_data).length > 0
     ) {
       const stations = Array.from(
-        new Set(inputs.training_data['training_data']['station'])
+        new Set(inputs.training_data["training_data"]["station"])
       );
       const xvals = generateXvalues(
         stations,
-        inputs.training_data['training_data'],
+        inputs.training_data["training_data"],
         month
       );
       const yearvals = generateXvalues(
         stations,
-        inputs.training_data['training_data'],
-        'year'
+        inputs.training_data["training_data"],
+        "year"
       );
       const data = xvals.map((data, i) => ({
         x: yearvals[i],
         y: data,
-        type: 'scatter',
-        mode: !toggle ? 'markers' : 'lines+markers',
+        type: "scatter",
+        mode: !toggle ? "markers" : "lines+markers",
         name: stations[i],
       }));
       console.log(
-        new Set(inputs.training_data['training_data']['station']),
+        new Set(inputs.training_data["training_data"]["station"]),
         stations,
         xvals,
         data
@@ -135,28 +142,28 @@ const Results = ({ getData }) => {
       let cls = inputs.cluster[0];
       setClusterPlotData([
         {
-          x: cls['High Temp Cluster'][0],
-          y: cls['High Temp Cluster'][1],
-          type: 'scatter',
-          mode: !toggleClustered ? 'markers' : 'lines+markers',
-          name: 'High Temps',
-          marker: { color: 'red' },
+          x: cls["High Temp Cluster"][0],
+          y: cls["High Temp Cluster"][1],
+          type: "scatter",
+          mode: !toggleClustered ? "markers" : "lines+markers",
+          name: "High Temps",
+          marker: { color: "red" },
         },
         {
-          x: cls['Mid Temp Cluster'][0],
-          y: cls['Mid Temp Cluster'][1],
-          type: 'scatter',
-          mode: !toggleClustered ? 'markers' : 'lines+markers',
-          name: 'Med Temps',
-          marker: { color: 'green' },
+          x: cls["Mid Temp Cluster"][0],
+          y: cls["Mid Temp Cluster"][1],
+          type: "scatter",
+          mode: !toggleClustered ? "markers" : "lines+markers",
+          name: "Med Temps",
+          marker: { color: "green" },
         },
         {
-          x: cls['Low Temp Cluster'][0],
-          y: cls['Low Temp Cluster'][1],
-          type: 'scatter',
-          mode: !toggleClustered ? 'markers' : 'lines+markers',
-          name: 'Low Temps',
-          marker: { color: 'blue' },
+          x: cls["Low Temp Cluster"][0],
+          y: cls["Low Temp Cluster"][1],
+          type: "scatter",
+          mode: !toggleClustered ? "markers" : "lines+markers",
+          name: "Low Temps",
+          marker: { color: "blue" },
         },
       ]);
       setDataRetrieved(true);
@@ -175,22 +182,24 @@ const Results = ({ getData }) => {
     ));
 
   const generateModelDataTable = (temps) => {
-    let labels = ['Low', 'Middle', 'High', 'All Data'];
+    let labels = ["Low", "Middle", "High", "All Data"];
     return temps.map((data, i) =>
       data ? (
         <tr key={i}>
           <td style={graphLabelStyle}>
-            {data?.name.split(' ')[0] === 'All'
-              ? 'All Data'
-              : data?.name.split(' ')[0]}
+            {data?.name.split(" ")[0] === "All"
+              ? "All Data"
+              : data?.name.split(" ")[0]}
           </td>
-          <td>{data?.prediction[0].toFixed(2)}&#176;C</td>
+          <td>
+            {convert(convertToF, data?.prediction[0].toFixed(2), convertCtoF)}
+          </td>
           <td>{data?.metrics.mse.toFixed(2)}</td>
           <td>{data?.metrics.r2.toFixed(2)}</td>
         </tr>
       ) : (
         <tr key={i}>
-          <td style={{ textAlign: 'left' }}>{labels[i]}</td>
+          <td style={{ textAlign: "left" }}>{labels[i]}</td>
           <td>Not Enough Data</td>
           <td></td>
           <td></td>
@@ -200,186 +209,207 @@ const Results = ({ getData }) => {
   };
 
   const generateClusterTable = (temps, pre, post) => {
-    let tempTitle = ['Low', 'Middle', 'High'];
+    let tempTitle = ["Low", "Middle", "High"];
     let tempCluster = [
-      'Low Temp Cluster',
-      'Mid Temp Cluster',
-      'High Temp Cluster',
+      "Low Temp Cluster",
+      "Mid Temp Cluster",
+      "High Temp Cluster",
     ];
-    
-    // console.log(inputs.cluster[1][tempCluster2['Low']][0][inputs.cluster[1][tempCluster2['Low']][1].indexOf(Math.max(...temps['High Temp Cluster']))])
-    console.log(pre['Pre Low Temp Cluster']);
+
     return tempCluster.map((t, i) => {
-      let postAvg = average(post['Post ' + t][1]).toFixed(2)
-      let preAvg = average(pre['Pre ' + t][1]).toFixed(2)
-      return <tr key={i}>
-        <td style={graphLabelStyle}>{tempTitle[i]}</td>
-        <td>
-          {average(temps[t][1]).toFixed(2)}
-          &#176;C
-          <br />
-          <Badge variant="dark">
-            {temps[t][0][0]} - {temps[t][0][temps[t][0].length - 1]}
-          </Badge>
-        </td>
-        <td>
-          {Math.max(...temps[t][1]).toFixed(2)}
-          &#176;C
-          <br />
-          <Badge variant="dark">
-            {temps[t][0][temps[t][1].indexOf(Math.max(...temps[t][1]))]}
-          </Badge>
-        </td>
-        <td>
-          {Math.min(...temps[t][1]).toFixed(2)}
-          &#176;C
-          <br />
-          <Badge variant="dark">
-            {temps[t][0][temps[t][1].indexOf(Math.min(...temps[t][1]))]}
-          </Badge>
-        </td>
-        <td>
-          {preAvg}
-          &#176;C
-          <br />
-          <Badge variant="dark">
-            {pre['Pre ' + t][0][0]} -{' '}
-            {pre['Pre ' + t][0][pre['Pre ' + t][0].length - 1]}
-          </Badge>
-        </td>
-        <td>
-          {/*arrow go here with logic */}
-          {postAvg}
-          &#176;C
-          {preAvg < postAvg ? <FontAwesomeIcon
-                    icon={faArrowUp}
-                    style={{
-                      marginLeft: '2px',
-                      fontSize: '0.7rem',
-                      verticalAlign: '5px',
-                      color:"red",
-                    }}
-                  />:
-                  <FontAwesomeIcon
-                    icon={faArrowDown}
-                    style={{
-                      marginLeft: '2px',
-                      fontSize: '0.7rem',
-                      verticalAlign: '5px',
-                      color:"green",
-                    }}
-                  />}
-          <br />
-          <Badge variant="dark">
-            {post['Post ' + t][0][0]} -{' '}
-            {post['Post ' + t][0][post['Post ' + t][0].length - 1]}
-          </Badge>
-        </td>
-      </tr>
+      let avgTemp = average(temps[t][1]).toFixed(2);
+      let maxTemp = Math.max(...temps[t][1]).toFixed(2);
+      let minTemp = Math.min(...temps[t][1]).toFixed(2);
+      let postAvg = average(post["Post " + t][1]).toFixed(2);
+      let preAvg = average(pre["Pre " + t][1]).toFixed(2);
+      return (
+        <tr key={i}>
+          <td style={graphLabelStyle}>{tempTitle[i]}</td>
+          <td>
+            {convert(convertToF, avgTemp, convertCtoF)}
+            <br />
+            <Badge variant="dark">
+              {temps[t][0][0]} - {temps[t][0][temps[t][0].length - 1]}
+            </Badge>
+          </td>
+          <td>
+            {convert(convertToF, maxTemp, convertCtoF)}
+            <br />
+            <Badge variant="dark">
+              {temps[t][0][temps[t][1].indexOf(Math.max(...temps[t][1]))]}
+            </Badge>
+          </td>
+          <td>
+            {convert(convertToF, minTemp, convertCtoF)}
+            <br />
+            <Badge variant="dark">
+              {temps[t][0][temps[t][1].indexOf(Math.min(...temps[t][1]))]}
+            </Badge>
+          </td>
+          <td>
+            {convert(convertToF, preAvg, convertCtoF)}
+            <br />
+            <Badge variant="dark">
+              {pre["Pre " + t][0][0]} -{" "}
+              {pre["Pre " + t][0][pre["Pre " + t][0].length - 1]}
+            </Badge>
+          </td>
+          <td>
+            {/*arrow go here with logic */}
+            {convert(convertToF, postAvg, convertCtoF)}
+            {preAvg < postAvg ? (
+              <FontAwesomeIcon
+                icon={faArrowUp}
+                style={{
+                  marginLeft: "2px",
+                  fontSize: "0.7rem",
+                  verticalAlign: "5px",
+                  color: "red",
+                }}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faArrowDown}
+                style={{
+                  marginLeft: "2px",
+                  fontSize: "0.7rem",
+                  verticalAlign: "5px",
+                  color: "green",
+                }}
+              />
+            )}
+            <br />
+            <Badge variant="dark">
+              {post["Post " + t][0][0]} -{" "}
+              {post["Post " + t][0][post["Post " + t][0].length - 1]}
+            </Badge>
+          </td>
+        </tr>
+      );
     });
   };
 
   const generatePrePostTable = (temps) => {
-    const labels = ['Post-1980', 'Pre-1980', 'All Data'];
-    console.log(temps['post'][month]);
-    console.log("temps",temps)
-    return Object.keys(temps).map((data, i) => {
-
-      return <tr>
-        <td>{labels[i]}</td>
-        {/* average */}
-        {console.log(data=="post")}
-        <td>
-          {average(temps[data][month]).toFixed(2)}
-          &#176;C
-          {data==="post"?average(temps['post'][month]) > average(temps['pre'][month])? <FontAwesomeIcon
+    const labels = ["Post-1980", "Pre-1980", "All Data"];
+    return Object.keys(temps)
+      .reverse()
+      .map((data, i) => {
+        const avgTemp = average(temps[data][month]).toFixed(2);
+        const maxTemp = Math.max(...temps[data][month]).toFixed(2); 
+        const minTemp = Math.min(...temps[data][month]).toFixed(2); 
+        return (
+          <tr>
+            <td>{labels.reverse()[i]}</td>
+            <td>
+              {convert(convertToF, avgTemp, convertCtoF)}
+              {data === "post" ? (
+                average(temps["post"][month]) > average(temps["pre"][month]) ? (
+                  <FontAwesomeIcon
                     icon={faArrowUp}
                     style={{
-                      marginLeft: '2px',
-                      fontSize: '0.7rem',
-                      verticalAlign: '5px',
-                      color:"red",
+                      marginLeft: "2px",
+                      fontSize: "0.7rem",
+                      verticalAlign: "5px",
+                      color: "red",
                     }}
-                  />:
+                  />
+                ) : (
                   <FontAwesomeIcon
                     icon={faArrowDown}
                     style={{
-                      marginLeft: '2px',
-                      fontSize: '0.7rem',
-                      verticalAlign: '5px',
-                      color:"green",
+                      marginLeft: "2px",
+                      fontSize: "0.7rem",
+                      verticalAlign: "5px",
+                      color: "green",
                     }}
-                  />:""}
-          <br />
-          <Badge variant="dark">
-            {temps[data]['year'][0]} -{' '}
-            {temps[data]['year'][temps[data][month].length - 1]}
-          </Badge>
-        </td>
-        {/* highest */}
-        <td>
-          {Math.max(...temps[data][month]).toFixed(2)}
-          &#176;C
-          {data==="post"?Math.max(...temps['post'][month]) > Math.max(...temps['pre'][month])? <FontAwesomeIcon
+                  />
+                )
+              ) : (
+                ""
+              )}
+              <br />
+              <Badge variant="dark">
+                {temps[data]["year"][0]} -{" "}
+                {temps[data]["year"][temps[data][month].length - 1]}
+              </Badge>
+            </td>
+            <td>
+              {convert(convertToF, maxTemp, convertCtoF)}
+              {data === "post" ? (
+                Math.max(...temps["post"][month]) >
+                Math.max(...temps["pre"][month]) ? (
+                  <FontAwesomeIcon
                     icon={faArrowUp}
                     style={{
-                      marginLeft: '2px',
-                      fontSize: '0.7rem',
-                      verticalAlign: '5px',
-                      color:"red",
+                      marginLeft: "2px",
+                      fontSize: "0.7rem",
+                      verticalAlign: "5px",
+                      color: "red",
                     }}
-                  />:
+                  />
+                ) : (
                   <FontAwesomeIcon
                     icon={faArrowDown}
                     style={{
-                      marginLeft: '2px',
-                      fontSize: '0.7rem',
-                      verticalAlign: '5px',
-                      color:"green",
+                      marginLeft: "2px",
+                      fontSize: "0.7rem",
+                      verticalAlign: "5px",
+                      color: "green",
                     }}
-                  />:""}
-          <br />
-          <Badge variant="dark">
-            {
-              temps[data]['year'][
-                temps[data][month].indexOf(Math.max(...temps[data][month]))
-              ]
-            }
-          </Badge>
-        </td>
-        {/* lowest */}
-        <td>
-          {Math.min(...temps[data][month]).toFixed(2)}
-          &#176;C
-          {data==="post"?Math.min(...temps['post'][month]) > Math.min(...temps['pre'][month])? <FontAwesomeIcon
+                  />
+                )
+              ) : (
+                ""
+              )}
+              <br />
+              <Badge variant="dark">
+                {
+                  temps[data]["year"][
+                    temps[data][month].indexOf(Math.max(...temps[data][month]))
+                  ]
+                }
+              </Badge>
+            </td>
+            <td>
+              {convert(convertToF, minTemp, convertCtoF)}
+              {data === "post" ? (
+                Math.min(...temps["post"][month]) >
+                Math.min(...temps["pre"][month]) ? (
+                  <FontAwesomeIcon
                     icon={faArrowUp}
                     style={{
-                      marginLeft: '2px',
-                      fontSize: '0.7rem',
-                      verticalAlign: '5px',
-                      color:"red",
+                      marginLeft: "2px",
+                      fontSize: "0.7rem",
+                      verticalAlign: "5px",
+                      color: "red",
                     }}
-                  />:
+                  />
+                ) : (
                   <FontAwesomeIcon
                     icon={faArrowDown}
                     style={{
-                      marginLeft: '2px',
-                      fontSize: '0.7rem',
-                      verticalAlign: '5px',
-                      color:"green",
+                      marginLeft: "2px",
+                      fontSize: "0.7rem",
+                      verticalAlign: "5px",
+                      color: "green",
                     }}
-                  />:""}
-          <br />
-          <Badge variant="dark">
-            {
-              temps[data]['year'][
-                temps[data][month].indexOf(Math.min(...temps[data][month]))
-              ]
-            }
-          </Badge>
-        </td>
-      </tr>
-    });
+                  />
+                )
+              ) : (
+                ""
+              )}
+              <br />
+              <Badge variant="dark">
+                {
+                  temps[data]["year"][
+                    temps[data][month].indexOf(Math.min(...temps[data][month]))
+                  ]
+                }
+              </Badge>
+            </td>
+          </tr>
+        );
+      });
   };
 
   const renderR2Tooltip = (props) => (
@@ -412,9 +442,9 @@ const Results = ({ getData }) => {
                   <FontAwesomeIcon
                     icon={faQuestionCircle}
                     style={{
-                      marginLeft: '2px',
-                      fontSize: '0.7rem',
-                      verticalAlign: '5px',
+                      marginLeft: "2px",
+                      fontSize: "0.7rem",
+                      verticalAlign: "5px",
                     }}
                   />
                 </OverlayTrigger>
@@ -429,9 +459,9 @@ const Results = ({ getData }) => {
                   <FontAwesomeIcon
                     icon={faQuestionCircle}
                     style={{
-                      marginLeft: '2px',
-                      fontSize: '0.7rem',
-                      verticalAlign: '5px',
+                      marginLeft: "2px",
+                      fontSize: "0.7rem",
+                      verticalAlign: "5px",
                     }}
                   />
                 </OverlayTrigger>
@@ -479,7 +509,7 @@ const Results = ({ getData }) => {
   };
 
   const PrePostTable = () => {
-    console.log('ran3');
+    console.log("ran3");
 
     return (
       <>
@@ -504,7 +534,7 @@ const Results = ({ getData }) => {
 
   const getPlot = useCallback(
     (data, layout) => {
-      return dataRetrieved ? <DataPlot data={data} layout={layout} /> : '';
+      return dataRetrieved ? <DataPlot data={data} layout={layout} /> : "";
     },
     [inputs.training_data, inputs.cluster, dataRetrieved]
   );
@@ -512,25 +542,36 @@ const Results = ({ getData }) => {
   return (
     <div className="results">
       <h2> {`${inputs.county}, ${inputs.state} Temperature Profile`} </h2>
-      <h2 style={{ marginTop: '5px' }}> {`for ${months[inputs.month]}`} </h2>
+      <h2 style={{ marginTop: "5px" }}> {`for ${months[inputs.month]}`} </h2>
+      <Grid component="label" container spacing={1} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+          <Grid item>&#176;C</Grid>
+          <Grid item>
+            <Form.Check
+              type="switch"
+              id="convertTemp"
+              onClick={() => setConvertToF(!convertToF)}
+            />
+          </Grid>
+          <Grid item>&#176;F</Grid>
+        </Grid>
       <div className="tables-charts-two">
         <div className="PrePostTable">
-          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
+          <h1 style={{ fontSize: "1.5em", fontWeight: "bolder" }}>
             Linear Model Predictions for {months[inputs.month]}, {inputs.year}
           </h1>
           <Card>
-            <Card.Body style={{ padding: '.3em 1.25em 0px' }}>
+            <Card.Body style={{ padding: ".3em 1.25em 0px" }}>
               <ModelDataTable />
             </Card.Body>
           </Card>
         </div>
 
         <div className="clusterModelTable">
-          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
+          <h1 style={{ fontSize: "1.5em", fontWeight: "bolder" }}>
             Cluster Analysis for Selected Stations
           </h1>
           <Card>
-            <Card.Body style={{ padding: '.75em 1.25rem 0' }}>
+            <Card.Body style={{ padding: ".75em 1.25rem 0" }}>
               <Card.Subtitle></Card.Subtitle>
               <Card.Text>
                 <ClusterDataTable />
@@ -540,19 +581,19 @@ const Results = ({ getData }) => {
         </div>
 
         <div className="linearTable">
-          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
+          <h1 style={{ fontSize: "1.5em", fontWeight: "bolder" }}>
             Temperatures for Selected Stations (Pre & Post 1980)
           </h1>
           <Card>
-            <Card.Body style={{ padding: '.75em 1.25rem 0' }}>
+            <Card.Body style={{ padding: ".75em 1.25rem 0" }}>
               <Card.Text>
                 <PrePostTable />
               </Card.Text>
             </Card.Body>
           </Card>
         </div>
-        <div className="histTempDataPlot" style={{ position: 'relative' }}>
-          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
+        <div className="histTempDataPlot" style={{ position: "relative" }}>
+          <h1 style={{ fontSize: "1.5em", fontWeight: "bolder" }}>
             Historical Temperature Data
           </h1>
           {trainingPlotData.length > 0 ? (
@@ -562,7 +603,7 @@ const Results = ({ getData }) => {
           ) : (
             <Skeleton variant="rect" width={500} height={500} />
           )}
-          <Form style={{ position: 'absolute', top: '50px', left: '30px' }}>
+          <Form style={{ position: "absolute", top: "50px", left: "30px" }}>
             <Form.Check
               type="switch"
               id="scatLine"
@@ -571,8 +612,8 @@ const Results = ({ getData }) => {
             />
           </Form>
         </div>
-        <div className="histRangeTempsPlot" style={{ position: 'relative' }}>
-          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
+        <div className="histRangeTempsPlot" style={{ position: "relative" }}>
+          <h1 style={{ fontSize: "1.5em", fontWeight: "bolder" }}>
             Clustered Historical Temperatures
           </h1>
           {clusterPlotData.length > 0 ? (
@@ -582,7 +623,7 @@ const Results = ({ getData }) => {
           ) : (
             <Skeleton variant="rect" width={500} height={500} />
           )}
-          <Form style={{ position: 'absolute', top: '50px', left: '30px' }}>
+          <Form style={{ position: "absolute", top: "50px", left: "30px" }}>
             <Form.Check
               type="switch"
               id="scatLineCluster"
