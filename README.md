@@ -12,7 +12,7 @@ This appication pulls data from the NOAA Api and then uses that data to predict 
 This is the frontend repository.
 The backend can be found [HERE](https://github.com/Killaskt/raft-backend)
 
-Team Members & GitHub usernames:
+## Team Members & GitHub usernames:
 * Sunayana Sharma - yanassss
 * Thaddious Gorges - ThaddG
 * Shubham Tiwari - Killaskt
