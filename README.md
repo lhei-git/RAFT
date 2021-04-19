@@ -7,7 +7,7 @@
 # RAFT
 Regional Assessments of Future Temperatures
 
-An appication that pulls data from the NOAA Api and then uses that data to predict the temperatures of a specified year and specified county. Currently, this application only supports locations in the United States. 
+This appication pulls data from the NOAA Api and then uses that data to predict the temperatures of a specified year and specified county. Currently, this application only supports locations in the United States. 
 
 This is the frontend repository.
 The backend can be found [HERE](https://github.com/Killaskt/raft-backend)
