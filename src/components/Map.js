@@ -15,7 +15,6 @@ const options = {
 };
 
 const Map = () => {
-
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
   });
@@ -52,10 +51,11 @@ const Map = () => {
         {selectedMarker ? (
           <InfoWindow
             position={{
-              lat: selectedMarker.latitude + 0.09,
+              lat: selectedMarker.latitude,
               lng: selectedMarker.longitude,
             }}
             onCloseClick={() => setSelectedMarker(null)}
+            options={{ pixelOffset: new window.google.maps.Size(0, -45) }}
           >
             <div style={{ textAlign: 'left' }}>
               <p>
@@ -79,11 +79,12 @@ const Map = () => {
 };
 
 const mapContainerStyle = {
-  minWidth: '500px',
+  minWidth: '200px',
   zIndex: '1',
   // width: '100%',
-  height: '500px',
+  height: '400px',
   boxShadow: '1px 1px 9px rgb(10 10 10 / 30%)',
+  borderRadius: '0.2em',
 };
 
 export default Map;

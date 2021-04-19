@@ -1,3 +1,7 @@
+.App {
+  min-height: 100vh;
+  background-color: #cad2c5;
+}
 .description {
   display: flex;
   flex-wrap: wrap;
@@ -5,6 +9,16 @@
   justify-content: start;
   align-content: center;
   text-align: center;
-  width: 800px;
+  width: 1000px;
   margin: 0 auto;
+  font-size: x-large;
+}
+
+Table > ul > li {
+  font-size: 700;
+}
+
+.title h3 {
+  font-size: 60px;
+  font-weight: 700;
 }
