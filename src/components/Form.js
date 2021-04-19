@@ -42,7 +42,7 @@ const InputForm = ({ onSubmitPressed, getData, setGetData, setOpen, open }) => {
 
   return (
     <div className="form-contain">
-      <div id="plsWork">
+      <Card id="plsWork">
         <div id="plsWork-inner-container">
           <div className="form-dropdown">
             <DropdownInput
@@ -138,7 +138,7 @@ const InputForm = ({ onSubmitPressed, getData, setGetData, setOpen, open }) => {
             )}
           </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 };

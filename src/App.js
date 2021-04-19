@@ -62,7 +62,7 @@ function App() {
                       onMouseLeave={toggleHover}
                       onMouseEnter={toggleHover}
                       icon={faGlobeAmericas}
-                      style={{ fontSize: '2.7rem', verticalAlign: '0rem' }}
+                      style={{ fontSize: '2.7rem', verticalAlign: '0rem', color: 'aliceblue' }}
                     />
                     <h1 style={{ paddingLeft: '10px' }}>
                       <a href="/about" className="logo">
@@ -109,7 +109,7 @@ function App() {
                 </div>
               </div>
             </div>
-            <section>
+            <section id="map-section">
               <div className="map">
                 <Map />
               </div>

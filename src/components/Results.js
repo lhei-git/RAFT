@@ -42,6 +42,21 @@ const Results = ({ getData }) => {
     setToggleClustered(!toggleClustered);
   };
 
+  const months = {
+    "JAN": 'January',
+    "FEB": 'Februrary',
+    "MAR": 'March',
+    "APR": 'April',
+    "MAY": 'May',
+    "JUN": 'June',
+    "JUL": 'July',
+    "AUG": 'August',
+    "SEP": 'September',
+    "OCT": 'October',
+    "NOV": 'November',
+    "DEC": 'December',
+  };
+
   const graphLabelStyle = {
     textAlign: 'Left',
     fontWeight: 675,
@@ -417,11 +432,11 @@ const Results = ({ getData }) => {
   return (
     <div className="results">
       <h2> {`${inputs.county}, ${inputs.state} Temperature Profile`} </h2>
-      <h2> {`for ${inputs.month}`} </h2>
+      <h2 style={{ marginTop: '5px' }}> {`for ${months[inputs.month]}`} </h2>
       <div className="tables-charts-two">
         <div className="PrePostTable">
           <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
-            Linear Model Predictions for {inputs.month} , {inputs.year}
+            Linear Model Predictions for {months[inputs.month]}, {inputs.year}
           </h1>
           <Card>
             <Card.Body style={{ padding: '.3em 1.25em 0px' }}>
