@@ -82,14 +82,11 @@ export const InputsProvider = ({ children }) => {
       // axios call to get counties
       const response = await raftApi.get(`/v2/counties?state=${state}`);
       dispatch({ type: 'GET_COUNTIES', payload: response.data });
-
-      console.log('counties', response.data);
     } catch (err) {
       console.log(err);
     }
   };
   const getStations = async (state, county) => {
-    console.log('yolo', inputs.token)
     try {
       // axios call to get stations
       const response = await raftApi.get(
@@ -177,7 +174,6 @@ export const InputsProvider = ({ children }) => {
     Geocode.fromAddress(`${address}, ${state}`).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
-        // console.log(lat, lng);
         dispatch({ type: 'SET_LAT_LNG', payload: { lat, lng } });
       },
       (error) => {
