@@ -62,7 +62,11 @@ function App() {
                       onMouseLeave={toggleHover}
                       onMouseEnter={toggleHover}
                       icon={faGlobeAmericas}
-                      style={{ fontSize: '2.7rem', verticalAlign: '0rem', color: 'aliceblue' }}
+                      style={{
+                        fontSize: '2.7rem',
+                        verticalAlign: '0rem',
+                        color: 'aliceblue',
+                      }}
                     />
                     <h1 style={{ paddingLeft: '10px' }}>
                       <a href="/about" className="logo">
@@ -87,13 +91,13 @@ function App() {
                         and uses a linear model to predict future average
                         temperatures for a particular year.
                         <p> </p>
-                        <p style={{ color: '#696969' }}>
-                          Choose a specific county, month and a future year of
-                          interest to get started!
-                        </p>
                       </p>
                     </div>
                     <div className="inner-hero-cont">
+                      <p style={{ color: 'aliceblue' }}>
+                        Choose a specific county, month and a future year of
+                        interest to get started!
+                      </p>
                       <Form
                         getData={getData}
                         setGetData={setGetData}
@@ -132,6 +136,7 @@ function App() {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                marginTop: '1em'
               }}
             >
               <p style={{ margin: '0', paddingRight: '10px' }}>&#169; 2021</p>

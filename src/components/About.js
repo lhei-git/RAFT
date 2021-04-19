@@ -14,14 +14,14 @@ function About() {
     <div className="App">
       <div className="default-view-container">
         <div className="default-view">
-          <div className="title-logo">
+          <div className="title-logo-about">
             <div className="title">
               <FontAwesomeIcon
                 className={spin ? 'fa-spin' : ''}
                 onMouseLeave={toggleHover}
                 onMouseEnter={toggleHover}
                 icon={faGlobeAmericas}
-                style={{ fontSize: '2.7rem', verticalAlign: '0rem' }}
+                style={{ fontSize: '2.7rem', verticalAlign: '0rem', color: 'aliceblue' }}
               />
               <h1 style={{ paddingLeft: '10px' }}>
                 <a href="/" className="logo">

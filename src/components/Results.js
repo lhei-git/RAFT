@@ -514,7 +514,7 @@ const Results = ({ getData }) => {
       <h2> {`${inputs.county}, ${inputs.state} Temperature Profile`} </h2>
       <h2 style={{ marginTop: '5px' }}> {`for ${months[inputs.month]}`} </h2>
       <div className="tables-charts-two">
-        <div className="PrePostTable">
+        <div className="linearTable">
           <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
             Linear Model Predictions for {months[inputs.month]}, {inputs.year}
           </h1>
@@ -539,7 +539,7 @@ const Results = ({ getData }) => {
           </Card>
         </div>
 
-        <div className="linearTable">
+        <div className="PrePostTable">
           <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
             Temperatures for Selected Stations (Pre & Post 1980)
           </h1>
