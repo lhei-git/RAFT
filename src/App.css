@@ -68,15 +68,17 @@
   margin: 0 1em 1em;
 }
 .results h2 {
+  margin-top: 20px;
   font-size: 50px;
   font-weight: 700;
 }
 
 .results {
+  position: relative;
   text-align: center;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 50px 1fr;
+  grid-template-rows: 0.025fr 0.05fr 1fr;
   justify-items: center;
 }
 #results {
@@ -130,7 +132,11 @@
   justify-items: center;
   gap: 30px;
 }
-
+@media (min-width: 870px) {
+  .tables-charts-two {
+    overflow-x: hidden;
+  }
+}
 @media (min-width: 1415px) {
   .tables-charts-two {
     max-width: 1500px;
@@ -140,7 +146,9 @@
     grid-template-areas:
       'ppt htd'
       'cmt cht'
-      'lmp .';
+      'lmp lmp';
+    justify-content: center;
+    align-items: center;
   }
   .linearTable {
     grid-area: lmp;
