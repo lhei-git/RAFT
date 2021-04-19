@@ -12,7 +12,7 @@ function About() {
 
   return (
     <div className="App">
-      <div className="default-view-container">
+      <div className="default-view-container-about">
         <div className="default-view">
           <div className="title-logo-about">
             <div className="title">
@@ -21,10 +21,10 @@ function About() {
                 onMouseLeave={toggleHover}
                 onMouseEnter={toggleHover}
                 icon={faGlobeAmericas}
-                style={{ fontSize: '2.7rem', verticalAlign: '0rem', color: 'aliceblue' }}
+                style={{ fontSize: '2.7rem', verticalAlign: '0rem' }}
               />
               <h1 style={{ paddingLeft: '10px' }}>
-                <a href="/" className="logo">
+                <a href="/" className="logo" style={{ color: '#000' }}>
                   RAFT
                 </a>
               </h1>
