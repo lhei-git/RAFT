@@ -37,8 +37,26 @@ const Results = ({ getData }) => {
   // false = scatter, true = line
   const [toggle, setToggle] = useState(false);
   const toggleClick = () => {
-    console.log('toggle status', toggle);
     setToggle(!toggle);
+  };
+  const [toggleClustered, setToggleClustered] = useState(false);
+  const toggleClickClustered = () => {
+    setToggleClustered(!toggleClustered);
+  };
+
+  const months = {
+    "JAN": 'January',
+    "FEB": 'Februrary',
+    "MAR": 'March',
+    "APR": 'April',
+    "MAY": 'May',
+    "JUN": 'June',
+    "JUL": 'July',
+    "AUG": 'August',
+    "SEP": 'September',
+    "OCT": 'October',
+    "NOV": 'November',
+    "DEC": 'December',
   };
 
   const graphLabelStyle = {
@@ -120,7 +138,7 @@ const Results = ({ getData }) => {
           x: cls['High Temp Cluster'][0],
           y: cls['High Temp Cluster'][1],
           type: 'scatter',
-          mode: 'markers',
+          mode: !toggleClustered ? 'markers' : 'lines+markers',
           name: 'High Temps',
           marker: { color: 'red' },
         },
@@ -128,7 +146,7 @@ const Results = ({ getData }) => {
           x: cls['Mid Temp Cluster'][0],
           y: cls['Mid Temp Cluster'][1],
           type: 'scatter',
-          mode: 'markers',
+          mode: !toggleClustered ? 'markers' : 'lines+markers',
           name: 'Med Temps',
           marker: { color: 'green' },
         },
@@ -136,14 +154,14 @@ const Results = ({ getData }) => {
           x: cls['Low Temp Cluster'][0],
           y: cls['Low Temp Cluster'][1],
           type: 'scatter',
-          mode: 'markers',
+          mode: !toggleClustered ? 'markers' : 'lines+markers',
           name: 'Low Temps',
           marker: { color: 'blue' },
         },
       ]);
       setDataRetrieved(true);
     }
-  }, [inputs.training_data, inputs.cluster, toggle]);
+  }, [inputs.training_data, inputs.cluster, toggle, toggleClustered]);
 
   const generateSkeleton = (rows, cols) =>
     [...Array(rows)].map((_, i) => (
@@ -431,7 +449,7 @@ const Results = ({ getData }) => {
   };
 
   const ClusterDataTable = () => {
-    console.log('ran2');
+    // console.log('ran2');
 
     return (
       <>
@@ -494,11 +512,11 @@ const Results = ({ getData }) => {
   return (
     <div className="results">
       <h2> {`${inputs.county}, ${inputs.state} Temperature Profile`} </h2>
-      <h2> {`for ${inputs.month}`} </h2>
+      <h2 style={{ marginTop: '5px' }}> {`for ${months[inputs.month]}`} </h2>
       <div className="tables-charts-two">
         <div className="PrePostTable">
           <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
-            Linear Model Predictions for {inputs.month} , {inputs.year}
+            Linear Model Predictions for {months[inputs.month]}, {inputs.year}
           </h1>
           <Card>
             <Card.Body style={{ padding: '.3em 1.25em 0px' }}>
@@ -534,14 +552,17 @@ const Results = ({ getData }) => {
           </Card>
         </div>
         <div className="histTempDataPlot" style={{ position: 'relative' }}>
+          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
+            Historical Temperature Data
+          </h1>
           {trainingPlotData.length > 0 ? (
             getPlot(trainingPlotData, {
-              title: 'Historical Temperature Data',
+              // title: 'Historical Temperature Data',
             })
           ) : (
             <Skeleton variant="rect" width={500} height={500} />
           )}
-          <Form style={{ position: 'absolute', bottom: '10px', left: '10px' }}>
+          <Form style={{ position: 'absolute', top: '50px', left: '30px' }}>
             <Form.Check
               type="switch"
               id="scatLine"
@@ -550,14 +571,25 @@ const Results = ({ getData }) => {
             />
           </Form>
         </div>
-        <div className="histRangeTempsPlot">
+        <div className="histRangeTempsPlot" style={{ position: 'relative' }}>
+          <h1 style={{ fontSize: '1.5em', fontWeight: 'bolder' }}>
+            Clustered Historical Temperatures
+          </h1>
           {clusterPlotData.length > 0 ? (
             getPlot(clusterPlotData, {
-              title: 'Clustered Historical Temperatures',
+              // title: 'Clustered Historical Temperatures',
             })
           ) : (
             <Skeleton variant="rect" width={500} height={500} />
           )}
+          <Form style={{ position: 'absolute', top: '50px', left: '30px' }}>
+            <Form.Check
+              type="switch"
+              id="scatLineCluster"
+              label="Scatter/Line"
+              onClick={toggleClickClustered}
+            />
+          </Form>
         </div>
       </div>
     </div>
