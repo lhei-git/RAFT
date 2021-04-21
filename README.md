@@ -8,7 +8,7 @@
 Regional Assessments of Future Temperatures
 
 ## Overview
-This appication pulls data from the NOAA Api and then uses that data to predict the temperatures of a specified year and specified county. Currently, this application only supports locations in the United States. 
+This application pulls data from the NOAA Api and then uses that data to predict the temperatures of a specified year and specified county. Currently, this application only supports locations in the United States. 
 
 This is the frontend repository.
 The backend can be found [HERE](https://github.com/Killaskt/raft-backend)
@@ -23,9 +23,9 @@ The backend can be found [HERE](https://github.com/Killaskt/raft-backend)
 ## Setup
 
 1. Open the command prompt or terminal
-2. Clone the repository `git clone https://github.com/lhei-git/RAFT.git`
+2. Clone the repository: `git clone https://github.com/lhei-git/RAFT.git`
 3. Navigate to the new directory: `cd RAFT`
-4. In your terminal (while open to the project directory), `yarn install`
+4. In your terminal (while open to the project directory): `yarn install`
 5. Get a Google Maps API environment key; [follow these steps if you dont know how](https://studiosimpati.co/setup-configure-google-maps-api-key/)
 6. Create a file named `.env` and place your key inside it
 

@@ -51,10 +51,11 @@ const Map = () => {
         {selectedMarker ? (
           <InfoWindow
             position={{
-              lat: selectedMarker.latitude + 0.09,
+              lat: selectedMarker.latitude,
               lng: selectedMarker.longitude,
             }}
             onCloseClick={() => setSelectedMarker(null)}
+            options={{ pixelOffset: new window.google.maps.Size(0, -45) }}
           >
             <div style={{ textAlign: 'left' }}>
               <p>

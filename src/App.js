@@ -78,7 +78,7 @@ function App() {
                 <div className="hero">
                   <div className="hero-container">
                     <div className="information">
-                      <div classname="rtp">
+                      <div className="rtp">
                         <h3 style={{ paddingBottom: '.5rem' }}>
                           Regional Temperature Profiler
                         </h3>
@@ -90,7 +90,6 @@ function App() {
                         <br />
                         and uses a linear model to predict future average
                         temperatures for a particular year.
-                        <p> </p>
                       </p>
                     </div>
                     <div className="inner-hero-cont">
