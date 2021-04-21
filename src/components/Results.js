@@ -41,10 +41,6 @@ const Results = ({ getData }) => {
   const toggleClick = () => {
     setToggle(!toggle);
   };
-  const [toggleClustered, setToggleClustered] = useState(false);
-  const toggleClickClustered = () => {
-    setToggleClustered(!toggleClustered);
-  };
 
   const months = {
     JAN: 'January',
@@ -145,7 +141,7 @@ const Results = ({ getData }) => {
           x: cls['High Temp Cluster'][0],
           y: cls['High Temp Cluster'][1],
           type: 'scatter',
-          mode: !toggleClustered ? 'markers' : 'lines+markers',
+          mode: 'markers',
           name: 'High Temps',
           marker: { color: 'red' },
         },
@@ -153,7 +149,7 @@ const Results = ({ getData }) => {
           x: cls['Mid Temp Cluster'][0],
           y: cls['Mid Temp Cluster'][1],
           type: 'scatter',
-          mode: !toggleClustered ? 'markers' : 'lines+markers',
+          mode: 'markers',
           name: 'Med Temps',
           marker: { color: 'green' },
         },
@@ -161,14 +157,14 @@ const Results = ({ getData }) => {
           x: cls['Low Temp Cluster'][0],
           y: cls['Low Temp Cluster'][1],
           type: 'scatter',
-          mode: !toggleClustered ? 'markers' : 'lines+markers',
+          mode: 'markers',
           name: 'Low Temps',
           marker: { color: 'blue' },
         },
       ]);
       setDataRetrieved(true);
     }
-  }, [inputs.training_data, inputs.cluster, toggle, toggleClustered]);
+  }, [inputs.training_data, inputs.cluster, toggle]);
 
   const generateSkeleton = (rows, cols) =>
     [...Array(rows)].map((_, i) => (
@@ -565,7 +561,7 @@ const Results = ({ getData }) => {
             style={{ fontSize: '2em', fontWeight: 'bolder', color: '#2f5597' }}
           >
             Average Temperature Predictions for: {months[inputs.month]},{' '}
-            {/* {years[inputs.years]} */}
+            {inputs.year}
           </h1>
           <p style={{ fontSize: '1.2em' }}>
             Data source: Selected stations of NOAA's GHCND
@@ -637,7 +633,7 @@ const Results = ({ getData }) => {
           ) : (
             <Skeleton variant="rect" width={500} height={500} />
           )}
-          <Form style={{ position: 'absolute', top: '50px', left: '30px' }}>
+          <Form style={{ position: 'absolute', top: '100px', left: '70px' }}>
             <Form.Check
               type="switch"
               id="scatLine"
@@ -665,14 +661,6 @@ const Results = ({ getData }) => {
           ) : (
             <Skeleton variant="rect" width={500} height={500} />
           )}
-          <Form style={{ position: 'absolute', top: '50px', left: '30px' }}>
-            <Form.Check
-              type="switch"
-              id="scatLineCluster"
-              label="Scatter/Line"
-              onClick={toggleClickClustered}
-            />
-          </Form>
         </div>
       </div>
     </div>

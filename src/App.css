@@ -148,7 +148,7 @@
       'cmt cht'
       'lmp lmp';
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
   }
   .linearTable {
     grid-area: lmp;
