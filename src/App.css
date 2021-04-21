@@ -91,6 +91,9 @@
   grid-template-rows: 0.5fr 0.5fr;
   align-items: center;
 }
+.table-title, .table-subtitle {
+  text-align: left;
+}
 
 .table-plots {
   display: grid;

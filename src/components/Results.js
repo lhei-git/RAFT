@@ -556,32 +556,40 @@ const Results = ({ getData }) => {
         <Grid item>&#176;F</Grid>
       </Grid>
       <div className="tables-charts-two">
-        <div className="linearTable">
+        <div className="PrePostTable">
           <h1
-            style={{ fontSize: '2em', fontWeight: 'bolder', color: '#2f5597' }}
+            className="table-title"
+            style={{
+              fontSize: '2em',
+              fontWeight: 'bolder',
+              color: '#2f5597',
+            }}
           >
-            Average Temperature Predictions for: {months[inputs.month]},{' '}
-            {inputs.year}
+            Mean, High and Low Average Temperatures for {months[inputs.month]}
           </h1>
-          <p style={{ fontSize: '1.2em' }}>
-            Data source: Selected stations of NOAA's GHCND
-            <br />
-            Model: Linear Regression Model Using Year and Average Temperatures
+          <p
+            className="table-subtitle"
+            style={{ fontSize: '1.2em', textAlign: 'left' }}
+          >
+            Data source: Selected Stations of NOAA's GHCND
           </p>
           <Card>
-            <Card.Body style={{ padding: '.3em 1.25em 0px' }}>
-              <ModelDataTable />
+            <Card.Body style={{ padding: '.75em 1.25rem 0' }}>
+              <Card.Text>
+                <PrePostTable />
+              </Card.Text>
             </Card.Body>
           </Card>
         </div>
 
         <div className="clusterModelTable">
           <h1
+            className="table-title"
             style={{ fontSize: '2em', fontWeight: 'bolder', color: '#2f5597' }}
           >
             Low, Middle and High Average Temperature Clusters
           </h1>
-          <p style={{ fontSize: '1.2em' }}>
+          <p className="table-subtitle" style={{ fontSize: '1.2em' }}>
             Data source: Selected Stations of NOAA's GHCND
             <br />
             Model: SciKitLearn K-Means
@@ -596,34 +604,33 @@ const Results = ({ getData }) => {
           </Card>
         </div>
 
-        <div className="PrePostTable">
+        <div className="linearTable">
           <h1
-            style={{
-              fontSize: '2em',
-              fontWeight: 'bolder',
-              color: '#2f5597',
-            }}
+            className="table-title"
+            style={{ fontSize: '2em', fontWeight: 'bolder', color: '#2f5597' }}
           >
-            Mean, High and Low Average Temperatures for {months[inputs.month]}
+            Average Temperature Predictions for: {months[inputs.month]},{' '}
+            {inputs.year}
           </h1>
-          <p style={{ fontSize: '1.2em' }}>
-            Data source: Selected Stations of NOAA's GHCND
+          <p className="table-subtitle" style={{ fontSize: '1.2em' }}>
+            Data source: Selected stations of NOAA's GHCND
+            <br />
+            Model: Linear Regression Model Using Year and Average Temperatures
           </p>
           <Card>
-            <Card.Body style={{ padding: '.75em 1.25rem 0' }}>
-              <Card.Text>
-                <PrePostTable />
-              </Card.Text>
+            <Card.Body style={{ padding: '.3em 1.25em 0px' }}>
+              <ModelDataTable />
             </Card.Body>
           </Card>
         </div>
         <div className="histTempDataPlot" style={{ position: 'relative' }}>
           <h1
+            className="table-title"
             style={{ fontSize: '2em', fontWeight: 'bolder', color: '#2f5597' }}
           >
             {months[inputs.month]} Average Temperatures
           </h1>
-          <p style={{ fontSize: '1.2em' }}>
+          <p className="table-subtitle" style={{ fontSize: '1.2em' }}>
             Data source: Selected Stations of NOAA's GHCND
           </p>
           {trainingPlotData.length > 0 ? (
@@ -644,11 +651,12 @@ const Results = ({ getData }) => {
         </div>
         <div className="histRangeTempsPlot" style={{ position: 'relative' }}>
           <h1
+            className="table-title"
             style={{ fontSize: '2em', fontWeight: 'bolder', color: '#2f5597' }}
           >
             Clusters of {months[inputs.month]} Average Temperatures
           </h1>
-          <p style={{ fontSize: '1.2em' }}>
+          <p className="table-subtitle" style={{ fontSize: '1.2em' }}>
             Data source: Selected Stations of NOAA's GHCND
             <br />
             Model: SciKitLearn K-Means{' '}
