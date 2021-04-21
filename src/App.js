@@ -84,12 +84,13 @@ function App() {
                         </h3>
                       </div>
                       <p>
-                        The RTP application uses data from NOAA to present
-                        average temperature pre and post 1980; <br /> clusters
-                        of low, middle and high temperatures over time;
+                        RTP uses data from NOAA to calculate mean, high and low
+                        average temperatures;
                         <br />
-                        and uses a linear model to predict future average
-                        temperatures for a particular year.
+                        clusters of low, middle and high average temperatures;
+                        and predictions
+                        <br />
+                        of future average temperatures for specific US counties.
                       </p>
                     </div>
                     <div className="inner-hero-cont">
@@ -135,7 +136,7 @@ function App() {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: '1em'
+                marginTop: '1em',
               }}
             >
               <p style={{ margin: '0', paddingRight: '10px' }}>&#169; 2021</p>
