@@ -1,9 +1,10 @@
 .default-view-container {
   /* background-image: url('../assets/2_Muir_Glacier_Comb_1.jpg'); */
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.65)),
     url("../assets/hidden_lake_glacier_national_park_montana-wallpaper-5120x3200.jpg");
   /* background-repeat: no-repeat; */
   background-size: cover;
+  
   
   margin-bottom: 1em;
 }
@@ -101,9 +102,10 @@ Table > * {
   .hero-container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 0.3fr 1fr;
+    /*grid-template-rows: 0.3fr 1fr;*/
   }
   .inner-hero-cont {
+    margin-top: 12em;
     /* grid-template-columns: 1fr;
     grid-template-rows: 1fr; */
   }
@@ -146,3 +148,10 @@ Table > * {
     column-gap: 20px;
   }
 }
+/*
+@media(max-width: 900px)  {
+  .inner-hero-cont {
+    margin-top: 10em;
+  }
+}
+*/
