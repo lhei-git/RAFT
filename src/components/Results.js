@@ -151,7 +151,7 @@ const Results = ({ getData }) => {
           type: 'scatter',
           mode: 'markers',
           name: 'Med Temps',
-          marker: { color: 'green' },
+          marker: { color: 'blue' },
         },
         {
           x: cls['Low Temp Cluster'][0],
@@ -159,7 +159,7 @@ const Results = ({ getData }) => {
           type: 'scatter',
           mode: 'markers',
           name: 'Low Temps',
-          marker: { color: 'blue' },
+          marker: { color: 'green' },
         },
       ]);
       setDataRetrieved(true);
@@ -270,7 +270,7 @@ const Results = ({ getData }) => {
                   marginLeft: '2px',
                   fontSize: '0.7rem',
                   verticalAlign: '5px',
-                  color: 'green',
+                  color: 'blue',
                 }}
               />
             )}
@@ -316,7 +316,7 @@ const Results = ({ getData }) => {
                       marginLeft: '2px',
                       fontSize: '0.7rem',
                       verticalAlign: '5px',
-                      color: 'green',
+                      color: 'blue',
                     }}
                   />
                 )
@@ -350,7 +350,7 @@ const Results = ({ getData }) => {
                       marginLeft: '2px',
                       fontSize: '0.7rem',
                       verticalAlign: '5px',
-                      color: 'green',
+                      color: 'blue',
                     }}
                   />
                 )
@@ -387,7 +387,7 @@ const Results = ({ getData }) => {
                       marginLeft: '2px',
                       fontSize: '0.7rem',
                       verticalAlign: '5px',
-                      color: 'green',
+                      color: 'blue',
                     }}
                   />
                 )
